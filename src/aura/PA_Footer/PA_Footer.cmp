@@ -1,0 +1,2 @@
+<aura:component description="PA_Footer" implements="forceCommunity:availableForAllPageTypes">
+</aura:component>

@@ -1,0 +1,3 @@
+<aura:component description="PA_Header" implements="forceCommunity:availableForAllPageTypes">
+
+</aura:component>
