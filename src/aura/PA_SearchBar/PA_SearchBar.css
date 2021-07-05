@@ -1,0 +1,96 @@
+.THIS {
+    width: 70%;
+}
+
+.THIS .slds-leftpad {
+    padding-left: 2rem;
+}
+
+.THIS .iconheight {
+    top: 65%;
+}
+
+.THIS .leftspace {
+    display: flex;
+}
+
+.THIS .leftspace input {
+    padding-left: 2rem;
+}
+
+.THIS .dropdown::-webkit-scrollbar {
+    display: none;
+}
+
+.THIS .searchRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    height: auto;
+    border: 1px solid rgba(102, 102, 102, 0.27);
+    border-radius: 5px;
+    transition: transform .3s;
+}
+
+.THIS .searchRow:hover {
+    transform: scale(1.01);
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.THIS .searchRow__imageContainer {
+    padding: 5px;
+}
+
+.THIS .searchRow__imageContainer__image {
+    height: 60px;
+    border-radius: 5px;
+}
+
+.THIS .searchRecordBody {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.THIS .searchRecordBody__item {
+    padding: 10px;
+}
+
+.THIS .searchRecordBody__item--primary {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/*.THIS .cancelButtonContainer {*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.THIS .slds-input__icon {*/
+/*    height: inherit;*/
+/*    margin-top: inherit;*/
+/*}*/
+
+/*.THIS .container {*/
+/*    width: 70%;*/
+/*    margin-top: -20px;*/
+/*}*/
+
+/*.THIS .baseContainer {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    padding-top: 10px;*/
+/*}*/
+
+/*.THIS .mainContainer {*/
+/*    background-color: #ffffff;*/
+/*    border-radius: 5px;*/
+/*    border: 1px solid #e6e6e6;*/
+/*    width: 70%;*/
+/*}*/
+

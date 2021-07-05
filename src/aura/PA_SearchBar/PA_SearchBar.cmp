@@ -1,0 +1,82 @@
+<aura:component description="PA_SearchBar">
+
+    <aura:attribute name="selectRecordId" type="String"/>
+    <aura:attribute name="selectRecordName" type="String"/>
+    <aura:attribute name="searchRecords" type="List"/>
+    <aura:attribute name="LoadingText" type="Boolean" default="false"/>
+
+    <div>
+        <div class="slds-form-element ">
+            <div class="slds-form-element__control ">
+                <div class="slds-combobox_container ">
+
+                    <div class=" slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aura:id="resultBox"
+                         aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right"
+                             role="none">
+
+                            <span onkeydown="{!c.onKeyPress}">
+                            <lightning:input aura:id="userinput"
+                                             label=""
+                                             name="searchText"
+                                             onchange="{!c.searchField}"
+                                             placeholder="Search products..."
+                                             value="{!v.selectRecordName}"
+                                             class="leftspace"/>
+                            </span>
+                            <aura:if isTrue="{!empty(v.selectRecordName)}">
+                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                        <lightning:icon
+                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                                iconName="utility:search" size="x-small" alternativeText="icon"/>
+                                    </span>
+                                <aura:set attribute="else">
+                                    <button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon"
+                                            onclick="{!c.resetData}">
+                                        <lightning:icon
+                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                                iconName="utility:clear" size="x-small" alternativeText="icon"/>
+                                        <span class="slds-assistive-text">Clear</span>
+                                    </button>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+
+                        <div id="listbox-id-1"
+                             class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid dropdown"
+                             role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <aura:iteration items="{!v.searchRecords}" var="movie" indexVar="hdtv">
+                                    <li role="presentation" class="slds-listbox__item">
+                                        <div id="{!movie.id}" data-name="{!movie.title}"
+                                             onclick="{!c.setSelectedRecord}"
+                                             class="searchRow"
+                                             role="option">
+                                            <div class="slds-media__figure searchRow__imageContainer">
+                                                <img style="width: 40px" src="{!movie.poster_path}"
+                                                     class="searchRow__imageContainer__image"/>
+                                            </div>
+                                            <div class="slds-media__body searchRecordBody">
+                                                <span class="searchRecordBody__item searchRecordBody__item--primary slds-listbox__option-text slds-listbox__option-text_entity">{!movie.title}</span>
+                                                <span class="searchRecordBody__item slds-listbox__option-meta slds-listbox__option-meta_entity">{!'Release date: '+ movie.release_date}</span>
+                                                <span class="searchRecordBody__item slds-listbox__option-meta slds-listbox__option-meta_entity">{!'Only for adults: '+((movie.adult) ? 'Yes' : 'No')}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </aura:iteration>
+                                <aura:if isTrue="{!and(v.searchRecords.length == 0 , !v.LoadingText)}">
+                                    No result found.
+                                </aura:if>
+                                <aura:if isTrue="{!v.LoadingText}">
+                                    Loading...
+                                </aura:if>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

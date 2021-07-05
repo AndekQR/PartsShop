@@ -1,3 +1,7 @@
 <aura:component description="PA_Header" implements="forceCommunity:availableForAllPageTypes">
-
+    <div>
+        <div class="headerContainer">
+            <c:PA_SearchBar/>
+        </div>
+    </div>
 </aura:component>
