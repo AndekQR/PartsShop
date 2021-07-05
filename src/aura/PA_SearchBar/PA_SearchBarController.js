@@ -1,6 +1,7 @@
 ({
     searchField: function(component, event, helper) {
-
+        let searchQuery = event.getSource().get('v.value');
+        helper.searchRecords(component, searchQuery);
     },
 
     onKeyPress: function (component, event, helper) {

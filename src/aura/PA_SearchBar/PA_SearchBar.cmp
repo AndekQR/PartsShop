@@ -1,4 +1,4 @@
-<aura:component description="PA_SearchBar">
+<aura:component description="PA_SearchBar" controller="PA_DataProvider">
 
     <aura:attribute name="selectRecordId" type="String"/>
     <aura:attribute name="selectRecordName" type="String"/>
@@ -65,7 +65,9 @@
                                     </li>
                                 </aura:iteration>
                                 <aura:if isTrue="{!and(v.searchRecords.length == 0 , !v.LoadingText)}">
-                                    No result found.
+                                    <span class="noResultsText">
+                                        No result found.
+                                    </span>
                                 </aura:if>
                                 <aura:if isTrue="{!v.LoadingText}">
                                     Loading...

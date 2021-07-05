@@ -64,33 +64,11 @@
     font-weight: bold;
 }
 
-/*.THIS .cancelButtonContainer {*/
-/*    height: 100%;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
+.THIS .slds-form-element__label {
+    display: none;
+}
 
-/*.THIS .slds-input__icon {*/
-/*    height: inherit;*/
-/*    margin-top: inherit;*/
-/*}*/
-
-/*.THIS .container {*/
-/*    width: 70%;*/
-/*    margin-top: -20px;*/
-/*}*/
-
-/*.THIS .baseContainer {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    padding-top: 10px;*/
-/*}*/
-
-/*.THIS .mainContainer {*/
-/*    background-color: #ffffff;*/
-/*    border-radius: 5px;*/
-/*    border: 1px solid #e6e6e6;*/
-/*    width: 70%;*/
-/*}*/
+.THIS .noResultsText {
+    padding-left: 10px;
+}
 
