@@ -1,11 +1,11 @@
 ({
     newProductAction: function(component, event, helper) {
-        helper.openNewProductDialog(component);
+        helper.openNewProductBodyContent();
     },
     watchListAction: function(component, event, helper) {
-
+        helper.openWatchListBodyContent();
     },
     cartAction: function(component, event, helper) {
-
+        helper.openCartBodyContent();
     },
 })

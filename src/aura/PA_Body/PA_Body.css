@@ -1,2 +1,20 @@
 .THIS {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .THIS .bodyContainer {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .THIS .bodyContainer {
+        width: 70%;
+    }
+}
+
+.THIS .bodyVisibleContent {
+
 }

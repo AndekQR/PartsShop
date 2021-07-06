@@ -1,2 +1,20 @@
 <aura:component description="PA_Body" implements="forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="whatToShow" type="String" access="private"/>
+    <aura:handler event="c:PA_ChangeBodyContentEvent" action="{!c.onChangeBodyContent}"/>
+
+    <div>
+        <div class="bodyContainer">
+            <aura:if isTrue="{!v.whatToShow == 'newProductScreen'}">
+                <c:PA_CreateProduct/>
+            </aura:if>
+            <aura:if isTrue="{!v.whatToShow == 'watchListScreen'}">
+
+            </aura:if>
+            <aura:if isTrue="{!v.whatToShow == 'cartScreen'}">
+
+            </aura:if>
+        </div>
+        <c:Spinner aura:id="spinner"/>
+    </div>
 </aura:component>
