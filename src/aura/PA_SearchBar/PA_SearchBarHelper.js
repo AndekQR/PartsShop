@@ -54,4 +54,21 @@
         component.set('v.selectRecordName', '');
         component.set('v.selectRecordId', '');
     },
+
+    fireProductSelectedEvent: function (component, productId) {
+        let event = $A.get('e.c:PA_ProductSelectedEvent');
+        event.setParams({
+            productId: productId
+        });
+        event.fire();
+    },
+
+    fireShowSearchListEvent: function (component) {
+        let query = component.get('v.selectRecordName');
+        let event = $A.get('e.c:PA_ShowSearchListEvent');
+        event.setParams({
+            query: query
+        });
+        event.fire();
+    }
 })

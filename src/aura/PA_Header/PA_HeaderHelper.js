@@ -1,1 +1,5 @@
-({})
+({
+    openNewProductDialog: function(component) {
+
+    }
+})

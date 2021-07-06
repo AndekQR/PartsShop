@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="PA_ProductSelectedEvent">
+    <aura:attribute name="productId" type="String"/>
+</aura:event>

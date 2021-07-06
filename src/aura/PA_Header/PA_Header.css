@@ -6,4 +6,39 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid rgb(193, 193, 193);
+}
+
+.THIS .headerContainer__logo {
+    padding: 15px;
+}
+
+.THIS .headerContainer__searchBar {
+    width: 60%;
+    padding: 15px;
+}
+
+.THIS .headerContainer__controls {
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.THIS .headerContainer__controls__control {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    transition: transform .1s;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.THIS .headerContainer__controls__control:hover {
+    cursor: pointer;
+    transform: scale(1.01);
 }

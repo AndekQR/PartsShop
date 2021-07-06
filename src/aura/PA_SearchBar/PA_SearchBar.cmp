@@ -1,9 +1,10 @@
 <aura:component description="PA_SearchBar" controller="PA_DataProvider">
 
-    <aura:attribute name="selectRecordId" type="String"/>
-    <aura:attribute name="selectRecordName" type="String"/>
-    <aura:attribute name="searchRecords" type="List"/>
+    <aura:attribute name="selectRecordId" type="String" access="private"/>
+    <aura:attribute name="selectRecordName" type="String" access="private"/>
+    <aura:attribute name="searchRecords" type="List" access="private"/>
     <aura:attribute name="LoadingText" type="Boolean" default="false"/>
+    <aura:registerEvent name="PA_ProductSelectedEvent" type="c:PA_ProductSelectedEvent"/>
 
     <div>
         <div class="slds-form-element ">
@@ -34,9 +35,8 @@
                                     <button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon"
                                             onclick="{!c.resetData}">
                                         <lightning:icon
-                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default customCancelButton"
                                                 iconName="utility:clear" size="x-small" alternativeText="icon"/>
-                                        <span class="slds-assistive-text">Clear</span>
                                     </button>
                                 </aura:set>
                             </aura:if>
@@ -46,20 +46,22 @@
                              class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid dropdown"
                              role="listbox">
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-                                <aura:iteration items="{!v.searchRecords}" var="movie" indexVar="hdtv">
+                                <aura:iteration items="{!v.searchRecords}" var="record" indexVar="hdtv">
                                     <li role="presentation" class="slds-listbox__item">
-                                        <div id="{!movie.id}" data-name="{!movie.title}"
+                                        <div id="{!record.Id}" data-name="{!record.Name}"
                                              onclick="{!c.setSelectedRecord}"
                                              class="searchRow"
                                              role="option">
                                             <div class="slds-media__figure searchRow__imageContainer">
-                                                <img style="width: 40px" src="{!movie.poster_path}"
-                                                     class="searchRow__imageContainer__image"/>
+                                                <span class="slds-icon_container slds-icon-utility-search">
+                                                    <lightning:icon
+                                                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                                            iconName="utility:search" size="x-small"
+                                                            alternativeText="icon"/>
+                                                </span>
                                             </div>
                                             <div class="slds-media__body searchRecordBody">
-                                                <span class="searchRecordBody__item searchRecordBody__item--primary slds-listbox__option-text slds-listbox__option-text_entity">{!movie.title}</span>
-                                                <span class="searchRecordBody__item slds-listbox__option-meta slds-listbox__option-meta_entity">{!'Release date: '+ movie.release_date}</span>
-                                                <span class="searchRecordBody__item slds-listbox__option-meta slds-listbox__option-meta_entity">{!'Only for adults: '+((movie.adult) ? 'Yes' : 'No')}</span>
+                                                <span class="searchRecordBody__item searchRecordBody__item--primary slds-listbox__option-text slds-listbox__option-text_entity">{!record.Name}</span>
                                             </div>
                                         </div>
                                     </li>

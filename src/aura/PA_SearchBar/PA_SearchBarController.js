@@ -8,11 +8,11 @@
         let pressedKeyName = event.key;
         switch (pressedKeyName) {
             case 'Enter': {
-
-                break;
+                helper.fireShowSearchListEvent(component);
             }
             case 'Escape': {
-
+                helper.removeResultBox(component);
+                helper.clearSelected(component);
                 break;
             }
         }
@@ -21,5 +21,15 @@
     resetData: function (component, event, helper) {
         helper.clearSelected(component);
         helper.removeResultBox(component);
+    },
+
+    setSelectedRecord: function (component, event, helper) {
+        let productId = event.currentTarget.id;
+        let productName = event.currentTarget.dataset.name;
+        helper.removeResultBox(component);
+        component.set('v.selectRecordName', productName);
+        component.set('v.selectRecordId', productId);
+        helper.fireProductSelectedEvent(component, productId);
+        helper.clearSelected(component);
     },
 })
