@@ -31,4 +31,34 @@ public with sharing class PA_DataProviderService {
         ];
         return products;
     }
+
+    public static List<ProductCategory__c> getAllProductCategories() {
+        return [
+                SELECT Id, Name
+                FROM ProductCategory__c
+                ORDER BY Name
+        ];
+    }
+
+    public static void saveProduct(Product__c product, List<String> imageUrls,
+            Map<String, String> specs) {
+        insert product;
+        List<ProductImage__c> productImages = new List<ProductImage__c>();
+        List<ProductSpecyfication__c> productSpecyfications = new List<ProductSpecyfication__c>();
+        for (String url : imageUrls) {
+            ProductImage__c productImage = new ProductImage__c();
+            productImage.Url__c = url.trim();
+            productImage.Product__c = product.Id;
+            productImages.add(productImage);
+        }
+        for(String key : specs.keySet()) {
+            ProductSpecyfication__c specyfication = new ProductSpecyfication__c();
+            specyfication.Name = key.trim();
+            specyfication.Value__c = specs.get(key).trim();
+            specyfication.Product__c = product.Id;
+            productSpecyfications.add(specyfication);
+        }
+        insert productImages;
+        insert productSpecyfications;
+    }
 }

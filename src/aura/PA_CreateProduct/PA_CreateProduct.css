@@ -1,2 +1,48 @@
 .THIS {
 }
+
+.THIS .imagesChooserContainer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.THIS .chooser__title {
+    hyphens: auto;
+    display: inline-block;
+    color: var(--lwc-colorTextLabel,#696969);
+    font-size: var(--lwc-formLabelFontSize,0.75rem);
+    padding-right: var(--lwc-spacingXSmall,0.5rem);
+    padding-top: var(--lwc-spacingXxSmall,0.25rem);
+    margin-bottom: var(--lwc-spacingXxxSmall,0.125rem);
+}
+
+.THIS .imagesChooserContainer__newImage {
+
+}
+
+.THIS .imagesChooserContainer__newImage button {
+    width: 100%;
+}
+
+.THIS .imagesChooserContainer__allImages {
+
+}
+
+.THIS .imagesChooserContainer__allImages__element {
+   padding: 5px;
+}
+
+.THIS .specificationChooserContainer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.THIS .specificationChooserContainer__new button {
+    width: 100%;
+}
+
+.THIS .specificationChooserContainer__all__element {
+    padding: 5px;
+    font-weight: bold;
+}
+

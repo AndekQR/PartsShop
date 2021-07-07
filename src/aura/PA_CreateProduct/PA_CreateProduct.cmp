@@ -1,3 +1,104 @@
-<aura:component description="PA_CreateProduct">
-    new product!
+<aura:component description="PA_CreateProduct" controller="PA_DataProvider">
+
+    <aura:attribute name="newProduct" type="Product__c" access="private" default="{}"/>
+    <aura:attribute name="allCategories" type="ProductCategory__c[]" access="private"/>
+    <aura:attribute name="productImages" type="String[]" access="private"/>
+    <aura:attribute name="productSpecifications" type="ProductSpecyfication__c[]" access="private"/>
+
+    <aura:attribute name="image" type="String" access="private"/>
+    <aura:attribute name="specyfication" type="ProductSpecyfication__c" access="private" default="{}"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="slds-p-horizontal--small">
+            <lightning:input  required="true" type="text" aura:id="productField" label="Name"
+                             value="{!v.newProduct.Name}"/>
+            <lightning:layout>
+                <lightning:layoutItem size="6">
+                    <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField" label="Price"
+                                     value="{!v.newProduct.Price__c}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="6">
+                    <lightning:input required="true" type="number" aura:id="productField" label="Quantity"
+                                     value="{!v.newProduct.Quantity__c}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:textarea required="true" aura:id="productField" label="Description"
+                                value="{!v.newProduct.Description__c}"/>
+            <lightning:select aura:id="productField" name="select" label="Category"
+                              value="{!v.newProduct.ProductCategory__c}">
+                <aura:iteration items="{!v.allCategories}" var="category">
+                    <option value="{!category.Id}" label="{!category.Name}"></option>
+                </aura:iteration>
+            </lightning:select>
+
+            <div class="imagesChooserContainer">
+                <span class="chooser__title">Images</span>
+                <div class="imagesChooserContainer__newImage">
+                    <lightning:layout>
+                        <lightning:layoutItem size="10">
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="Image url"
+                                             variant="label-hidden" aura:id="imageUrl"
+                                             required="true" type="url" label="URL"
+                                             pattern="(^http).+(png|jpg|jpeg)$"
+                                             value="{!v.image}"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2">
+                            <lightning:button label="Add" variant="neutral" onclick="{!c.onImageAdd}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="imagesChooserContainer__allImages">
+                    <aura:iteration items="{!v.productImages}" var="image">
+                        <div class="imagesChooserContainer__allImages__element slds-truncate">
+                            <lightning:formattedUrl value="{!image}"/>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+            <div class="specificationChooserContainer">
+                <span class="chooser__title">Specification</span>
+                <div class="specificationChooserContainer__new">
+                    <lightning:layout>
+                        <lightning:layoutItem size="5">
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="Specification name"
+                                             variant="label-hidden" aura:id="productField"
+                                             required="true" type="text" label="Name"
+                                             value="{!v.specyfication.Name}"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="5">
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="Specification value"
+                                             variant="label-hidden" aura:id="productField"
+                                             required="true" type="text" label="Value"
+                                             value="{!v.specyfication.Value__c}"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2">
+                            <lightning:button label="Add" variant="neutral" onclick="{!c.onSpecificationAdd}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="specificationChooserContainer__all">
+                    <aura:iteration items="{!v.productSpecifications}" var="spec">
+                        <div class="specificationChooserContainer__all__element slds-truncate">
+                            <lightning:layout>
+                                <lightning:layoutItem class="slds-text-align_center" size="5">
+                                    <lightning:formattedText value="{!spec.Name}"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-text-align_center" size="5">
+                                    <lightning:formattedText value="{!spec.Value__c}"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-text-align_center" size="2">
+                                </lightning:layoutItem>
+                            </lightning:layout>
+
+
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+
+            <lightning:button label="Save Product" variant="brand" onclick="{!c.onSaveProduct}"/>
+        </div>
+    </div>
 </aura:component>
