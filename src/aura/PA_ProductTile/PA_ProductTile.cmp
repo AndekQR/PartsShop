@@ -8,7 +8,7 @@
         <div class="tileContainer" onclick="{!c.productDetails}">
             <div class="tileContainer__image">
                 <img alt="Product Image"
-                     src="{!(empty(v.tileImageUrl) ?
+                     src="{!(empty(v.imageData) ?
                              $Resource.defaultMovieImage :
                              'data:image/png;base64,'+v.imageData)}"/>
             </div>

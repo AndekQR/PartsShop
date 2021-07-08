@@ -19,7 +19,7 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
-                component.set('v.searchRecords', returnValue);
+                component.set('v.searchRecords', returnValue.data);
             } else {
                 this.handleError(response);
             }

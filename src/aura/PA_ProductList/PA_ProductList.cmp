@@ -1,0 +1,38 @@
+<aura:component description="PA_ProductList" implements="forceCommunity:availableForAllPageTypes" controller="PA_DataProvider">
+
+    <aura:attribute name="products" type="Object[]" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="0" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="10" access="private"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private"/>
+    <aura:attribute name="allProductsSize" type="Integer" access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="slds-align_absolute-center containerList">
+            <div class="personListContainer">
+                <div class="personListContainer__body">
+                    <aura:iteration items="{!v.products}" var="product">
+                        <c:PA_ProductTile product="{!product}"/>
+                    </aura:iteration>
+                </div>
+                <div class="paginationControls">
+                    <div class="paginationControls__controls">
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="First Page"
+                                          onclick="{!c.firstPage}"/>
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="Previous Page"
+                                          onclick="{!c.previousPage}"/>
+                        <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                          label="Next Page" onclick="{!c.nextPage}"/>
+                        <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                          label="Last Page" onclick="{!c.lastPage}"/>
+                    </div>
+                    <div class="paginationControls__info">
+                            {! 'Page number: '+(v.pageNumber) + ' of '+(v.allPageSize)}
+                    </div>
+                </div>
+            </div>
+            <c:Spinner aura:id="spinner"/>
+        </div>
+    </div>
+</aura:component>

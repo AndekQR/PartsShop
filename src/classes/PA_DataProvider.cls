@@ -1,8 +1,9 @@
 public class PA_DataProvider {
 
     @AuraEnabled
-    public static List<Product__c> searchProducts(String searchQuery, Integer page) {
-        return PA_DataProviderService.searchMoviesLocally(searchQuery, page);
+    public static PA_PaginationResponse searchProducts(String searchQuery, Integer page) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        return service.searchMoviesLocally(searchQuery, page);
     }
 
     @AuraEnabled
@@ -14,13 +15,18 @@ public class PA_DataProvider {
     public static void saveProduct(Product__c product,
             Map<String, String> imagesData,
             Map<String, String> specs) {
-        System.debug('saveProduct DataProvider');
-        System.debug(imagesData);
-        new PA_DataProviderService().saveProduct(product, imagesData, specs);
+        PA_DataProviderService service = new PA_DataProviderService();
+        service.saveProduct(product, imagesData, specs);
     }
 
     @AuraEnabled
     public static void addToFavorites(String productId) {
         PA_DataProviderService.addToFavorites(productId);
+    }
+
+    @AuraEnabled
+    public static PA_PaginationResponse latestProducts(Integer page) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        return service.latestProducts(page);
     }
 }

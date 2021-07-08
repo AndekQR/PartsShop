@@ -48,7 +48,7 @@
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                 <aura:iteration items="{!v.searchRecords}" var="record" indexVar="hdtv">
                                     <li role="presentation" class="slds-listbox__item">
-                                        <div id="{!record.Id}" data-name="{!record.Name}"
+                                        <div id="{!record.product.Id}" data-name="{!record.product.Name}"
                                              onclick="{!c.setSelectedRecord}"
                                              class="searchRow"
                                              role="option">
@@ -61,7 +61,7 @@
                                                 </span>
                                             </div>
                                             <div class="slds-media__body searchRecordBody">
-                                                <span class="searchRecordBody__item searchRecordBody__item--primary slds-listbox__option-text slds-listbox__option-text_entity">{!record.Name}</span>
+                                                <span class="searchRecordBody__item searchRecordBody__item--primary slds-listbox__option-text slds-listbox__option-text_entity">{!record.product.Name}</span>
                                             </div>
                                         </div>
                                     </li>

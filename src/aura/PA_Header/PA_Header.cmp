@@ -1,7 +1,5 @@
 <aura:component description="PA_Header" implements="forceCommunity:availableForAllPageTypes">
 
-    <aura:registerEvent name="PA_ChangeBodyContentEvent" type="c:PA_ChangeBodyContentEvent"/>
-
     <div>
         <div class="headerContainer">
             <div class="headerContainer__logo">
