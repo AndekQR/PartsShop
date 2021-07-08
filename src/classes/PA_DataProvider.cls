@@ -12,8 +12,15 @@ public class PA_DataProvider {
 
     @AuraEnabled
     public static void saveProduct(Product__c product,
-            List<String> imageUrls,
+            Map<String, String> imagesData,
             Map<String, String> specs) {
-        PA_DataProviderService.saveProduct(product, imageUrls, specs);
+        System.debug('saveProduct DataProvider');
+        System.debug(imagesData);
+        new PA_DataProviderService().saveProduct(product, imagesData, specs);
+    }
+
+    @AuraEnabled
+    public static void addToFavorites(String productId) {
+        PA_DataProviderService.addToFavorites(productId);
     }
 }

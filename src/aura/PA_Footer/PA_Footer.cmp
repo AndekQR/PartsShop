@@ -1,2 +1,7 @@
 <aura:component description="PA_Footer" implements="forceCommunity:availableForAllPageTypes">
+    <div class="">
+        <div class="footerContainer">
+            FOOTER
+        </div>
+    </div>
 </aura:component>

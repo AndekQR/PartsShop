@@ -40,25 +40,46 @@ public with sharing class PA_DataProviderService {
         ];
     }
 
-    public static void saveProduct(Product__c product, List<String> imageUrls,
+    public void saveProduct(Product__c product, Map<String, String> imagesData,
             Map<String, String> specs) {
         insert product;
-        List<ProductImage__c> productImages = new List<ProductImage__c>();
         List<ProductSpecyfication__c> productSpecyfications = new List<ProductSpecyfication__c>();
-        for (String url : imageUrls) {
-            ProductImage__c productImage = new ProductImage__c();
-            productImage.Url__c = url.trim();
-            productImage.Product__c = product.Id;
-            productImages.add(productImage);
-        }
-        for(String key : specs.keySet()) {
+        for (String key : specs.keySet()) {
             ProductSpecyfication__c specyfication = new ProductSpecyfication__c();
             specyfication.Name = key.trim();
             specyfication.Value__c = specs.get(key).trim();
             specyfication.Product__c = product.Id;
             productSpecyfications.add(specyfication);
         }
-        insert productImages;
+        this.saveImages(imagesData, product.Id);
         insert productSpecyfications;
     }
+
+    private void saveImages(Map<String, String> imagesData, String imagesOwnerId) {
+        List<Attachment> attachments = new List<Attachment>();
+        for (String fileName : imagesData.keySet()) {
+            Attachment attachment = new Attachment();
+            attachment.parentId = imagesOwnerId;
+            attachment.body = EncodingUtil.base64Decode(imagesData.get(fileName));
+            attachment.name = fileName;
+            attachments.add(attachment);
+        }
+        insert attachments;
+    }
+
+    private List<Attachment> getImages(String ownerId) {
+        return [
+                SELECT Id, Name, LastModifiedDate, ContentType
+                FROM Attachment
+                WHERE parentid = :ownerId
+                ORDER BY LastModifiedDate DESC
+        ];
+    }
+
+    public static void addToFavorites(String productId) {
+        FavoriteProduct__c favoriteProduct = new FavoriteProduct__c();
+        favoriteProduct.Product__c = productId;
+        insert favoriteProduct;
+    }
+
 }

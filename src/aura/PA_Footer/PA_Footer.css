@@ -1,2 +1,9 @@
 .THIS {
+    box-shadow: none;
+}
+
+.THIS .footerContainer {
+    height: 70px;
+    border-top: 2px solid rgb(193, 193, 193);
+    width: 100%;
 }
