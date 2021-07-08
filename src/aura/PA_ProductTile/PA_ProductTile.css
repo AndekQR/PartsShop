@@ -1,0 +1,57 @@
+.THIS {
+    width: 150px;
+}
+
+.THIS .tileContainer {
+    transition: transform .2s;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+}
+
+.THIS .tileContainer:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.THIS .tileContainer__image {
+
+}
+.THIS .tileContainer__image img {
+    object-fit: fill;
+}
+
+.THIS .tileContainer__text {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.THIS .tileContainer__watchList {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    align-content: center;
+    transition: transform .2s;
+
+}
+
+.THIS .tileContainer__watchList svg:hover {
+    /*border: 1px solid #e6e6e6;*/
+    height: 20px;
+    width: 20px;
+}
+
+.THIS .tileContainer__text svg:hover {
+    height: 20px;
+    width: 20px;
+}
+
