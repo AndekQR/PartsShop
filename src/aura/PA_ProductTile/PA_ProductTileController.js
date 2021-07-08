@@ -1,8 +1,8 @@
 ({
     init: function(component, event, helper) {
         let product = component.get('v.product');
-        if(product.ProductImages__r != null && product.ProductImages__r.length > 0) {
-            component.set('v.tileImageUrl', product.ProductImages__r[0].Url__c);
+        if(product.images != null && product.images.length > 0) {
+            component.set('v.tileImageUrl', product.images[0]);
         }
     },
     addToCart: function(component, event, helper) {
