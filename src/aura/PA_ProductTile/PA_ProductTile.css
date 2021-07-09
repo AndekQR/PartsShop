@@ -17,9 +17,12 @@
 
 .THIS .tileContainer__image {
     padding-bottom: 10px;
+    height: 120px;
 }
 .THIS .tileContainer__image img {
-    object-fit: fill;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
 }
 
 .THIS .tileContainer__text {

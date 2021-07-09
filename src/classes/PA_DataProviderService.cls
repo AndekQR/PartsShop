@@ -1,6 +1,6 @@
 public with sharing class PA_DataProviderService {
 
-    private static final Integer PAGE_SIZE_LOCAL = 1;
+    private static final Integer PAGE_SIZE_LOCAL = 10;
 
     public PA_PaginationResponse searchMoviesLocally(String query, Integer page) {
         if (page == null || page < 1) {

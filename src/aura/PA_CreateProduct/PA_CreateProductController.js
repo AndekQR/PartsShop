@@ -35,9 +35,6 @@
         event.preventDefault();
         event.dataTransfer.dropEffect = 'copy';
         let files = event.dataTransfer.files;
-        console.log('onDrop');
-        console.log(JSON.parse(JSON.stringify(files)));
-        console.log(files);
         Array.prototype.forEach.call(files, (file) => {
             helper.readFile(component, helper, file)
         });

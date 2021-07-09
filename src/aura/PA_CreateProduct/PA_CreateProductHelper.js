@@ -31,12 +31,6 @@
         }
     },
 
-    validateImageUrl: function (component) {
-        let cmp = component.find('imageUrl');
-        cmp.showHelpMessageIfInvalid();
-        return cmp.get('v.validity').valid;
-    },
-
     validateFields: function (component) {
        return component.find('productField').reduce(function (validSoFar, inputCmp) {
             inputCmp.showHelpMessageIfInvalid();
