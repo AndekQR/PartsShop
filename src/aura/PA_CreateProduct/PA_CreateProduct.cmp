@@ -1,4 +1,5 @@
-<aura:component description="PA_CreateProduct" controller="PA_DataProvider" implements="forceCommunity:availableForAllPageTypes">
+<aura:component description="PA_CreateProduct" controller="PA_DataProvider"
+                implements="forceCommunity:availableForAllPageTypes">
 
     <aura:attribute name="newProduct" type="Product__c" access="private" default="{}"/>
     <aura:attribute name="allCategories" type="ProductCategory__c[]" access="private"/>
@@ -15,11 +16,12 @@
             <span class="title">New Product</span>
         </div>
         <div class="slds-p-horizontal--small">
-            <lightning:input  required="true" type="text" aura:id="productField" label="Name"
+            <lightning:input required="true" type="text" aura:id="productField" label="Name" maxlength="80"
                              value="{!v.newProduct.Name}"/>
             <lightning:layout>
                 <lightning:layoutItem size="6">
-                    <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField" label="Price"
+                    <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField"
+                                     label="Price"
                                      value="{!v.newProduct.Price__c}"/>
                 </lightning:layoutItem>
                 <lightning:layoutItem size="6">
@@ -39,12 +41,11 @@
             <div class="imagesChooserContainer">
                 <span class="chooser__title">Images</span>
                 <div class="imagesChooserContainer__newImage" ondragover="{!c.onDragOver}" ondrop="{!c.onDrop}">
-                        Drop Image Here
+                    Drop Image Here
                 </div>
                 <div class="imagesChooserContainer__allImages">
                     <aura:iteration items="{!v.productImages}" var="imageObject">
                         <div class="imagesChooserContainer__allImages__element slds-truncate">
-<!--                            <lightning:formattedUrl value="{!image}"/>-->
                             <img src="{!imageObject.data}"/>
                         </div>
                     </aura:iteration>
@@ -57,13 +58,13 @@
                         <lightning:layoutItem size="5">
                             <lightning:input class="slds-m-right_xxx-small" placeholder="Specification name"
                                              variant="label-hidden" aura:id="productField"
-                                             required="true" type="text" label="Name"
+                                             type="text" label="Name"
                                              value="{!v.specyfication.Name}"/>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="5">
                             <lightning:input class="slds-m-right_xxx-small" placeholder="Specification value"
                                              variant="label-hidden" aura:id="productField"
-                                             required="true" type="text" label="Value"
+                                             type="text" label="Value"
                                              value="{!v.specyfication.Value__c}"/>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="2">
@@ -90,8 +91,8 @@
                     </aura:iteration>
                 </div>
             </div>
-
             <lightning:button label="Save Product" variant="brand" onclick="{!c.onSaveProduct}"/>
         </div>
+        <c:Spinner aura:id="spinner"/>
     </div>
 </aura:component>

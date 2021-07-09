@@ -37,7 +37,16 @@
         return cmp.get('v.validity').valid;
     },
 
+    validateFields: function (component) {
+       return component.find('productField').reduce(function (validSoFar, inputCmp) {
+            inputCmp.showHelpMessageIfInvalid();
+            let isValid = inputCmp.get('v.validity').valid;
+            return validSoFar && isValid;
+        }, true);
+    },
+
     saveProduct: function (component) {
+        this.showSpinner(component);
         let productObject = component.get('v.newProduct');
         let productImages = component.get('v.productImages');
         let productSpecifications = component.get('v.productSpecifications');
@@ -54,21 +63,27 @@
             specs: specsMap
         });
         action.setCallback(this, (response) => {
+            this.hideSpinner(component);
             let state = response.getState();
             if (state === 'SUCCESS') {
                 this.clearForm(component);
-                let resultsToast = $A.get("e.force:showToast");
-                resultsToast.setParams({
-                    "title": "Approve Process",
-                    "message": "Product successfully send to approve process.",
-                    "type": "success"
-                });
-                resultsToast.fire();
+                this.showToast('Approve Process', 'Product successfully send to approve process.', 'success');
             } else {
+                this.showToast('Error', 'Something went wrong. Try again!', 'error');
                 this.handleError(response);
             }
         });
         $A.enqueueAction(action);
+    },
+
+    showToast: function (title, message, type) {
+        let resultsToast = $A.get("e.force:showToast");
+        resultsToast.setParams({
+            "title": title,
+            "message": message,
+            "type": type
+        });
+        resultsToast.fire();
     },
 
     clearForm: function (component) {
@@ -82,7 +97,8 @@
     readFile: function (component, helper, file) {
         if (!file) return;
         if (!file.type.match(/(image.*)/)) {
-            return alert('Image file not supported');
+            this.showToast('Error', 'Image file not supported', 'error');
+            return;
         }
         let allImages = component.get('v.productImages');
         let reader = new FileReader();
@@ -96,6 +112,15 @@
             component.set('v.productImages', allImages);
         };
         reader.readAsDataURL(file);
+    },
+
+    showSpinner: function (component) {
+        let spinnerComponent = component.find('spinner');
+        spinnerComponent.turnOn();
+    },
+    hideSpinner: function (component) {
+        let spinnerComponent = component.find('spinner');
+        spinnerComponent.turnOff();
     },
 
 })
