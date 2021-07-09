@@ -1,0 +1,13 @@
+<aura:component description="PA_ProductDetails" implements="forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="product" type="Object" access="private"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="productDetailsContainer">
+
+        </div>
+    </div>
+
+</aura:component>

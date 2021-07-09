@@ -22,7 +22,7 @@ public with sharing class PA_DataProviderService {
                 OFFSET :offset
         ];
         List<Attachment> attachments = getImages(this.getIds(products));
-        List<PA_ProductWrapper> wrappers =  PA_ProductWrapper.createWrappers(products, attachments);
+        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(products, attachments);
         return new PA_PaginationResponse(page, getProductsSize(), wrappers, PAGE_SIZE_LOCAL);
     }
 
@@ -38,7 +38,7 @@ public with sharing class PA_DataProviderService {
                 OFFSET :offset
         ];
         List<Attachment> attachments = getImages(this.getIds(products));
-        List<PA_ProductWrapper> wrappers =  PA_ProductWrapper.createWrappers(products, attachments);
+        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(products, attachments);
         return new PA_PaginationResponse(page, getProductsSize(), wrappers, PAGE_SIZE_LOCAL);
     }
 
@@ -136,8 +136,23 @@ public with sharing class PA_DataProviderService {
 
         ];
         List<Attachment> attachments = getImages(this.getIds(products));
-        List<PA_ProductWrapper> wrappers =  PA_ProductWrapper.createWrappers(products, attachments);
+        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(products, attachments);
         return new PA_PaginationResponse(page, getProductsSize(), wrappers, PAGE_SIZE_LOCAL);
+    }
+
+    public PA_ProductWrapper getProductDetails(String productId) {
+        Product__c product = [
+                SELECT Id,Name,
+                        Description__c, Price__c,
+                        ProductCategory__c, ProductDiscount__c,
+                        Rating__c, ShortDescription__c
+                FROM Product__c
+                WHERE Id = :productId
+                LIMIT 1
+        ];
+        List<Attachment> attachments = getImages(productId);
+        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(new List<Product__c>{product}, attachments);
+        return wrappers.get(0);
     }
 
 }

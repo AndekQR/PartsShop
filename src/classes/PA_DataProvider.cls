@@ -29,4 +29,10 @@ public class PA_DataProvider {
         PA_DataProviderService service = new PA_DataProviderService();
         return service.latestProducts(page);
     }
+
+    @AuraEnabled
+    public static PA_ProductWrapper getProductDetails(String productId) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        return service.getProductDetails(productId);
+    }
 }

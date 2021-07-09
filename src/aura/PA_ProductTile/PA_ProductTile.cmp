@@ -3,6 +3,7 @@
     <aura:attribute name="imageData" type="String" access="private"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <lightning:navigation aura:id="navService"/>
 
     <div>
         <div class="tileContainer" onclick="{!c.productDetails}">
