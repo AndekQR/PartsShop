@@ -25,6 +25,10 @@
             if(state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 component.set('v.product', returnValue);
+                console.log(JSON.parse(JSON.stringify(returnValue)));
+                let originalPrice = returnValue.product.Price__c;
+                let bestDiscount = returnValue.bestDiscount;
+                this.setPriceAfterDiscount(component, originalPrice, bestDiscount);
             } else {
                 this.handleError(response);
             }
@@ -42,5 +46,26 @@
         } else {
             console.log("Unknown error");
         }
+    },
+
+    setPriceAfterDiscount: function(component, originalPrice, bestDiscount) {
+        if(bestDiscount == null) {
+            component.set('v.priceAfterDiscount', originalPrice);
+        } else {
+            let percent = bestDiscount.Size__c / 100;
+            let afterDiscount = originalPrice - (originalPrice * percent);
+            afterDiscount = Math.round(afterDiscount * 100) / 100;
+            component.set('v.priceAfterDiscount', afterDiscount);
+        }
+
+    },
+
+    showSpinner: function (component) {
+        let spinnerComponent = component.find('spinner');
+        spinnerComponent.turnOn();
+    },
+    hideSpinner: function (component) {
+        let spinnerComponent = component.find('spinner');
+        spinnerComponent.turnOff();
     },
 })

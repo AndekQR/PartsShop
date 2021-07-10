@@ -1,4 +1,4 @@
-<aura:component description="PA_SearchBar" controller="PA_DataProvider" implements="forceCommunity:availableForAllPageTypes">
+<aura:component description="PA_SearchBar" controller="PA_DataProvider" implements="forceCommunity:searchInterface">
 
     <aura:attribute name="selectRecordId" type="String" access="private"/>
     <aura:attribute name="selectRecordName" type="String" access="private"/>

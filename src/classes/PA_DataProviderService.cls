@@ -14,16 +14,16 @@ public with sharing class PA_DataProviderService {
         List<Product__c> products = [
                 SELECT Id,Name,
                         Description__c, Price__c,
-                        ProductCategory__c, ProductDiscount__c,
-                        Rating__c, ShortDescription__c
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c
                 FROM Product__c
                 WHERE Name LIKE :query + '%'
                 LIMIT :PAGE_SIZE_LOCAL
                 OFFSET :offset
         ];
-        List<Attachment> attachments = getImages(this.getIds(products));
-        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(products, attachments);
-        return new PA_PaginationResponse(page, getProductsSize(), wrappers, PAGE_SIZE_LOCAL);
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
+                .images();
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), PAGE_SIZE_LOCAL);
     }
 
     public PA_PaginationResponse getProducts(Integer page) {
@@ -31,15 +31,15 @@ public with sharing class PA_DataProviderService {
         List<Product__c> products = [
                 SELECT Id,Name,
                         Description__c, Price__c,
-                        ProductCategory__c, ProductDiscount__c,
-                        Rating__c, ShortDescription__c
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c
                 FROM Product__c
                 LIMIT :PAGE_SIZE_LOCAL
                 OFFSET :offset
         ];
-        List<Attachment> attachments = getImages(this.getIds(products));
-        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(products, attachments);
-        return new PA_PaginationResponse(page, getProductsSize(), wrappers, PAGE_SIZE_LOCAL);
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
+                .images();
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), PAGE_SIZE_LOCAL);
     }
 
     public static List<ProductCategory__c> getAllProductCategories() {
@@ -94,16 +94,6 @@ public with sharing class PA_DataProviderService {
         return (Integer) result.get('size');
     }
 
-    private List<Attachment> getImages(List<String> ownersId) {
-        List<Attachment> attachments = [
-                SELECT Id, Body, ParentId
-                FROM Attachment
-                WHERE ParentId IN :ownersId
-                ORDER BY LastModifiedDate DESC
-        ];
-        return attachments;
-    }
-
     private List<String> getIds(List<SObject> objects) {
         List<String> result = new List<String>();
         for (SObject ob : objects) {
@@ -127,32 +117,36 @@ public with sharing class PA_DataProviderService {
         List<Product__c> products = [
                 SELECT Id,Name,
                         Description__c, Price__c,
-                        ProductCategory__c, ProductDiscount__c,
-                        Rating__c, ShortDescription__c
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c
                 FROM Product__c
                 ORDER BY CreatedDate DESC
                 LIMIT :PAGE_SIZE_LOCAL
                 OFFSET :offset
 
         ];
-        List<Attachment> attachments = getImages(this.getIds(products));
-        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(products, attachments);
-        return new PA_PaginationResponse(page, getProductsSize(), wrappers, PAGE_SIZE_LOCAL);
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
+                .images();
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), PAGE_SIZE_LOCAL);
     }
 
     public PA_ProductWrapper getProductDetails(String productId) {
         Product__c product = [
                 SELECT Id,Name,
                         Description__c, Price__c,
-                        ProductCategory__c, ProductDiscount__c,
-                        Rating__c, ShortDescription__c
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c
                 FROM Product__c
                 WHERE Id = :productId
                 LIMIT 1
         ];
-        List<Attachment> attachments = getImages(productId);
-        List<PA_ProductWrapper> wrappers = PA_ProductWrapper.createWrappers(new List<Product__c>{product}, attachments);
-        return wrappers.get(0);
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(new List<Product__C>{
+                product
+        })
+                .images()
+                .specifications()
+                .discount();
+        return builder.build().get(0);
     }
 
 }

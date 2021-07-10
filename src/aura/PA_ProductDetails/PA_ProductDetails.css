@@ -1,2 +1,160 @@
 .THIS {
 }
+
+
+.THIS .productDetailsContainer {
+
+}
+
+.THIS .productDetailsContainer__imageContainer {
+    border: 1px solid rgb(158, 158, 158);
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+
+.THIS .slds-carousel__panel-action {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.THIS div[role=tabpanel] {
+    height:100%;
+}
+
+.THIS .slds-carousel__image img {
+    max-height: 400px;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    min-width: 150px;
+}
+
+.THIS .content-container {
+    display: none;
+}
+
+.THIS .slds-carousel__content .content-container {
+    display:none;
+}
+
+.THIS .slds-carousel__panel-action {
+    border: none;
+}
+
+
+.THIS .productDetailsContainer__detailsContainer {
+    min-width: 300px;
+    height: 100%;
+    padding: 10px;
+}
+
+.THIS .productDetailsContainer__detailsContainer__header {
+    color: rgb(26, 26, 26);
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 22px;
+    line-height: 28px;
+    word-wrap: break-word;
+}
+
+.THIS .productDetailsContainer__description {
+    text-align: justify;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0px;
+    color: rgb(77, 77, 77);
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__priceContainer {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.THIS .slds-form-element__label {
+    max-width: none;
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__price__price {
+    display: flex;
+    color: rgb(77, 77, 77);
+    flex-wrap: wrap;
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__price__beforeDiscount {
+    font-size: 14px;
+    line-height: 24px;
+    margin-right: 8px;
+    text-decoration: line-through;
+    color: rgb(148, 148, 148);
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__price__afterDiscount {
+    font-size: 26px;
+    line-height: 32px;
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__price__watchListButton {
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    height: 50px;
+    width: 100%;
+    background-color: #0096c7;
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 50px;
+    text-align: center;
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__price__cartButton {
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    height: 80px;
+    width: 100%;
+    background-color: rgb(17, 158, 0);
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    font-weight: 400;
+    padding: 5px;
+    line-height: 62px;
+    text-align: center;
+}
+.THIS .productDetailsContainer__detailsContainer__details__price__watchListButton:hover {
+    border: 1px solid rgb(184, 184, 184);
+    background-color: #0098ca;
+    cursor: pointer;
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__price__cartButton:hover {
+    border: 1px solid rgb(195, 195, 195);
+    background-color: rgb(21, 191, 0);
+    cursor: pointer;
+}
+
+.THIS .productDetailsContainer__detailsContainer__details__priceContainer__container {
+    border: 1px solid rgb(158, 158, 158);
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .secondSection {
+    border: 1px solid rgb(158, 158, 158);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+.THIS .title {
+    color: rgb(26, 26, 26);
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 22px;
+    line-height: 28px;
+    word-wrap: break-word;
+}
