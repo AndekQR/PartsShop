@@ -2,14 +2,13 @@ public with sharing class PA_DataProviderService {
 
     private static final Integer PAGE_SIZE_LOCAL = 10;
 
-    public PA_PaginationResponse searchMoviesLocally(String query, Integer page) {
-        if (page == null || page < 1) {
-            page = 1;
-        }
+    public PA_PaginationResponse searchMoviesLocally(String query, Integer page, Integer pageSize) {
+        page = validatePageData(page, 1);
+        pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
-        Integer offset = (page - 1) * PAGE_SIZE_LOCAL;
+        Integer offset = (page - 1) * pageSize;
         if (String.isBlank(query)) {
-            return getProducts(page);
+            return getProducts(page, pageSize);
         }
         List<Product__c> products = [
                 SELECT Id,Name,
@@ -18,28 +17,28 @@ public with sharing class PA_DataProviderService {
                         Rating__c, Quantity__c
                 FROM Product__c
                 WHERE Name LIKE :query + '%'
-                LIMIT :PAGE_SIZE_LOCAL
+                LIMIT :pageSize
                 OFFSET :offset
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
                 .images();
-        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), PAGE_SIZE_LOCAL);
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
-    public PA_PaginationResponse getProducts(Integer page) {
-        Integer offset = (page - 1) * PAGE_SIZE_LOCAL;
+    public PA_PaginationResponse getProducts(Integer page, Integer pageSize) {
+        Integer offset = (page - 1) * pageSize;
         List<Product__c> products = [
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
                         Rating__c, Quantity__c
                 FROM Product__c
-                LIMIT :PAGE_SIZE_LOCAL
+                LIMIT :pageSize
                 OFFSET :offset
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
                 .images();
-        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), PAGE_SIZE_LOCAL);
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
     public static List<ProductCategory__c> getAllProductCategories() {
@@ -108,12 +107,11 @@ public with sharing class PA_DataProviderService {
         insert favoriteProduct;
     }
 
-    public PA_PaginationResponse latestProducts(Integer page) {
-        if (page == null || page < 1) {
-            page = 1;
-        }
+    public PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
+        page = validatePageData(page, 1);
+        pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
-        Integer offset = (page - 1) * PAGE_SIZE_LOCAL;
+        Integer offset = (page - 1) * pageSize;
         List<Product__c> products = [
                 SELECT Id,Name,
                         Description__c, Price__c,
@@ -121,13 +119,13 @@ public with sharing class PA_DataProviderService {
                         Rating__c, Quantity__c
                 FROM Product__c
                 ORDER BY CreatedDate DESC
-                LIMIT :PAGE_SIZE_LOCAL
+                LIMIT :pageSize
                 OFFSET :offset
 
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
                 .images();
-        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), PAGE_SIZE_LOCAL);
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
     public PA_ProductWrapper getProductDetails(String productId) {
@@ -157,11 +155,34 @@ public with sharing class PA_DataProviderService {
         insert review;
     }
 
-    public List<ProductReview__c> getReviews(String productId) {
-        return [
-                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name
+    private Integer getReviewsSize(String productId) {
+        AggregateResult result = [
+                SELECT count(Id) size
                 FROM ProductReview__c
         ];
+        return (Integer) result.get('size');
+    }
+
+    public PA_PaginationResponse getReviews(String productId, Integer page, Integer pageSize) {
+        page = validatePageData(page, 1);
+        pageSize = validatePageData(pageSize, 12);
+        Integer offset = (page - 1) * pageSize;
+        LIst<ProductReview__c> reviews = [
+                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name
+                FROM ProductReview__c
+                WHERE Product__c = :productId
+                ORDER BY CreatedDate DESC
+                LIMIT :pageSize
+                OFFSET :offset
+        ];
+        return new PA_PaginationResponse(page, getReviewsSize(productId), reviews, pageSize);
+    }
+
+    private Integer validatePageData(Integer currentValue, Integer defaultValue) {
+        if (currentValue == null || currentValue < 1) {
+            return defaultValue;
+        }
+        return currentValue;
     }
 
 }

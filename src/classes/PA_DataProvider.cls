@@ -1,9 +1,9 @@
 public class PA_DataProvider {
 
     @AuraEnabled
-    public static PA_PaginationResponse searchProducts(String searchQuery, Integer page) {
+    public static PA_PaginationResponse searchProducts(String searchQuery, Integer page, Integer pageSize) {
         PA_DataProviderService service = new PA_DataProviderService();
-        return service.searchMoviesLocally(searchQuery, page);
+        return service.searchMoviesLocally(searchQuery, page, pageSize);
     }
 
     @AuraEnabled
@@ -25,9 +25,9 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static PA_PaginationResponse latestProducts(Integer page) {
+    public static PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
         PA_DataProviderService service = new PA_DataProviderService();
-        return service.latestProducts(page);
+        return service.latestProducts(page, pageSize);
     }
 
     @AuraEnabled
@@ -43,8 +43,8 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static List<ProductReview__c> getReviews(String productId) {
+    public static PA_PaginationResponse getReviews(String productId, Integer page, Integer pageSize) {
         PA_DataProviderService service = new PA_DataProviderService();
-        return service.getReviews(productId);
+        return service.getReviews(productId, page, pageSize);
     }
 }

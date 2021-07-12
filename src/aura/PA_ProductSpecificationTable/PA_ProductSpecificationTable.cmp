@@ -14,13 +14,13 @@
             </div>
             <aura:iteration items="{!v.specification}" var="spec">
                 <div class="productSpecsContainer__row">
-                    <div class="productSpecsContainer__row__name">
+                    <div class="productSpecsContainer__row__name slds-truncate">
                         {!spec.Name}
                     </div>
                     <div class="productSpecsContainer__row__delimiter">
                         |
                     </div>
-                    <div class="productSpecsContainer__row__value">
+                    <div class="productSpecsContainer__row__value slds-truncate">
                         {!spec.Value__c}
                     </div>
                 </div>

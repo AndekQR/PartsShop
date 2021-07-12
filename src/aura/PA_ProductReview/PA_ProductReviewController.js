@@ -21,17 +21,10 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 helper.setReviews(component);
+                helper.showToast('Saved', 'Review successfully added.', 'success');
                 component.set('v.newReviewContent', '');
-                let resultsToast = $A.get("e.force:showToast");
-                resultsToast.setParams({
-                    "title": "Saved",
-                    "message": "Review successfully added.",
-                    "type": "success"
-                });
-                resultsToast.fire();
-
             } else {
-                console.log('save error');
+                helper.handleError(response);
             }
         });
         $A.enqueueAction(action);

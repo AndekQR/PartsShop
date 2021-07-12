@@ -1,18 +1,17 @@
 <aura:component description="PA_ProductReview" controller="PA_DataProvider">
     <aura:attribute name="productId" type="String"/>
-    <aura:attribute name="reviews" type="Review__c[]"/>
-    <aura:attribute name="newReviewContent" type="String"/>
-    <aura:attribute name="newReviewRating" type="Integer"/>
+    <aura:attribute name="reviews" type="Review__c[]" access="private"/>
+    <aura:attribute name="newReviewContent" type="String" access="private"/>
+    <aura:attribute name="newReviewRating" type="Integer" access="private"/>
     <aura:handler name="change" value="{!v.productId}" action="{!c.setReviews}"/>
 
     <!--    pagination-->
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <aura:handler name="change" value="{!v.reviews}" action="{!c.change}"/>
 
-    <aura:attribute name="objects_page" type="Object[]"/>
-    <aura:attribute name="pageNumber" type="Integer" default="0"/>
-    <aura:attribute name="pageSize" type="Integer" default="5"/>
-    <aura:attribute name="allPageSize" type="Integer"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="4" access="private"/>
+    <aura:attribute name="allDataSize" type="Integer" access="private"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private"/>
 
 
     <div>
@@ -30,7 +29,7 @@
                     </div>
                 </lightning:tab>
                 <lightning:tab label="Reviews" id="two">
-                    <aura:iteration items="{!v.objects_page}" var="item">
+                    <aura:iteration items="{!v.reviews}" var="item">
                         <div class="reviewItem">
                             <div class="reviewItem__header">
                                 <span>{!item.CreatedBy.Name +' | '+ format(item.CreatedDate)}</span>
@@ -46,13 +45,13 @@
                     </aura:if>
                     <div class="paginationControls">
                         <div class="paginationControls__controls">
-                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 0)}" label="First Page" onclick="{!c.firstPage}"/>
-                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 0)}" label="Previous Page" onclick="{!c.previousPage}"/>
+                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="First Page" onclick="{!c.firstPage}"/>
+                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="Previous Page" onclick="{!c.previousPage}"/>
                             <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="Next Page" onclick="{!c.nextPage}"/>
                             <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="Last Page" onclick="{!c.lastPage}"/>
                         </div>
                         <div class="paginationControls__info">
-                                {! 'Page number: '+(v.pageNumber+1) + ' of '+(v.allPageSize+1)}
+                                {! 'Page number: '+(v.pageNumber) + ' of '+(v.allPageSize)}
                         </div>
                     </div>
                 </lightning:tab>

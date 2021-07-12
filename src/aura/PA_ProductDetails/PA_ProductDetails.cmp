@@ -14,12 +14,14 @@
     <!-- images, title, description, specyfication, price, discount, quantity, rating, comments, category-->
     <div>
         <div class="productDetailsContainer">
+            <div class="productDetailsContainer__category">
+                /{!v.product.product.ProductCategory__r.Name}
+            </div>
             <div class="slds-grid slds-wrap">
                 <div class="productDetailsContainer__imageContainer slds-size_12-of-12 slds-medium-size_6-of-12">
                     <lightning:carousel disableAutoScroll="true">
                         <aura:iteration items="{!v.product.images}" var="imageData">
-                            <lightning:carouselImage src="{!'data:image/png;base64,' + imageData}">
-                            </lightning:carouselImage>
+                            <lightning:carouselImage src="{!'data:image/png;base64,' + imageData}"/>
                         </aura:iteration>
                     </lightning:carousel>
                 </div>
@@ -55,6 +57,9 @@
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__secondContainer">
                                 <div class="productDetailsContainer__detailsContainer__details__price__watchListButton slds-truncate">
                                     Add To Watchlist
+                                </div>
+                                <div class="productDetailsContainer__detailsContainer__details__price__discountButton slds-truncate">
+                                    Apply For Discount
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__cartButton slds-truncate">
                                     Add To Cart

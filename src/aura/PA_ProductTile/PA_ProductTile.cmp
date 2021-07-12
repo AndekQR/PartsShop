@@ -17,15 +17,17 @@
                 <span class="slds-truncate">{!v.product.product.Name}</span>
                 <lightning:formattedNumber value="{!v.product.product.Price__c}" style="currency" currencyCode="USD"/>
                 <div class="tileContainer__watchList">
-                    <div onclick="{!c.addToCart}">
+                    <div class="tileContainer__watchList__inner" onclick="{!c.addToCart}">
                         <lightning:icon
                                 class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
                                 iconName="utility:checkout" size="x-small" alternativeText="icon"/>
+                        <span class="tooltiptext">Add To Cart</span>
                     </div>
-                    <div onclick="{!c.addToWatchList}">
+                    <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
                         <lightning:icon
                                 class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
                                 iconName="utility:pin" size="x-small" alternativeText="icon"/>
+                        <span class="tooltiptext">Add To Watchlist</span>
                     </div>
                 </div>
             </div>

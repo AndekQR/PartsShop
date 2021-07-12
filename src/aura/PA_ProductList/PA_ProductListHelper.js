@@ -85,10 +85,12 @@
 
     setObjectByQuery: function (component, query) {
         let page = component.get('v.pageNumber');
+        let pageSize = component.get('v.pageSize');
         let action = component.get('c.searchProducts');
         action.setParams({
             searchQuery: query,
-            page: page
+            page: page,
+            pageSize: pageSize
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
@@ -105,9 +107,11 @@
     setFullObjectList: function (component) {
         let page = component.get('v.pageNumber');
         let action = component.get('c.searchProducts');
+        let pageSize = component.get('v.pageSize');
         action.setParams({
             searchQuery: null,
-            page: page
+            page: page,
+            pageSize: pageSize
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
@@ -124,8 +128,10 @@
     setLatest: function (component) {
         let page = component.get('v.pageNumber');
         let action = component.get('c.latestProducts');
+        let pageSize = component.get('v.pageSize');
         action.setParams({
-            page: page
+            page: page,
+            pageSize: pageSize
         });
         action.setCallback(this, (response) => {
             let state = response.getState();

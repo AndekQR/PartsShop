@@ -59,3 +59,28 @@
     width: 20px;
 }
 
+
+.THIS .tileContainer__watchList__inner {
+    /*position: relative;*/
+}
+
+.THIS .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    width: 120px;
+    bottom: -20px;
+    left: 50%;
+    margin-left: -60px;
+
+    position: absolute;
+    z-index: 1;
+}
+.THIS .tileContainer__watchList__inner:hover .tooltiptext {
+    visibility: visible;
+}
+
+

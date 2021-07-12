@@ -1,8 +1,8 @@
 <aura:component description="PA_ProductList" implements="forceCommunity:availableForAllPageTypes" controller="PA_DataProvider">
 
     <aura:attribute name="products" type="Object[]" access="private"/>
-    <aura:attribute name="pageNumber" type="Integer" default="0" access="private"/>
-    <aura:attribute name="pageSize" type="Integer" default="10" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="12" access="private"/>
     <aura:attribute name="allPageSize" type="Integer" access="private"/>
     <aura:attribute name="allProductsSize" type="Integer" access="private"/>
 
