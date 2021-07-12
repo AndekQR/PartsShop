@@ -4,7 +4,6 @@
         let productId = helper.getUrlParameter('c__productId');
         // let productId = 'a0B090000002GiVEAU';
         helper.getProductDetails(component, productId);
-        helper.hideSpinner(component);
     },
 
 })

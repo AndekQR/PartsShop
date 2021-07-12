@@ -10,6 +10,7 @@
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
     <!-- images, title, description, specyfication, price, discount, quantity, rating, comments, category-->
     <div>
         <div class="productDetailsContainer">

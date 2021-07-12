@@ -19,8 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
+
 .THIS div[role=tabpanel] {
     height:100%;
 }
@@ -144,8 +144,8 @@
 }
 
 .THIS .secondSection {
-    border: 1px solid rgb(158, 158, 158);
-    border-radius: 5px;
+    /*border: 1px solid rgb(158, 158, 158);*/
+    /*border-radius: 5px;*/
     margin-bottom: 5px;
     padding: 10px;
 }

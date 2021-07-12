@@ -1,14 +1,10 @@
 ({
     getUrlParameter: function (sParam) {
         let sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
+            sURLVariables = sPageURL.split('&'), sParameterName, i;
 
-        console.log('params');
         for (i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
-            console.log(sParameterName);
             if (sParameterName[0] === sParam) {
                 return sParameterName[1] === undefined ? true : sParameterName[1];
             }
@@ -25,10 +21,10 @@
             if(state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 component.set('v.product', returnValue);
-                console.log(JSON.parse(JSON.stringify(returnValue)));
                 let originalPrice = returnValue.product.Price__c;
                 let bestDiscount = returnValue.bestDiscount;
                 this.setPriceAfterDiscount(component, originalPrice, bestDiscount);
+                this.hideSpinner(component);
             } else {
                 this.handleError(response);
             }

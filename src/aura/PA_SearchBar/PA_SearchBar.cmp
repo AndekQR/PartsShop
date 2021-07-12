@@ -4,7 +4,7 @@
     <aura:attribute name="selectRecordName" type="String" access="private"/>
     <aura:attribute name="searchRecords" type="List" access="private"/>
     <aura:attribute name="LoadingText" type="Boolean" default="false"/>
-    <aura:registerEvent name="PA_ProductSelectedEvent" type="c:PA_ProductSelectedEvent"/>
+    <c:PA_Navigation aura:id="navigation"/>
 
     <div>
         <div class="slds-form-element ">
@@ -77,7 +77,6 @@
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

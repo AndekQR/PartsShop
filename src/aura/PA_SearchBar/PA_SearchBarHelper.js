@@ -55,14 +55,6 @@
         component.set('v.selectRecordId', '');
     },
 
-    fireProductSelectedEvent: function (component, productId) {
-        let event = $A.get('e.c:PA_ProductSelectedEvent');
-        event.setParams({
-            productId: productId
-        });
-        event.fire();
-    },
-
     fireShowSearchListEvent: function (component) {
         let query = component.get('v.selectRecordName');
         let event = $A.get('e.c:PA_ShowSearchListEvent');
@@ -70,5 +62,12 @@
             query: query
         });
         event.fire();
+    },
+
+    toProduct: function(component) {
+        let productId = component.get('v.selectRecordId');
+        let navComponent = component.find('navigation');
+        navComponent.navigate('/product-detail', productId);
     }
 })
+

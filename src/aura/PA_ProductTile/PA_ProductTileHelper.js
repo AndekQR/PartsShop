@@ -39,18 +39,9 @@
         }
     },
 
-    openProductDetailsPage: function(component) {
-        let product = component.get('v.product').product;
-        const pageReference = {
-            type: "comm__namedPage",
-            attributes: {
-                name: "Product_Detail__c"
-            },
-            state: {
-                c__productId: product.Id
-            }
-        };
-        const navService = component.find('navService');
-        navService.navigate(pageReference);
+    toProductDetails: function(component) {
+        let productId = component.get('v.product').product.Id;
+        let navComponent = component.find('navigation');
+        navComponent.navigate('/product-detail', productId);
     }
 })

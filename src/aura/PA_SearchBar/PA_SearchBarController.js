@@ -29,7 +29,8 @@
         helper.removeResultBox(component);
         component.set('v.selectRecordName', productName);
         component.set('v.selectRecordId', productId);
-        helper.fireProductSelectedEvent(component, productId);
+        // helper.openProductDetailsPage(component);
+        helper.toProduct(component);
         helper.clearSelected(component);
     },
 })

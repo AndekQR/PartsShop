@@ -13,6 +13,6 @@
         event.stopPropagation();
     },
     productDetails: function(component, event, helper) {
-        helper.openProductDetailsPage(component);
+        helper.toProductDetails(component);
     },
 })
