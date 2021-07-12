@@ -2,15 +2,20 @@
 }
 
 .THIS .productSpecsContainer {
+    border: 1px solid rgb(158, 158, 158);
+    border-radius: 5px;
+}
 
+.THIS .productSpecsContainer .productSpecsContainer__title {
+    font-weight: 500;
+    background-color: #06d6a0;
 }
 
 .THIS .productSpecsContainer__row {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    border: 1px solid rgb(158, 158, 158);
-    border-radius: 5px;
+    border-bottom: 1px solid rgb(158, 158, 158);
     font-size: 16px;
     font-weight: 500;
     box-sizing: border-box;

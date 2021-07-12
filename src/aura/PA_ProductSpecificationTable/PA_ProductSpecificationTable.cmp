@@ -4,7 +4,7 @@
 
     <div>
         <div class="productSpecsContainer">
-            <div style="font-weight: bold;" class="productSpecsContainer__row">
+            <div class="productSpecsContainer__row productSpecsContainer__title">
                 <div class="productSpecsContainer__row__name">
                     Name
                 </div>
