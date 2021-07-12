@@ -35,4 +35,16 @@ public class PA_DataProvider {
         PA_DataProviderService service = new PA_DataProviderService();
         return service.getProductDetails(productId);
     }
+
+    @AuraEnabled
+    public static void saveReview(String content, String productId, Integer rating) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        service.saveReview(content, productId, rating);
+    }
+
+    @AuraEnabled
+    public static List<ProductReview__c> getReviews(String productId) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        return service.getReviews(productId);
+    }
 }

@@ -22,6 +22,5 @@
 
     lastPage: function (component, event, helper) {
         helper.setLastPage(component);
-
     }
 })

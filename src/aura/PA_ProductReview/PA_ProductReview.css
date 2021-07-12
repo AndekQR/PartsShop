@@ -1,0 +1,52 @@
+.THIS {
+    margin-left: 10px;
+}
+
+.THIS .reviewContainer {
+    border-top: 1px solid #D4D4D4;
+}
+
+.THIS .inputReviewTabContainer {
+    margin-top: -20px !important;
+}
+
+.THIS .reviewItem {
+    border: 1px solid #f4f4f4;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .reviewItem__header {
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.THIS .reviewItem__body {
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.THIS .inputReviewTabContainer__footer {
+    display: flex;
+}
+
+.THIS .paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.THIS .paginationControls__info {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.THIS .paginationControls__controls {
+    display: flex;
+    justify-content: flex-end;
+}

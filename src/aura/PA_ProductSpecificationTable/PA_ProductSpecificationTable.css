@@ -1,0 +1,36 @@
+.THIS {
+}
+
+.THIS .productSpecsContainer {
+
+}
+
+.THIS .productSpecsContainer__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid rgb(158, 158, 158);
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+.THIS .productSpecsContainer__row:not(:first-child) {
+    border-top: none;
+}
+
+.THIS .productSpecsContainer__row__name {
+    text-align: center;
+    flex-grow: 5;
+}
+
+.THIS .productSpecsContainer__row__delimiter {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.THIS .productSpecsContainer__row__value {
+    text-align: center;
+    flex-grow: 5;
+}

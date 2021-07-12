@@ -1,0 +1,31 @@
+<aura:component description="PA_ProductSpecificationTable">
+
+    <aura:attribute name="specification" type="Object[]"/>
+
+    <div>
+        <div class="productSpecsContainer">
+            <div style="font-weight: bold;" class="productSpecsContainer__row">
+                <div class="productSpecsContainer__row__name">
+                    Name
+                </div>
+                <div class="productSpecsContainer__row__value">
+                    Value
+                </div>
+            </div>
+            <aura:iteration items="{!v.specification}" var="spec">
+                <div class="productSpecsContainer__row">
+                    <div class="productSpecsContainer__row__name">
+                        {!spec.Name}
+                    </div>
+                    <div class="productSpecsContainer__row__delimiter">
+                        |
+                    </div>
+                    <div class="productSpecsContainer__row__value">
+                        {!spec.Value__c}
+                    </div>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+
+</aura:component>

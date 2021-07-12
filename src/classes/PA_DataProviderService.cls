@@ -149,4 +149,19 @@ public with sharing class PA_DataProviderService {
         return builder.build().get(0);
     }
 
+    public void saveReview(String content, String productId, Integer rating) {
+        ProductReview__c review = new ProductReview__c();
+        review.Content__c = content;
+        review.Product__c = productId;
+        review.Rating__c = rating;
+        insert review;
+    }
+
+    public List<ProductReview__c> getReviews(String productId) {
+        return [
+                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name
+                FROM ProductReview__c
+        ];
+    }
+
 }
