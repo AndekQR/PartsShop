@@ -1,11 +1,11 @@
-<aura:component description="PA_ProductList" implements="forceCommunity:availableForAllPageTypes" controller="PA_DataProvider">
+<aura:component description="PA_ProductList" implements="forceCommunity:availableForAllPageTypes"
+                controller="PA_DataProvider">
 
     <aura:attribute name="products" type="Object[]" access="private"/>
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
     <aura:attribute name="pageSize" type="Integer" default="12" access="private"/>
     <aura:attribute name="allPageSize" type="Integer" access="private"/>
     <aura:attribute name="allProductsSize" type="Integer" access="private"/>
-
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
     <div>
@@ -18,17 +18,17 @@
                 </div>
                 <div class="paginationControls">
                     <div class="paginationControls__controls">
-                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="First Page"
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}"
                                           onclick="{!c.firstPage}"/>
-                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="Previous Page"
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.previous_page}"
                                           onclick="{!c.previousPage}"/>
                         <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
-                                          label="Next Page" onclick="{!c.nextPage}"/>
+                                          label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
                         <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
-                                          label="Last Page" onclick="{!c.lastPage}"/>
+                                          label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
                     </div>
                     <div class="paginationControls__info">
-                            {! 'Page number: '+(v.pageNumber) + ' of '+(v.allPageSize)}
+                            {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
                     </div>
                 </div>
             </div>

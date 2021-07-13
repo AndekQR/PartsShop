@@ -13,7 +13,8 @@
 
                     <div class=" slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aura:id="resultBox"
                          aria-expanded="false" aria-haspopup="listbox" role="combobox">
-                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon slds-input-has-icon_left-right"
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon
+                                slds-input-has-icon_left-right"
                              role="none">
 
                             <span onkeydown="{!c.onKeyPress}">
@@ -21,12 +22,13 @@
                                              label=""
                                              name="searchText"
                                              onchange="{!c.searchField}"
-                                             placeholder="Search products..."
+                                             placeholder="{!$Label.c.search_bar_description}"
                                              value="{!v.selectRecordName}"
                                              class="leftspace"/>
                             </span>
                             <aura:if isTrue="{!empty(v.selectRecordName)}">
-                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon
+                                                slds-input__icon_right">
                                         <lightning:icon
                                                 class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
                                                 iconName="utility:search" size="x-small" alternativeText="icon"/>
@@ -35,7 +37,8 @@
                                     <button class="slds-input__icon slds-input__icon_right slds-button slds-button_icon"
                                             onclick="{!c.resetData}">
                                         <lightning:icon
-                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default customCancelButton"
+                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default
+                                                        customCancelButton"
                                                 iconName="utility:clear" size="x-small" alternativeText="icon"/>
                                     </button>
                                 </aura:set>
@@ -61,18 +64,21 @@
                                                 </span>
                                             </div>
                                             <div class="slds-media__body searchRecordBody">
-                                                <span class="searchRecordBody__item searchRecordBody__item--primary slds-listbox__option-text slds-listbox__option-text_entity">{!record.product.Name}</span>
+                                                <span class="searchRecordBody__item searchRecordBody__item--primary
+                                                            slds-listbox__option-text slds-listbox__option-text_entity">
+                                                        {!record.product.Name}
+                                                </span>
                                             </div>
                                         </div>
                                     </li>
                                 </aura:iteration>
                                 <aura:if isTrue="{!and(v.searchRecords.length == 0 , !v.LoadingText)}">
                                     <span class="noResultsText">
-                                        No result found.
+                                        {!$Label.c.no_result_found}
                                     </span>
                                 </aura:if>
                                 <aura:if isTrue="{!v.LoadingText}">
-                                    Loading...
+                                    {!$Label.c.loading}
                                 </aura:if>
                             </ul>
                         </div>

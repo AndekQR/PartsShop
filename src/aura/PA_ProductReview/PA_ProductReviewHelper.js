@@ -1,5 +1,5 @@
 ({
-    setReviews: function(component) {
+    setReviews: function (component) {
         let pageNumber = component.get('v.pageNumber');
         let pageSize = component.get('v.pageSize');
         let productId = component.get('v.productId');
@@ -11,7 +11,7 @@
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue);
                 this.formatDates(component);
@@ -22,15 +22,15 @@
         $A.enqueueAction(action);
     },
 
-    setPaginationData: function(component, returnValue) {
+    setPaginationData: function (component, returnValue) {
         component.set('v.reviews', returnValue.data);
         component.set('v.allDataSize', returnValue.allProductsSize);
         this.setAllPageSize(component);
     },
 
-    formatDates: function(component) {
+    formatDates: function (component) {
         let allReviews = component.get('v.reviews');
-        if(allReviews != null) {
+        if (allReviews != null) {
             allReviews.forEach(element => {
                 element.CreatedDate = $A.localizationService.formatDateTime(element.CreatedDate);
             })
@@ -42,7 +42,7 @@
         let pageSize = component.get('v.pageSize');
         let allDataSize = component.get('v.allDataSize');
         let number = (Math.ceil(allDataSize / pageSize));
-        if(number < 0) {
+        if (number < 0) {
             component.set('v.allPageSize', 0);
         } else {
             component.set('v.allPageSize', number);
@@ -54,7 +54,7 @@
         this.setReviews(component);
     },
 
-    setLastPage: function(component) {
+    setLastPage: function (component) {
         let allPageSize = component.get('v.allPageSize');
         component.set('v.pageNumber', (allPageSize));
         this.setReviews(component);
@@ -63,7 +63,6 @@
     setNextPage: function (component) {
         let pageNumber = component.get('v.pageNumber');
         let allPageSize = component.get('v.allPageSize');
-
         if (pageNumber < allPageSize) {
             component.set('v.pageNumber', (pageNumber + 1));
             this.setReviews(component);
@@ -72,8 +71,7 @@
 
     setPreviousPage: function (component) {
         let pageNumber = component.get('v.pageNumber');
-
-        if(pageNumber > 1) {
+        if (pageNumber > 1) {
             component.set('v.pageNumber', (pageNumber - 1));
             this.setReviews(component);
         }
@@ -101,4 +99,26 @@
         }
     },
 
+    saveReview: function (component) {
+        let content = component.get('v.newReviewContent');
+        let rating = component.get('v.newReviewRating');
+        let productId = component.get('v.productId');
+        let action = component.get('c.saveReview');
+        action.setParams({
+            content: content,
+            productId: productId,
+            rating: rating
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if (state === 'SUCCESS') {
+                this.setReviews(component);
+                this.showToast('Saved', 'Review successfully added.', 'success');
+                component.set('v.newReviewContent', '');
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
+    }
 })

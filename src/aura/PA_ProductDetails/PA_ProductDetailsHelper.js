@@ -53,7 +53,6 @@
             afterDiscount = Math.round(afterDiscount * 100) / 100;
             component.set('v.priceAfterDiscount', afterDiscount);
         }
-
     },
 
     showSpinner: function (component) {

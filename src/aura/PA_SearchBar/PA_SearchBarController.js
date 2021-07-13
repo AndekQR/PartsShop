@@ -1,15 +1,15 @@
 ({
-    searchField: function(component, event, helper) {
-        let searchQuery = event.getSource().get('v.value');
+    searchField: function (component, event, helper) {
+        const searchQuery = event.getSource().get('v.value');
         helper.searchRecords(component, searchQuery);
     },
 
     onKeyPress: function (component, event, helper) {
-        let pressedKeyName = event.key;
+        const pressedKeyName = event.key;
         switch (pressedKeyName) {
             case 'Enter': {
                 helper.fireShowSearchListEvent(component);
-            }
+            }/* falls through */
             case 'Escape': {
                 helper.removeResultBox(component);
                 helper.clearSelected(component);
@@ -29,8 +29,7 @@
         helper.removeResultBox(component);
         component.set('v.selectRecordName', productName);
         component.set('v.selectRecordId', productId);
-        // helper.openProductDetailsPage(component);
         helper.toProduct(component);
         helper.clearSelected(component);
-    },
+    }
 })

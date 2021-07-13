@@ -4,11 +4,9 @@
         let currentRating = component.get("v.value");
         let readOnly = component.get("v.readonly");
         let maxRating = 5;
-
         let callback = function(rating) {
             component.set('v.value', rating);
         };
-
         component.ratingObj = rating(domEl, currentRating, maxRating, callback, readOnly);
     },
 

@@ -43,5 +43,16 @@
         let productId = component.get('v.product').product.Id;
         let navComponent = component.find('navigation');
         navComponent.navigate('/product-detail', productId);
-    }
+    },
+
+    setPriceAfterDiscount: function(component, originalPrice, bestDiscount) {
+        if(bestDiscount == null) {
+            component.set('v.priceAfterDiscount', originalPrice);
+        } else {
+            let percent = bestDiscount.Size__c / 100;
+            let afterDiscount = originalPrice - (originalPrice * percent);
+            afterDiscount = Math.round(afterDiscount * 100) / 100;
+            component.set('v.priceAfterDiscount', afterDiscount);
+        }
+    },
 })

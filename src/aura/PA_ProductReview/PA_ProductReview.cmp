@@ -1,34 +1,31 @@
 <aura:component description="PA_ProductReview" controller="PA_DataProvider">
+
     <aura:attribute name="productId" type="String"/>
     <aura:attribute name="reviews" type="Review__c[]" access="private"/>
     <aura:attribute name="newReviewContent" type="String" access="private"/>
     <aura:attribute name="newReviewRating" type="Integer" access="private"/>
-    <aura:handler name="change" value="{!v.productId}" action="{!c.setReviews}"/>
-
-    <!--    pagination-->
-    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
     <aura:attribute name="pageSize" type="Integer" default="4" access="private"/>
     <aura:attribute name="allDataSize" type="Integer" access="private"/>
     <aura:attribute name="allPageSize" type="Integer" access="private"/>
-
+    <aura:handler name="change" value="{!v.productId}" action="{!c.setReviews}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
     <div>
         <div class="reviewContainer">
             <lightning:tabset selectedTabId="two">
-                <lightning:tab label="Write Review" id="one">
+                <lightning:tab label="{!$Label.c.write_review}" id="one">
                     <div class="inputReviewTabContainer">
-                        <lightning:textarea placeholder="Your Review... Don't forget about rating stars!" label="" aura:id="description"
+                        <lightning:textarea placeholder="{!$Label.c.review_box_description}" label="" aura:id="description"
                                             value="{!v.newReviewContent}"/>
                         <div class="inputReviewTabContainer__footer">
-                            <lightning:button label="Submit" iconName="utility:save" variant="brand"
+                            <lightning:button label="{!$Label.c.submit}" iconName="utility:save" variant="brand"
                                               onclick="{!c.onSave}"/>
                             <c:PA_FiveStarRating value="{!v.newReviewRating}" readonly="false"/>
                         </div>
                     </div>
                 </lightning:tab>
-                <lightning:tab label="Reviews" id="two">
+                <lightning:tab label="{!$Label.c.reviews}" id="two">
                     <aura:iteration items="{!v.reviews}" var="item">
                         <div class="reviewItem">
                             <div class="reviewItem__header">
@@ -41,17 +38,17 @@
                         </div>
                     </aura:iteration>
                     <aura:if isTrue="{!empty(v.reviews)}">
-                        No Reviews
+                        {!$Label.c.no_reviews}
                     </aura:if>
                     <div class="paginationControls">
                         <div class="paginationControls__controls">
-                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="First Page" onclick="{!c.firstPage}"/>
-                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="Previous Page" onclick="{!c.previousPage}"/>
-                            <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="Next Page" onclick="{!c.nextPage}"/>
-                            <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="Last Page" onclick="{!c.lastPage}"/>
+                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}" onclick="{!c.firstPage}"/>
+                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.previous_page}" onclick="{!c.previousPage}"/>
+                            <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
+                            <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
                         </div>
                         <div class="paginationControls__info">
-                                {! 'Page number: '+(v.pageNumber) + ' of '+(v.allPageSize)}
+                                {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
                         </div>
                     </div>
                 </lightning:tab>

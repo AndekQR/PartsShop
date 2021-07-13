@@ -52,7 +52,6 @@
     setNextPage: function (component) {
         let pageNumber = component.get('v.pageNumber');
         let allPageSize = component.get('v.allPageSize');
-
         if (pageNumber < allPageSize) {
             component.set('v.pageNumber', (pageNumber + 1));
             this.refreshData(component);
@@ -61,7 +60,6 @@
 
     setPreviousPage: function (component) {
         let pageNumber = component.get('v.pageNumber');
-
         if (pageNumber > 1) {
             component.set('v.pageNumber', (pageNumber - 1));
             this.refreshData(component);

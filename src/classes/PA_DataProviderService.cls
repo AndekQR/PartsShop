@@ -21,7 +21,8 @@ public with sharing class PA_DataProviderService {
                 OFFSET :offset
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
-                .images();
+                .images()
+                .discount();
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
@@ -37,7 +38,8 @@ public with sharing class PA_DataProviderService {
                 OFFSET :offset
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
-                .images();
+                .images()
+                .discount();
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
@@ -124,7 +126,8 @@ public with sharing class PA_DataProviderService {
 
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
-                .images();
+                .images()
+                .discount();
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 

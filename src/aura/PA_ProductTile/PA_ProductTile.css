@@ -8,6 +8,7 @@
     padding: 10px;
     border: 1px solid #e6e6e6;
     border-radius: 5px;
+    min-height: 253px;
 }
 
 .THIS .tileContainer:hover {
@@ -40,7 +41,7 @@
 .THIS .tileContainer__watchList {
     display: flex;
     justify-content: space-between;
-    padding-top: 20px;
+    padding-top: 10px;
     padding-left: 5px;
     padding-right: 5px;
     align-content: center;
@@ -49,7 +50,6 @@
 }
 
 .THIS .tileContainer__watchList svg:hover {
-    /*border: 1px solid #e6e6e6;*/
     height: 20px;
     width: 20px;
 }
@@ -75,12 +75,26 @@
     bottom: -20px;
     left: 50%;
     margin-left: -60px;
-
     position: absolute;
     z-index: 1;
 }
 .THIS .tileContainer__watchList__inner:hover .tooltiptext {
     visibility: visible;
+}
+
+.THIS .tileContainer__text__price {
+   text-align: right;
+    font-weight: bold;
+}
+
+.THIS .tileContainer__text__price__beforeDiscount {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 24px;
+    margin-right: 8px;
+    text-decoration: line-through;
+    color: rgb(148, 148, 148);
+    text-align: left;
 }
 
 
