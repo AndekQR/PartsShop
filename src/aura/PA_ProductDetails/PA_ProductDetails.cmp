@@ -8,10 +8,8 @@
     ]"/>
     <aura:attribute name="quantity" type="Integer" default="1" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
-
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
-    <!-- images, title, description, specification, price, discount, quantity, rating, comments, category-->
     <div>
         <div class="productDetailsContainer">
             <div class="productDetailsContainer__category">

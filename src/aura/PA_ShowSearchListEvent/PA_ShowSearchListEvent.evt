@@ -1,3 +1,0 @@
-<aura:event type="APPLICATION" description="PA_ShowSearchListEvent">
-    <aura:attribute name="query" type="String"/>
-</aura:event>

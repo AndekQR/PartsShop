@@ -1,6 +1,6 @@
 <aura:component description="PA_Navigation">
-    <aura:method name="navigate" action="{!c.onNavigate}">
-        <aura:attribute name="address" type="String"/>
+    <aura:method name="navigateToProductDetails" action="{!c.toProductDetails}">
         <aura:attribute name="productId" type="String"/>
     </aura:method>
+    <aura:method name="navigateToCart" action="{!c.toCart}"/>
 </aura:component>

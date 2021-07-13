@@ -42,7 +42,7 @@
     toProductDetails: function(component) {
         let productId = component.get('v.product').product.Id;
         let navComponent = component.find('navigation');
-        navComponent.navigate('/product-detail', productId);
+        navComponent.navigateToProductDetails(productId);
     },
 
     setPriceAfterDiscount: function(component, originalPrice, bestDiscount) {

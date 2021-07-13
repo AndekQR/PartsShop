@@ -1,0 +1,13 @@
+<aura:component description="PA_Cart" implements="forceCommunity:availableForAllPageTypes" controller="PA_DataProvider">
+
+    <div>
+        <div class="cartContainer slds-grid slds-wrap">
+            <div class="cartContainer__leftSection slds-size_12-of-12 slds-medium-size_8-of-12">
+
+            </div>
+            <div class="cartContainer__rightSection slds-size_12-of-12 slds-medium-size_4-of-12">
+
+            </div>
+        </div>
+    </div>
+</aura:component>

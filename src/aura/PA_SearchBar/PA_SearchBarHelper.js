@@ -55,19 +55,10 @@
         component.set('v.selectRecordId', '');
     },
 
-    fireShowSearchListEvent: function (component) {
-        let query = component.get('v.selectRecordName');
-        let event = $A.get('e.c:PA_ShowSearchListEvent');
-        event.setParams({
-            query: query
-        });
-        event.fire();
-    },
-
     toProduct: function(component) {
         let productId = component.get('v.selectRecordId');
         let navComponent = component.find('navigation');
-        navComponent.navigate('/product-detail', productId);
+        navComponent.navigateToProductDetails(productId);
     }
 })
 

@@ -1,7 +1,7 @@
 ({
     refreshData: function (component) {
         this.showSpinner(component);
-        let whatToSow = this.getUrlParameter('whatToShow');
+        let whatToSow = this.getUrlParameter('listDataType');
         switch (whatToSow) {
             case 'searchList': {
                 let query = this.getUrlParameter('query');
@@ -10,6 +10,10 @@
             }
             case 'fullList': {
                 this.setFullObjectList(component);
+                break;
+            }
+            case 'cart': {
+
                 break;
             }
             default: {

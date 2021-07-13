@@ -8,7 +8,7 @@
         const pressedKeyName = event.key;
         switch (pressedKeyName) {
             case 'Enter': {
-                helper.fireShowSearchListEvent(component);
+
             }/* falls through */
             case 'Escape': {
                 helper.removeResultBox(component);
