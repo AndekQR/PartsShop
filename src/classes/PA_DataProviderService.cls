@@ -54,16 +54,16 @@ public with sharing class PA_DataProviderService {
     public void saveProduct(Product__c product, Map<String, String> imagesData,
             Map<String, String> specs) {
         insert product;
-        List<ProductSpecyfication__c> productSpecyfications = new List<ProductSpecyfication__c>();
+        List<ProductSpecification__c> productSpecifications = new List<ProductSpecification__c>();
         for (String key : specs.keySet()) {
-            ProductSpecyfication__c specyfication = new ProductSpecyfication__c();
-            specyfication.Name = key.trim();
-            specyfication.Value__c = specs.get(key).trim();
-            specyfication.Product__c = product.Id;
-            productSpecyfications.add(specyfication);
+            ProductSpecification__c specification = new ProductSpecification__c();
+            specification.Name = key.trim();
+            specification.Value__c = specs.get(key).trim();
+            specification.Product__c = product.Id;
+            productSpecifications.add(specification);
         }
         this.saveImages(imagesData, product.Id);
-        insert productSpecyfications;
+        insert productSpecifications;
     }
 
     private void saveImages(Map<String, String> imagesData, String imagesOwnerId) {

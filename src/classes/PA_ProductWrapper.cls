@@ -4,7 +4,7 @@ public class PA_ProductWrapper {
     @AuraEnabled
     public List<String> images { get; set; }
     @AuraEnabled
-    public List<ProductSpecyfication__c> specyfications { get; set; }
+    public List<ProductSpecification__c> specifications { get; set; }
     @AuraEnabled
     public ProductDiscount__c bestDiscount { get; set; }
 }

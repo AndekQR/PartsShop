@@ -1,5 +1,4 @@
 ({
-
     setProductCategories: function (component) {
         let product = component.get('v.newProduct');
         let action = component.get('c.getAllProductCategories');
@@ -32,7 +31,7 @@
     },
 
     validateFields: function (component) {
-       return component.find('productField').reduce(function (validSoFar, inputCmp) {
+        return component.find('productField').reduce(function (validSoFar, inputCmp) {
             inputCmp.showHelpMessageIfInvalid();
             let isValid = inputCmp.get('v.validity').valid;
             return validSoFar && isValid;
@@ -85,11 +84,13 @@
         component.set('v.productImages', []);
         component.set('v.productSpecifications', []);
         component.set('v.image', '');
-        component.set('v.specyfication', {});
+        component.set('v.specification', {});
     },
 
     readFile: function (component, helper, file) {
-        if (!file) return;
+        if (!file) {
+            return;
+        }
         if (!file.type.match(/(image.*)/)) {
             this.showToast('Error', 'Image file not supported', 'error');
             return;
@@ -115,6 +116,5 @@
     hideSpinner: function (component) {
         let spinnerComponent = component.find('spinner');
         spinnerComponent.turnOff();
-    },
-
+    }
 })

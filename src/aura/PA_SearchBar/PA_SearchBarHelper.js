@@ -1,6 +1,6 @@
 ({
     searchRecords: function (component, query) {
-        if (query == null || query == '') {
+        if (query === null || query === '') {
             return;
         }
         component.set('v.selectRecordName', query);

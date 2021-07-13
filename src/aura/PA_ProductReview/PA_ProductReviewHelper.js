@@ -30,7 +30,7 @@
 
     formatDates: function (component) {
         let allReviews = component.get('v.reviews');
-        if (allReviews != null) {
+        if (allReviews !== null) {
             allReviews.forEach(element => {
                 element.CreatedDate = $A.localizationService.formatDateTime(element.CreatedDate);
             })

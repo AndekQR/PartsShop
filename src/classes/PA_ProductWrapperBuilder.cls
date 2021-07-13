@@ -54,19 +54,19 @@ public class PA_ProductWrapperBuilder {
     }
 
     public PA_ProductWrapperBuilder specifications() {
-        List<ProductSpecyfication__c> specs = getProductsSpecyfications(getProductsIds());
+        List<ProductSpecification__c> specs = getProductsSpecifications(getProductsIds());
         for (PA_ProductWrapper wrapper : wrappers) {
             String productId = wrapper.product.Id;
-            wrapper.specyfications = findProductSpecyfications(specs, productId);
+            wrapper.specifications = findProductSpecifications(specs, productId);
         }
         return this;
     }
 
-    private List<ProductSpecyfication__c> findProductSpecyfications(
-            List<ProductSpecyfication__c> specs,
+    private List<ProductSpecification__c> findProductSpecifications(
+            List<ProductSpecification__c> specs,
             String productId) {
-        List<ProductSpecyfication__c> result = new List<ProductSpecyfication__c>();
-        for (ProductSpecyfication__c spec : specs) {
+        List<ProductSpecification__c> result = new List<ProductSpecification__c>();
+        for (ProductSpecification__c spec : specs) {
             if (spec.Product__c == productId) {
                 result.add(spec);
             }
@@ -74,10 +74,10 @@ public class PA_ProductWrapperBuilder {
         return result;
     }
 
-    private List<ProductSpecyfication__c> getProductsSpecyfications(List<String> productIds) {
+    private List<ProductSpecification__c> getProductsSpecifications(List<String> productIds) {
         return [
                 SELECT Id, Name, Value__c, Product__c
-                FROM ProductSpecyfication__c
+                FROM ProductSpecification__c
                 WHERE Product__c IN :productIds
         ];
     }

@@ -11,7 +11,7 @@
 
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
-    <!-- images, title, description, specyfication, price, discount, quantity, rating, comments, category-->
+    <!-- images, title, description, specification, price, discount, quantity, rating, comments, category-->
     <div>
         <div class="productDetailsContainer">
             <div class="productDetailsContainer__category">
@@ -32,7 +32,7 @@
                         </div>
                         <div class="slds-size_8-of-12">
                             <div class="productDetailsContainer__detailsContainer__details__specs">
-                                <c:PA_ProductSpecificationTable specification="{!v.product.specyfications}"/>
+                                <c:PA_ProductSpecificationTable specification="{!v.product.specifications}"/>
                             </div>
                         </div>
                         <div class="productDetailsContainer__detailsContainer__details__priceContainer slds-size_4-of-12">

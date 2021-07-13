@@ -10,13 +10,11 @@
         <div class="slds-form-element ">
             <div class="slds-form-element__control ">
                 <div class="slds-combobox_container ">
-
                     <div class=" slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click" aura:id="resultBox"
                          aria-expanded="false" aria-haspopup="listbox" role="combobox">
                         <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon
                                 slds-input-has-icon_left-right"
                              role="none">
-
                             <span onkeydown="{!c.onKeyPress}">
                             <lightning:input aura:id="userinput"
                                              label=""
@@ -44,7 +42,6 @@
                                 </aura:set>
                             </aura:if>
                         </div>
-
                         <div id="listbox-id-1"
                              class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid dropdown"
                              role="listbox">
@@ -78,7 +75,9 @@
                                     </span>
                                 </aura:if>
                                 <aura:if isTrue="{!v.LoadingText}">
-                                    {!$Label.c.loading}
+                                    <span class="slds-m-around_xx-small">
+                                            {!$Label.c.loading}
+                                    </span>
                                 </aura:if>
                             </ul>
                         </div>
@@ -87,5 +86,4 @@
             </div>
         </div>
     </div>
-
 </aura:component>

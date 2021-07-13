@@ -4,7 +4,7 @@
     },
 
     onSaveProduct: function (component, event, helper) {
-        if(helper.validateFields(component)) {
+        if (helper.validateFields(component)) {
             helper.saveProduct(component);
         }
     },
@@ -15,14 +15,13 @@
         allImages.push(newImage);
         component.set('v.productImages', allImages);
         component.set('v.image', {});
-
     },
 
     onSpecificationAdd: function (component, event, helper) {
-        let newSpecification = component.get('v.specyfication');
+        let newSpecification = component.get('v.specification');
         let allSpecs = component.get('v.productSpecifications');
         allSpecs.push(newSpecification);
-        component.set('v.specyfication', {});
+        component.set('v.specification', {});
         component.set('v.productSpecifications', allSpecs);
     },
 
