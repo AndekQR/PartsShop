@@ -11,25 +11,24 @@
     },
 
     addProductToFavorites: function (component) {
-        // let product = component.get('v.product');
-        // let action = component.get('c.addToFavorites');
-        // action.setParams({
-        //     productId: product.Id
-        // });
-        // action.setCallback(this, (response) => {
-        //     let state = response.getState();
-        //     if (state === 'SUCCESS') {
-        //         this.showToast('Success', 'Product went to your favorites!', 'success');
-        //     } else {
-        //         this.handleError(response);
-        //         this.showToast('Error', 'Something went wrong. Try again.', 'error');
-        //     }
-        // });
-        // $A.enqueueAction(action);
+        let product = component.get('v.productWrapper').product;
+        let action = component.get('c.addToFavorites');
+        action.setParams({
+            productId: product.Id
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if (state === 'SUCCESS') {
+                this.showToast('Success', 'Product went to your favorites!', 'success');
+            } else {
+                this.handleError(response);
+                this.showToast('Warning', response.getError()[0].message, 'warning');
+            }
+        });
+        $A.enqueueAction(action);
     },
 
     removeProductFromCart: function (component) {
-        console.log('remove from cart');
         const productId = component.get('v.productWrapper').product.Id;
         let action = component.get('c.removeFromCart');
         action.setParams({
@@ -82,7 +81,7 @@
 
     updateProductQuantity: function (component) {
         let productWrapper = component.get('v.productWrapper');
-        if(productWrapper != null) {
+        if (productWrapper != null) {
             let action = component.get('c.updateProductCartQuantity');
             action.setParams({
                 productId: productWrapper.product.Id,

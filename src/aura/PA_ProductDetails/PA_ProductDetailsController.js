@@ -7,7 +7,7 @@
     },
 
     addToWatchlist: function(component, event, helper) {
-
+        helper.addProductToFavorites(component);
     },
 
     applyForDiscount: function(component, event, helper) {

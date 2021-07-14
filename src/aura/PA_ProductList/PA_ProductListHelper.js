@@ -12,6 +12,10 @@
                 this.setFullObjectList(component);
                 break;
             }
+            case '/s/watch-list': {
+                this.setFavorites(component);
+                break;
+            }
             default: {
                 this.setLatest(component);
             }
@@ -134,6 +138,27 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
+                this.setPaginationData(component, returnValue)
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    
+    setFavorites: function (component) {
+        let page = component.get('v.pageNumber');
+        let pageSize = component.get('v.pageSize');
+        let action = component.get('c.getFavorites');
+        action.setParams({
+            page: page,
+            pageSize: pageSize
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                let returnValue = response.getReturnValue();
+                console.log(JSON.parse(JSON.stringify(returnValue)));
                 this.setPaginationData(component, returnValue)
             } else {
                 this.handleError(response);

@@ -92,4 +92,22 @@
         });
         resultsToast.fire();
     },
+
+    addProductToFavorites: function (component) {
+        let product = component.get('v.product').product;
+        let action = component.get('c.addToFavorites');
+        action.setParams({
+            productId: product.Id
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if (state === 'SUCCESS') {
+                this.showToast('Success', 'Product went to your favorites!', 'success');
+            } else {
+                this.handleError(response);
+                this.showToast('Warning', response.getError()[0].message, 'warning');
+            }
+        });
+        $A.enqueueAction(action);
+    },
 })

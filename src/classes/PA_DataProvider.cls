@@ -26,6 +26,18 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
+    public static void removeFromFavorites(String productId) {
+        PA_FavoriteService favoriteService = new PA_FavoriteService();
+        favoriteService.removeFromFavorites(productId);
+    }
+
+    @AuraEnabled
+    public static PA_PaginationResponse getFavorites(Integer page, Integer pageSize) {
+        PA_FavoriteService favoriteService = new PA_FavoriteService();
+        return favoriteService.getFavorites(page, pageSize);
+    }
+
+    @AuraEnabled
     public static PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
         PA_DataProviderService service = new PA_DataProviderService();
         return service.latestProducts(page, pageSize);

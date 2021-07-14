@@ -13,7 +13,7 @@
             <div class="personListContainer">
                 <div class="personListContainer__body">
                     <aura:iteration items="{!v.products}" var="product">
-                        <c:PA_ProductTile product="{!product}"/>
+                        <c:PA_ProductTile refreshDataMethod="{!c.init}" product="{!product}"/>
                     </aura:iteration>
                 </div>
                 <div class="paginationControls">

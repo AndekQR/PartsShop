@@ -4,6 +4,8 @@
     <aura:attribute name="product" type="Object" default='{}'/>
     <aura:attribute name="imageData" type="String" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
+    <aura:attribute name="isWatchList" type="Boolean" access="private" default="false"/>
+    <aura:attribute name="refreshDataMethod" type="Aura.Action"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
     <c:PA_Navigation aura:id="navigation"/>
@@ -39,12 +41,22 @@
                                 iconName="utility:checkout" size="x-small" alternativeText="icon"/>
                         <span class="tooltiptext">Add To Cart</span>
                     </div>
-                    <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
-                        <lightning:icon
-                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                                iconName="utility:pin" size="x-small" alternativeText="icon"/>
-                        <span class="tooltiptext">Add To Watchlist</span>
-                    </div>
+                    <aura:if isTrue="{!v.isWatchList}">
+                        <div class="tileContainer__watchList__inner" onclick="{!c.removeFromWatchList}">
+                            <lightning:icon
+                                    class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                    iconName="utility:close" size="x-small" alternativeText="icon"/>
+                            <span class="tooltiptext">Remove From Watchlist</span>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
+                                <lightning:icon
+                                        class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                        iconName="utility:pin" size="x-small" alternativeText="icon"/>
+                                <span class="tooltiptext">Add To Watchlist</span>
+                            </div>
+                        </aura:set>
+                    </aura:if>
                 </div>
             </div>
         </div>

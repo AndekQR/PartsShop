@@ -4,7 +4,8 @@
         if(product.images != null && product.images.length > 0) {
             component.set('v.imageData', product.images[0]);
         }
-        helper.setPriceAfterDiscount(component, product.product.Price__c, product.bestDiscount)
+        helper.setPriceAfterDiscount(component, product.product.Price__c, product.bestDiscount);
+        helper.isWatchList(component);
     },
     addToCart: function(component, event, helper) {
         event.stopPropagation();
@@ -16,5 +17,9 @@
     },
     productDetails: function(component, event, helper) {
         helper.toProductDetails(component);
+    },
+    removeFromWatchList: function(component, event, helper) {
+        event.stopPropagation();
+        helper.removeFavoriteProduct(component);
     },
 })

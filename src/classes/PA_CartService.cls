@@ -106,7 +106,6 @@ public with sharing class PA_CartService {
     }
 
     public void updateProductCartQuantity(String productId, Integer quantity) {
-        System.debug('updateProductCartQuantity');
         Cart__c cart = getUserCart();
         List<ProductCart__c> productCarts = [
                 SELECT Id, Quantity__c, Product__c
