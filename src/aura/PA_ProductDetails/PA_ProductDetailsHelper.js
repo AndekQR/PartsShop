@@ -63,4 +63,33 @@
         let spinnerComponent = component.find('spinner');
         spinnerComponent.turnOff();
     },
+
+    addProductToCart: function (component) {
+        const productId = component.get('v.product').product.Id;
+        console.log(productId);
+        let action = component.get('c.addToUserCart');
+        action.setParams({
+            productId: productId
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                this.showToast('Success', 'Product went to your cart!', 'success');
+            } else {
+                this.handleError(response);
+                this.showToast('Error', 'Something went wrong. Try again!', 'error');
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
+    showToast: function (title, message, type) {
+        let resultsToast = $A.get("e.force:showToast");
+        resultsToast.setParams({
+            "title": title,
+            "message": message,
+            "type": type
+        });
+        resultsToast.fire();
+    },
 })

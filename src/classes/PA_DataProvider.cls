@@ -21,7 +21,8 @@ public class PA_DataProvider {
 
     @AuraEnabled
     public static void addToFavorites(String productId) {
-        PA_DataProviderService.addToFavorites(productId);
+        PA_FavoriteService favoriteService = new PA_FavoriteService();
+        favoriteService.addToFavorites(productId);
     }
 
     @AuraEnabled
@@ -46,5 +47,34 @@ public class PA_DataProvider {
     public static PA_PaginationResponse getReviews(String productId, Integer page, Integer pageSize) {
         PA_DataProviderService service = new PA_DataProviderService();
         return service.getReviews(productId, page, pageSize);
+    }
+
+    @AuraEnabled
+    public static void addToUserCart(String productId){
+        PA_CartService service = new PA_CartService();
+        service.addToCart(productId);
+    }
+    @AuraEnabled
+    public static void removeFromCart(String productId){
+        PA_CartService service = new PA_CartService();
+        service.removeFromCart(productId);
+    }
+
+    @AuraEnabled
+    public static PA_PaginationResponse getCartsProducts(Integer page, Integer pageSize) {
+        PA_CartService service = new PA_CartService();
+        return service.getCartsProducts(page, pageSize);
+    }
+
+    @AuraEnabled
+    public static Cart__c getUserCart() {
+        PA_CartService service = new PA_CartService();
+        return service.getUserCart();
+    }
+
+    @AuraEnabled
+    public static void updateProductCartQuantity(String productId, Integer quantity) {
+        PA_CartService service = new PA_CartService();
+        service.updateProductCartQuantity(productId, quantity);
     }
 }

@@ -1,0 +1,78 @@
+.THIS {
+}
+
+.THIS .cartListElementContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid #dfe1de;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .cartListElementContainer__controls {
+    min-width: 180px;
+    background-color: #f9f9f9;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.THIS .CartListElementContainer__image {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.THIS .CartListElementContainer__image img {
+    object-fit: contain;
+    height: 70px;
+    min-width: 80px;
+}
+
+.THIS .cartListElementContainer__title {
+    font-weight: 400;
+    font-size: 14px;
+    padding: 10px;
+    word-break: break-word;
+}
+
+.THIS .cartListElementContainer__controls__price {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.THIS .cartListElementContainer__controls__price__beforeDiscount {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 24px;
+    text-decoration: line-through;
+    color: rgb(148, 148, 148);
+    text-align: left;
+}
+
+.THIS .cartListElementContainer__controls__button {
+    line-height: 30px;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+.THIS .cartListElementContainer__controls__button:hover {
+    border: 1px solid #ccd2d2;
+    background-color: #e8ede9;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.THIS .cartListElementContainer__controls__price__afterDiscount {
+    padding-left: 5px;
+}
+
+.THIS .cartListElementContainer__controls__quantity {
+    display: flex;
+    align-items: center;
+}
+.THIS .cartListElementContainer__controls__quantity lightning-input {
+    width: 50px;
+    padding-right: 5px;
+}

@@ -1,17 +1,43 @@
 public class PA_ProductWrapperBuilder {
 
     private List<PA_ProductWrapper> wrappers = new List<PA_ProductWrapper>();
+    private PA_Service service { get; set; }
 
     public PA_ProductWrapperBuilder(List<Product__c> products) {
         this.products(products);
+        this.service = new PA_Service();
     }
 
     private void products(List<Product__c> products) {
-        for (Product__c product : products) {
+        Map<Product__c, Integer> occurrences = this.getOccurrences(products);
+        for (Product__c product : occurrences.keySet()) {
             PA_ProductWrapper wrapper = new PA_ProductWrapper();
             wrapper.product = product;
             wrappers.add(wrapper);
         }
+    }
+
+    public PA_ProductWrapperBuilder cartQuantity(List<ProductCart__c> productCarts) {
+        for(ProductCart__c productCart : productCarts) {
+            for(PA_ProductWrapper wrapper : wrappers) {
+                if(productCart.Product__c == wrapper.product.Id) {
+                    wrapper.cartQuantity = (Integer)productCart.Quantity__c;
+                }
+            }
+        }
+        return this;
+    }
+
+    private Map<Product__c, Integer> getOccurrences(List<Product__c> products) {
+        Map<Product__c, Integer> result = new Map<Product__c, Integer>();
+        for (Product__c product : products) {
+            if (!result.containsKey(product)) {
+                result.put(product, 0);
+            }
+            Integer currOccurs = result.get(product) + 1;
+            result.put(product, currOccurs);
+        }
+        return result;
     }
 
     public PA_ProductWrapperBuilder images() {
@@ -96,44 +122,13 @@ public class PA_ProductWrapperBuilder {
 
     public PA_ProductWrapperBuilder discount() {
         List<String> productsIds = getProductsIds();
-        String userId = UserInfo.getUserId();
-        List<ProductDiscount__c> bestDiscounts = [
-                SELECT Id, Size__c, EndDate__c, ReservedFor__c, Product__c
-                FROM ProductDiscount__c
-                WHERE (Product__c IN :productsIds) AND
-                (
-                        ReservedFor__c = :userId OR ReservedFor__c = null
-                )
-        ];
-        if(!bestDiscounts.isEmpty()) {
-            for(PA_ProductWrapper wrapper : wrappers) {
+        List<ProductDiscount__c> allDiscounts = service.getDiscounts(productsIds);
+        if (!allDiscounts.isEmpty()) {
+            for (PA_ProductWrapper wrapper : wrappers) {
                 String productId = wrapper.product.Id;
-                wrapper.bestDiscount = findDiscountResult(bestDiscounts, productId);
+                wrapper.bestDiscount = service.findBestProductDiscount(allDiscounts, productId);
             }
         }
         return this;
-    }
-
-    private ProductDiscount__c findDiscountResult(List<ProductDiscount__c> results, String productId) {
-        List<ProductDiscount__c> discounts = new List<ProductDiscount__c>();
-        for(ProductDiscount__c result : results) {
-            if(result.Product__c == productId) {
-                discounts.add(result);
-            }
-        }
-        return findBest(discounts);
-    }
-
-    private ProductDiscount__c findBest(List<ProductDiscount__c> discounts) {
-        if (!discounts.isEmpty()) {
-            ProductDiscount__c best = discounts.get(0);
-            for(ProductDiscount__c discount : discounts) {
-                if(best.Size__c < discount.Size__c) {
-                    best = discount;
-                }
-            }
-            return best;
-        }
-        return null;
     }
 }

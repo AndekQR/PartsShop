@@ -103,12 +103,6 @@ public with sharing class PA_DataProviderService {
         return result;
     }
 
-    public static void addToFavorites(String productId) {
-        FavoriteProduct__c favoriteProduct = new FavoriteProduct__c();
-        favoriteProduct.Product__c = productId;
-        insert favoriteProduct;
-    }
-
     public PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);

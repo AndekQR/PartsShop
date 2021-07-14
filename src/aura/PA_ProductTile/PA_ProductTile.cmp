@@ -1,12 +1,12 @@
-<aura:component description="PA_ProductTile" implements="forceCommunity:availableForAllPageTypes">
+<aura:component description="PA_ProductTile" implements="forceCommunity:availableForAllPageTypes"
+                controller="PA_DataProvider">
 
     <aura:attribute name="product" type="Object" default='{}'/>
     <aura:attribute name="imageData" type="String" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
-
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <c:PA_Navigation aura:id="navigation"/>
 
+    <c:PA_Navigation aura:id="navigation"/>
     <div>
         <div class="tileContainer" onclick="{!c.productDetails}">
             <div class="tileContainer__image">

@@ -8,10 +8,11 @@
     },
     addToCart: function(component, event, helper) {
         event.stopPropagation();
+        helper.addProductToCart(component);
     },
     addToWatchList: function(component, event, helper) {
-        helper.addProductToFavorites(component);
         event.stopPropagation();
+        helper.addProductToFavorites(component);
     },
     productDetails: function(component, event, helper) {
         helper.toProductDetails(component);

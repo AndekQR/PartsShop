@@ -11,7 +11,7 @@
     font-weight: 700;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: #ef476f;
+    background-color: #f1f0f4;
     border-radius: 5px;
 }
 
@@ -113,37 +113,49 @@
 .THIS .productDetailsContainer__detailsContainer__details__priceContainer__secondContainer {
     flex-grow: 1;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
     color: rgb(255, 255, 255);
     text-align: center;
+    word-break: break-word;
 }
 
 .THIS .productDetailsContainer__detailsContainer__details__price__watchListButton {
     border: 1px solid rgb(255, 255, 255);
     border-radius: 5px;
-    height: 50px;
+    min-height: 50px;
     width: 100%;
     background-color: #ffd166;
-    line-height: 50px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
 }
 
 .THIS .productDetailsContainer__detailsContainer__details__price__cartButton {
     border: 1px solid rgb(255, 255, 255);
     border-radius: 5px;
-    height: 80px;
+    min-height: 80px;
     width: 100%;
     background-color: #06d6a0;
     padding: 5px;
-    line-height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
 }
 
 .THIS .productDetailsContainer__detailsContainer__details__price__discountButton {
     border: 1px solid rgb(255, 255, 255);
     border-radius: 5px;
-    height: 50px;
+    min-height: 50px;
     width: 100%;
     background-color: #118ab2;
-    line-height: 50px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
 }
 
 .THIS .productDetailsContainer__detailsContainer__details__price__discountButton:hover {
@@ -186,7 +198,7 @@
     font-size: 22px;
     line-height: 28px;
     word-wrap: break-word;
-    background-color: #ffd166;
+    background-color: #f1f0f4;
     border-radius: 5px;
     padding: 10px;
 }

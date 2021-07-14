@@ -1,13 +1,49 @@
 <aura:component description="PA_Cart" implements="forceCommunity:availableForAllPageTypes" controller="PA_DataProvider">
 
+    <aura:attribute name="priceSum" type="Decimal" access="private"/>
+    <aura:attribute name="productWrappers" type="Object[]" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="12" access="private"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private"/>
+    <aura:attribute name="allProductsSize" type="Integer" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="PA_ProductRemovedFromCart" event="c:PA_ProductRemovedFromCart" action="{!c.onProductRemovedFromCart}"/>
+    <aura:handler name="PA_OnProductQuantityChange" event="c:PA_OnProductQuantityChange" action="{!c.onQuantityChange}"/>
+
     <div>
         <div class="cartContainer slds-grid slds-wrap">
             <div class="cartContainer__leftSection slds-size_12-of-12 slds-medium-size_8-of-12">
-
+                <aura:iteration items="{!v.productWrappers}" var="wrapper">
+                    <c:PA_CartListElement productWrapper="{!wrapper}"/>
+                </aura:iteration>
+                <div class="paginationControls">
+                    <div class="paginationControls__controls">
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}"
+                                          onclick="{!c.firstPage}"/>
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.previous_page}"
+                                          onclick="{!c.previousPage}"/>
+                        <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                          label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
+                        <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                          label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
+                    </div>
+                    <div class="paginationControls__info">
+                            {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
+                    </div>
+                </div>
             </div>
             <div class="cartContainer__rightSection slds-size_12-of-12 slds-medium-size_4-of-12">
-
+                <div class="cartContainer__rightSection__inner">
+                    <div class="cartContainer__rightSection__inner__title">
+                        Total:
+                    </div>
+                    <div class="cartContainer__rightSection__inner__price">
+                        <lightning:formattedNumber value="{!v.priceSum}"
+                                                   style="currency" currencyCode="USD"/>
+                    </div>
+                </div>
             </div>
         </div>
+        <c:Spinner aura:id="spinner"/>
     </div>
 </aura:component>

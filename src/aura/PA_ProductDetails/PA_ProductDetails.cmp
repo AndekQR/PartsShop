@@ -2,10 +2,6 @@
                 controller="PA_DataProvider">
 
     <aura:attribute name="product" type="Object" access="private"/>
-    <aura:attribute name="columns" type="List" default="[
-        {label: 'Name', fieldName: 'Name', type:'text'},
-        {label: 'Value', fieldName: 'Value__c', type:'text'}
-    ]"/>
     <aura:attribute name="quantity" type="Integer" default="1" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
@@ -53,13 +49,13 @@
                                 </div>
                             </div>
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__secondContainer">
-                                <div class="productDetailsContainer__detailsContainer__details__price__watchListButton slds-truncate">
+                                <div class="productDetailsContainer__detailsContainer__details__price__watchListButton" onclick="{!c.addToWatchlist}">
                                     Add To Watchlist
                                 </div>
-                                <div class="productDetailsContainer__detailsContainer__details__price__discountButton slds-truncate">
+                                <div class="productDetailsContainer__detailsContainer__details__price__discountButton" onclick="{!c.applyForDiscount}">
                                     Apply For Discount
                                 </div>
-                                <div class="productDetailsContainer__detailsContainer__details__price__cartButton slds-truncate">
+                                <div class="productDetailsContainer__detailsContainer__details__price__cartButton" onclick="{!c.addToCart}">
                                     Add To Cart
                                 </div>
                             </div>

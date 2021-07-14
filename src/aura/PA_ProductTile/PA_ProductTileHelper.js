@@ -1,5 +1,5 @@
 ({
-    addProductToFavorites: function(component) {
+    addProductToFavorites: function (component) {
         let product = component.get('v.product');
         let action = component.get('c.addToFavorites');
         action.setParams({
@@ -7,7 +7,7 @@
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 this.showToast('Success', 'Product went to your favorites!', 'success');
             } else {
                 this.handleError(response);
@@ -39,14 +39,14 @@
         }
     },
 
-    toProductDetails: function(component) {
+    toProductDetails: function (component) {
         let productId = component.get('v.product').product.Id;
         let navComponent = component.find('navigation');
         navComponent.navigateToProductDetails(productId);
     },
 
-    setPriceAfterDiscount: function(component, originalPrice, bestDiscount) {
-        if(bestDiscount == null) {
+    setPriceAfterDiscount: function (component, originalPrice, bestDiscount) {
+        if (bestDiscount == null) {
             component.set('v.priceAfterDiscount', originalPrice);
         } else {
             let percent = bestDiscount.Size__c / 100;
@@ -54,5 +54,23 @@
             afterDiscount = Math.round(afterDiscount * 100) / 100;
             component.set('v.priceAfterDiscount', afterDiscount);
         }
+    },
+
+    addProductToCart: function (component) {
+        const productId = component.get('v.product').product.Id;
+        let action = component.get('c.addToUserCart');
+        action.setParams({
+            productId: productId
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                this.showToast('Success', 'Product went to your cart!', 'success');
+            } else {
+                this.handleError(response);
+                this.showToast('Error', 'Something went wrong. Try again!', 'error');
+            }
+        });
+        $A.enqueueAction(action);
     },
 })

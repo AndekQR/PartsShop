@@ -7,4 +7,6 @@ public class PA_ProductWrapper {
     public List<ProductSpecification__c> specifications { get; set; }
     @AuraEnabled
     public ProductDiscount__c bestDiscount { get; set; }
+    @AuraEnabled
+    public Integer cartQuantity { get; set; }
 }

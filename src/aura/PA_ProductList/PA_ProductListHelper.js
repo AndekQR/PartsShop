@@ -1,7 +1,7 @@
 ({
     refreshData: function (component) {
         this.showSpinner(component);
-        let whatToSow = this.getUrlParameter('listDataType');
+        let whatToSow = window.location.pathname;
         switch (whatToSow) {
             case 'searchList': {
                 let query = this.getUrlParameter('query');
@@ -10,10 +10,6 @@
             }
             case 'fullList': {
                 this.setFullObjectList(component);
-                break;
-            }
-            case 'cart': {
-
                 break;
             }
             default: {
@@ -71,12 +67,11 @@
     },
 
     getUrlParameter: function (sParam) {
-        let sPageURL = decodeURIComponent(window.location.search.substring(1)),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
+        let sPageURL = decodeURIComponent(window.location.search.substring(1));
+        let sURLVariables = sPageURL.split('&');
+        let sParameterName;
 
-        for (i = 0; i < sURLVariables.length; i++) {
+        for (let i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
 
             if (sParameterName[0] === sParam) {
@@ -166,5 +161,5 @@
         } else {
             console.log("Unknown error");
         }
-    },
+    }
 })

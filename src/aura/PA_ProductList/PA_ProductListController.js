@@ -1,7 +1,6 @@
 ({
     init: function (component, event, helper) {
         helper.setFirstPage(component);
-        helper.refreshData(component);
     },
 
     change: function (component, event, helper) {
