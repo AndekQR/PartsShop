@@ -166,13 +166,13 @@
 
 .THIS .productDetailsContainer__detailsContainer__details__price__watchListButton:hover {
     border: 1px solid rgb(184, 184, 184);
-    background-color: #e8be5c;
+    background-color: #eec35f;
     cursor: pointer;
 }
 
 .THIS .productDetailsContainer__detailsContainer__details__price__cartButton:hover {
     border: 1px solid rgb(195, 195, 195);
-    background-color: #06c694;
+    background-color: #06cb98;
     cursor: pointer;
 }
 

@@ -1,0 +1,21 @@
+<aura:component description="PA_NewProduct" implements="forceCommunity:availableForAllPageTypes">
+
+    <div>
+        <div class="newProductContainer">
+            <div class="newProductContainer__title">
+                {!$Label.c.new_product}
+            </div>
+            <div class="newProductContainer__content slds-grid slds-wrap">
+                <div class="newProductContainer__content__left slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <c:PA_CreateProduct/>
+                </div>
+                <div class="newProductContainer__content__right slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="newProductContainer__title newProductContainer__content__right__title">
+                            {!$Label.c.your_products}
+                    </div>
+                    <c:PA_ProductList whatToShow="userProducts" />
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -39,21 +39,21 @@
                         <lightning:icon
                                 class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
                                 iconName="utility:checkout" size="x-small" alternativeText="icon"/>
-                        <span class="tooltiptext">Add To Cart</span>
+                        <span class="tooltiptext">{!$Label.c.add_to_cart}</span>
                     </div>
                     <aura:if isTrue="{!v.isWatchList}">
                         <div class="tileContainer__watchList__inner" onclick="{!c.removeFromWatchList}">
                             <lightning:icon
                                     class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
                                     iconName="utility:close" size="x-small" alternativeText="icon"/>
-                            <span class="tooltiptext">Remove From Watchlist</span>
+                            <span class="tooltiptext">{!$Label.c.remove_from_watchlist}</span>
                         </div>
                         <aura:set attribute="else">
                             <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
                                 <lightning:icon
                                         class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
                                         iconName="utility:pin" size="x-small" alternativeText="icon"/>
-                                <span class="tooltiptext">Add To Watchlist</span>
+                                <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
                             </div>
                         </aura:set>
                     </aura:if>

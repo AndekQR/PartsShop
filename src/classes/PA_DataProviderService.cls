@@ -94,6 +94,14 @@ public with sharing class PA_DataProviderService {
         ];
         return (Integer) result.get('size');
     }
+    private Integer getProductsSize(String categoryId) {
+        AggregateResult result = [
+                SELECT count(Id) size
+                FROM Product__c
+                WHERE ProductCategory__c = :categoryId
+        ];
+        return (Integer) result.get('size');
+    }
 
     private List<String> getIds(List<SObject> objects) {
         List<String> result = new List<String>();
@@ -123,6 +131,52 @@ public with sharing class PA_DataProviderService {
                 .images()
                 .discount();
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
+    }
+
+    public PA_PaginationResponse userProducts(Integer page, Integer pageSize) {
+        page = validatePageData(page, 1);
+        pageSize = validatePageData(pageSize, 12);
+        String userId = UserInfo.getUserId();
+        PA_ProductWrapper productWrapper = new PA_ProductWrapper();
+        Integer offset = (page - 1) * pageSize;
+        List<Product__c> products = [
+                SELECT Id,Name,
+                        Description__c, Price__c,
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c
+                FROM Product__c
+                WHERE CreatedById = :userId
+                ORDER BY CreatedDate DESC
+                LIMIT :pageSize
+                OFFSET :offset
+
+        ];
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
+                .images()
+                .discount();
+        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
+    }
+    public PA_PaginationResponse getProductsByCategory(Integer page, Integer pageSize, String categoryId) {
+        page = validatePageData(page, 1);
+        pageSize = validatePageData(pageSize, 12);
+        PA_ProductWrapper productWrapper = new PA_ProductWrapper();
+        Integer offset = (page - 1) * pageSize;
+        List<Product__c> products = [
+                SELECT Id,Name,
+                        Description__c, Price__c,
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c
+                FROM Product__c
+                WHERE ProductCategory__c = :categoryId
+                ORDER BY CreatedDate DESC
+                LIMIT :pageSize
+                OFFSET :offset
+
+        ];
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
+                .images()
+                .discount();
+        return new PA_PaginationResponse(page, getProductsSize(categoryId), builder.build(), pageSize);
     }
 
     public PA_ProductWrapper getProductDetails(String productId) {
@@ -181,5 +235,4 @@ public with sharing class PA_DataProviderService {
         }
         return currentValue;
     }
-
 }

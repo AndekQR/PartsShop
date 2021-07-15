@@ -6,10 +6,10 @@
         <div class="productSpecsContainer">
             <div class="productSpecsContainer__row productSpecsContainer__title">
                 <div class="productSpecsContainer__row__name">
-                    Name
+                    {!$Label.c.name}
                 </div>
                 <div class="productSpecsContainer__row__value">
-                    Value
+                    {!$Label.c.value}
                 </div>
             </div>
             <aura:iteration items="{!v.specification}" var="spec">

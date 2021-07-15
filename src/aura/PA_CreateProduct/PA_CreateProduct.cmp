@@ -10,9 +10,6 @@
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
     <div>
-        <div class="titleContainer">
-            <span class="title">{!$Label.c.new_product}</span>
-        </div>
         <div class="slds-p-horizontal--small">
             <lightning:input required="true" type="text" aura:id="productField" label="Name" maxlength="80"
                              value="{!v.newProduct.Name}"/>

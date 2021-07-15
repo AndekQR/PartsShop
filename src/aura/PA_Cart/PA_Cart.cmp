@@ -11,6 +11,9 @@
     <aura:handler name="PA_OnProductQuantityChange" event="c:PA_OnProductQuantityChange" action="{!c.onQuantityChange}"/>
 
     <div>
+        <div class="cartContainer__title">
+                {!$Label.c.cart}
+        </div>
         <div class="cartContainer slds-grid slds-wrap">
             <div class="cartContainer__leftSection slds-size_12-of-12 slds-medium-size_8-of-12">
                 <aura:iteration items="{!v.productWrappers}" var="wrapper">
@@ -35,11 +38,14 @@
             <div class="cartContainer__rightSection slds-size_12-of-12 slds-medium-size_4-of-12">
                 <div class="cartContainer__rightSection__inner">
                     <div class="cartContainer__rightSection__inner__title">
-                        Total:
+                        {!$Label.c.total}
                     </div>
                     <div class="cartContainer__rightSection__inner__price">
                         <lightning:formattedNumber value="{!v.priceSum}"
                                                    style="currency" currencyCode="USD"/>
+                    </div>
+                    <div class="cartContainer__rightSection__inner__orderButton" onclick="{!c.onMakeOrder}">
+                        {!$Label.c.make_an_order}
                     </div>
                 </div>
             </div>

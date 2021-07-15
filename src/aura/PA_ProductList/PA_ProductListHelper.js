@@ -1,19 +1,18 @@
 ({
     refreshData: function (component) {
         this.showSpinner(component);
-        let whatToSow = window.location.pathname;
+        let whatToSow = component.get('v.whatToShow');
         switch (whatToSow) {
-            case 'searchList': {
-                let query = this.getUrlParameter('query');
-                this.setObjectByQuery(component, query);
-                break;
-            }
-            case 'fullList': {
-                this.setFullObjectList(component);
-                break;
-            }
-            case '/s/watch-list': {
+            case 'watchList': {
                 this.setFavorites(component);
+                break;
+            }
+            case 'userProducts': {
+                this.setUserProducts(component);
+                break;
+            }
+            case 'categories': {
+                this.setProductsByCategory(component);
                 break;
             }
             default: {
@@ -113,6 +112,47 @@
             searchQuery: null,
             page: page,
             pageSize: pageSize
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if (state === 'SUCCESS') {
+                let returnValue = response.getReturnValue();
+                this.setPaginationData(component, returnValue)
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
+    setUserProducts: function(component) {
+        let page = component.get('v.pageNumber');
+        let action = component.get('c.userProducts');
+        let pageSize = component.get('v.pageSize');
+        action.setParams({
+            page: page,
+            pageSize: pageSize
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if (state === 'SUCCESS') {
+                let returnValue = response.getReturnValue();
+                this.setPaginationData(component, returnValue)
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    setProductsByCategory: function(component) {
+        let categoryId = component.get('v.categoryId');
+        let page = component.get('v.pageNumber');
+        let action = component.get('c.getProductsByCategory');
+        let pageSize = component.get('v.pageSize');
+        action.setParams({
+            page: page,
+            pageSize: pageSize,
+            categoryId: categoryId
         });
         action.setCallback(this, (response) => {
             let state = response.getState();

@@ -33,7 +33,7 @@
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__container">
                                 <div class="productDetailsContainer__detailsContainer__details__price">
                                     <lightning:input max="{!v.product.product.Quantity__c}" value="{!v.quantity}" label="Quantity"/>
-                                    <span>Available items: {!v.product.product.Quantity__c}</span>
+                                    <span>{! $Label.c.available_items + v.product.product.Quantity__c}</span>
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__price">
                                     <aura:if isTrue="{!not(empty(v.product.bestDiscount))}">
@@ -50,13 +50,13 @@
                             </div>
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__secondContainer">
                                 <div class="productDetailsContainer__detailsContainer__details__price__watchListButton" onclick="{!c.addToWatchlist}">
-                                    Add To Watchlist
+                                    {!$Label.c.add_to_watchlist}
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__discountButton" onclick="{!c.applyForDiscount}">
-                                    Apply For Discount
+                                    {!$Label.c.apply_for_discount}
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__cartButton" onclick="{!c.addToCart}">
-                                    Add To Cart
+                                    {!$Label.c.add_to_cart}
                                 </div>
                             </div>
                         </div>

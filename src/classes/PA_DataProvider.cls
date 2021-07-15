@@ -89,4 +89,15 @@ public class PA_DataProvider {
         PA_CartService service = new PA_CartService();
         service.updateProductCartQuantity(productId, quantity);
     }
+
+    @AuraEnabled
+    public static PA_PaginationResponse userProducts(Integer page, Integer pageSize) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        return service.userProducts(page, pageSize);
+    }
+    @AuraEnabled
+    public static PA_PaginationResponse getProductsByCategory(Integer page, Integer pageSize, String categoryId) {
+        PA_DataProviderService service = new PA_DataProviderService();
+        return service.getProductsByCategory(page, pageSize, categoryId);
+    }
 }

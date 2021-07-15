@@ -1,0 +1,10 @@
+.THIS {
+}
+
+.THIS .watchListContainer__title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+}

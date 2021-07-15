@@ -28,4 +28,8 @@
         console.log('on quantity change cart');
         helper.setCartPriceSum(component);
     },
+
+    onMakeOrder: function(component, event, helper) {
+
+    },
 })
