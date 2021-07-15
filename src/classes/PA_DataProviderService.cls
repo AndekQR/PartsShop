@@ -1,8 +1,6 @@
 public with sharing class PA_DataProviderService {
 
-    private static final Integer PAGE_SIZE_LOCAL = 10;
-
-    public PA_PaginationResponse searchMoviesLocally(String query, Integer page, Integer pageSize) {
+    public static PA_PaginationResponse searchMoviesLocally(String query, Integer page, Integer pageSize) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
@@ -26,7 +24,7 @@ public with sharing class PA_DataProviderService {
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
-    public PA_PaginationResponse getProducts(Integer page, Integer pageSize) {
+    public static PA_PaginationResponse getProducts(Integer page, Integer pageSize) {
         Integer offset = (page - 1) * pageSize;
         List<Product__c> products = [
                 SELECT Id,Name,
@@ -51,7 +49,7 @@ public with sharing class PA_DataProviderService {
         ];
     }
 
-    public void saveProduct(Product__c product, Map<String, String> imagesData,
+    public static void saveProduct(Product__c product, Map<String, String> imagesData,
             Map<String, String> specs) {
         insert product;
         List<ProductSpecification__c> productSpecifications = new List<ProductSpecification__c>();
@@ -62,11 +60,11 @@ public with sharing class PA_DataProviderService {
             specification.Product__c = product.Id;
             productSpecifications.add(specification);
         }
-        this.saveImages(imagesData, product.Id);
+        saveImages(imagesData, product.Id);
         insert productSpecifications;
     }
 
-    private void saveImages(Map<String, String> imagesData, String imagesOwnerId) {
+    private static void saveImages(Map<String, String> imagesData, String imagesOwnerId) {
         List<Attachment> attachments = new List<Attachment>();
         for (String fileName : imagesData.keySet()) {
             Attachment attachment = new Attachment();
@@ -78,7 +76,7 @@ public with sharing class PA_DataProviderService {
         insert attachments;
     }
 
-    private List<Attachment> getImages(String ownerId) {
+    private static List<Attachment> getImages(String ownerId) {
         return [
                 SELECT Id, Body, ParentId
                 FROM Attachment
@@ -87,14 +85,14 @@ public with sharing class PA_DataProviderService {
         ];
     }
 
-    private Integer getProductsSize() {
+    private static Integer getProductsSize() {
         AggregateResult result = [
                 SELECT count(Id) size
                 FROM Product__c
         ];
         return (Integer) result.get('size');
     }
-    private Integer getProductsSize(String categoryId) {
+    private static Integer getProductsSize(String categoryId) {
         AggregateResult result = [
                 SELECT count(Id) size
                 FROM Product__c
@@ -103,7 +101,7 @@ public with sharing class PA_DataProviderService {
         return (Integer) result.get('size');
     }
 
-    private List<String> getIds(List<SObject> objects) {
+    private static List<String> getIds(List<SObject> objects) {
         List<String> result = new List<String>();
         for (SObject ob : objects) {
             result.add(ob.Id);
@@ -111,7 +109,7 @@ public with sharing class PA_DataProviderService {
         return result;
     }
 
-    public PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
+    public static PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
@@ -133,7 +131,7 @@ public with sharing class PA_DataProviderService {
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
-    public PA_PaginationResponse userProducts(Integer page, Integer pageSize) {
+    public static PA_PaginationResponse userProducts(Integer page, Integer pageSize) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         String userId = UserInfo.getUserId();
@@ -156,7 +154,7 @@ public with sharing class PA_DataProviderService {
                 .discount();
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
-    public PA_PaginationResponse getProductsByCategory(Integer page, Integer pageSize, String categoryId) {
+    public static PA_PaginationResponse getProductsByCategory(Integer page, Integer pageSize, String categoryId) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
@@ -179,7 +177,7 @@ public with sharing class PA_DataProviderService {
         return new PA_PaginationResponse(page, getProductsSize(categoryId), builder.build(), pageSize);
     }
 
-    public PA_ProductWrapper getProductDetails(String productId) {
+    public static PA_ProductWrapper getProductDetails(String productId) {
         Product__c product = [
                 SELECT Id,Name,
                         Description__c, Price__c,
@@ -194,11 +192,12 @@ public with sharing class PA_DataProviderService {
         })
                 .images()
                 .specifications()
+                .rateAverage()
                 .discount();
         return builder.build().get(0);
     }
 
-    public void saveReview(String content, String productId, Integer rating) {
+    public static void saveReview(String content, String productId, Integer rating) {
         ProductReview__c review = new ProductReview__c();
         review.Content__c = content;
         review.Product__c = productId;
@@ -206,7 +205,7 @@ public with sharing class PA_DataProviderService {
         insert review;
     }
 
-    private Integer getReviewsSize(String productId) {
+    private static Integer getReviewsSize(String productId) {
         AggregateResult result = [
                 SELECT count(Id) size
                 FROM ProductReview__c
@@ -214,11 +213,11 @@ public with sharing class PA_DataProviderService {
         return (Integer) result.get('size');
     }
 
-    public PA_PaginationResponse getReviews(String productId, Integer page, Integer pageSize) {
+    public static PA_PaginationResponse getReviews(String productId, Integer page, Integer pageSize) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         Integer offset = (page - 1) * pageSize;
-        LIst<ProductReview__c> reviews = [
+        List<ProductReview__c> reviews = [
                 SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name
                 FROM ProductReview__c
                 WHERE Product__c = :productId
@@ -229,7 +228,7 @@ public with sharing class PA_DataProviderService {
         return new PA_PaginationResponse(page, getReviewsSize(productId), reviews, pageSize);
     }
 
-    private Integer validatePageData(Integer currentValue, Integer defaultValue) {
+    private static Integer validatePageData(Integer currentValue, Integer defaultValue) {
         if (currentValue == null || currentValue < 1) {
             return defaultValue;
         }

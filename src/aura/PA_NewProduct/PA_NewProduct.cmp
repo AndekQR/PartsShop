@@ -13,7 +13,7 @@
                     <div class="newProductContainer__title newProductContainer__content__right__title">
                             {!$Label.c.your_products}
                     </div>
-                    <c:PA_ProductList whatToShow="userProducts" />
+                    <c:PA_ProductList showTileControls="{!false}" whatToShow="userProducts" />
                 </div>
             </div>
         </div>

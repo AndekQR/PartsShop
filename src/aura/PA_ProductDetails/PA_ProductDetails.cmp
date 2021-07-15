@@ -9,7 +9,11 @@
     <div>
         <div class="productDetailsContainer">
             <div class="productDetailsContainer__category">
-                /{!v.product.product.ProductCategory__r.Name}
+                <span>/{!v.product.product.ProductCategory__r.Name}</span>
+                <div class="productDetailsContainer__category__rating">
+                    <span>Average rate of {!v.product.numberOfReviews} reviews: </span>
+                    <c:PA_FiveStarRating value="{!v.product.average}" readonly="{!true}"/>
+                </div>
             </div>
             <div class="slds-grid slds-wrap">
                 <div class="productDetailsContainer__imageContainer slds-size_12-of-12 slds-medium-size_6-of-12">

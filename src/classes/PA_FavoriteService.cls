@@ -1,5 +1,5 @@
 public with sharing class PA_FavoriteService {
-    public void addToFavorites(String productId) {
+    public static void addToFavorites(String productId) {
         FavoriteProduct__c result = checkIfExists(productId);
         if (result == null) {
             FavoriteProduct__c favoriteProduct = new FavoriteProduct__c();
@@ -10,7 +10,7 @@ public with sharing class PA_FavoriteService {
         }
     }
 
-    private FavoriteProduct__c checkIfExists(String productId) {
+    private static FavoriteProduct__c checkIfExists(String productId) {
         String userId = UserInfo.getUserId();
         List<FavoriteProduct__c> favoriteProducts = [
                 SELECT Id
@@ -25,7 +25,7 @@ public with sharing class PA_FavoriteService {
         return null;
     }
 
-    public PA_PaginationResponse getFavorites(Integer page, Integer pageSize) {
+    public static PA_PaginationResponse getFavorites(Integer page, Integer pageSize) {
         Integer offset = (page - 1) * pageSize;
         String userId = UserInfo.getUserId();
         List<FavoriteProduct__c> favorites = [
@@ -43,7 +43,7 @@ public with sharing class PA_FavoriteService {
         return new PA_PaginationResponse(page, getNumberOfFavorites(), wrappers, pageSize);
     }
 
-    private List<Product__c> mapToProducts(List<FavoriteProduct__c> favorites) {
+    private static List<Product__c> mapToProducts(List<FavoriteProduct__c> favorites) {
         List<Product__c> result = new List<Product__c>();
         for(FavoriteProduct__c favorite : favorites) {
             Product__c product = new Product__c();
@@ -55,7 +55,7 @@ public with sharing class PA_FavoriteService {
         return result;
     }
 
-    private Integer getNumberOfFavorites() {
+    private static Integer getNumberOfFavorites() {
         String userId = UserInfo.getUserId();
         AggregateResult result = [
                 SELECT count(Id) size
@@ -65,7 +65,7 @@ public with sharing class PA_FavoriteService {
         return (Integer) result.get('size');
     }
 
-    public void removeFromFavorites(String productId) {
+    public static void removeFromFavorites(String productId) {
         String userId = UserInfo.getUserId();
         List<FavoriteProduct__c> favorites = [
                 SELECT Id

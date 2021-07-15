@@ -1,0 +1,8 @@
+<aura:component description="PA_Footer"  implements="forceCommunity:availableForAllPageTypes">
+
+    <div>
+        <div class="footerContainer">
+            © Daniel Legawiec 2021
+        </div>
+    </div>
+</aura:component>

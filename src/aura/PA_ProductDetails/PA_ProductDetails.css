@@ -13,6 +13,14 @@
     padding: 10px;
     background-color: #f1f0f4;
     border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.THIS .productDetailsContainer__category__rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .THIS .productDetailsContainer__imageContainer {

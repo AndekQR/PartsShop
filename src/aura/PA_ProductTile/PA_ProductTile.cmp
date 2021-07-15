@@ -1,6 +1,7 @@
 <aura:component description="PA_ProductTile" implements="forceCommunity:availableForAllPageTypes"
                 controller="PA_DataProvider">
 
+    <aura:attribute name="showControls" type="Boolean" default="true"/>
     <aura:attribute name="product" type="Object" default='{}'/>
     <aura:attribute name="imageData" type="String" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
@@ -34,30 +35,32 @@
                     <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
                                                currencyCode="USD"/>
                 </div>
-                <div class="tileContainer__watchList">
-                    <div class="tileContainer__watchList__inner" onclick="{!c.addToCart}">
-                        <lightning:icon
-                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                                iconName="utility:checkout" size="x-small" alternativeText="icon"/>
-                        <span class="tooltiptext">{!$Label.c.add_to_cart}</span>
-                    </div>
-                    <aura:if isTrue="{!v.isWatchList}">
-                        <div class="tileContainer__watchList__inner" onclick="{!c.removeFromWatchList}">
+                <aura:if isTrue="{!v.showControls}">
+                    <div class="tileContainer__watchList">
+                        <div class="tileContainer__watchList__inner" onclick="{!c.addToCart}">
                             <lightning:icon
                                     class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                                    iconName="utility:close" size="x-small" alternativeText="icon"/>
-                            <span class="tooltiptext">{!$Label.c.remove_from_watchlist}</span>
+                                    iconName="utility:checkout" size="x-small" alternativeText="icon"/>
+                            <span class="tooltiptext">{!$Label.c.add_to_cart}</span>
                         </div>
-                        <aura:set attribute="else">
-                            <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
+                        <aura:if isTrue="{!v.isWatchList}">
+                            <div class="tileContainer__watchList__inner" onclick="{!c.removeFromWatchList}">
                                 <lightning:icon
                                         class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                                        iconName="utility:pin" size="x-small" alternativeText="icon"/>
-                                <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
+                                        iconName="utility:close" size="x-small" alternativeText="icon"/>
+                                <span class="tooltiptext">{!$Label.c.remove_from_watchlist}</span>
                             </div>
-                        </aura:set>
-                    </aura:if>
-                </div>
+                            <aura:set attribute="else">
+                                <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
+                                    <lightning:icon
+                                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                            iconName="utility:pin" size="x-small" alternativeText="icon"/>
+                                    <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </aura:if>
             </div>
         </div>
     </div>

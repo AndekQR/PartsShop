@@ -131,4 +131,39 @@ public class PA_ProductWrapperBuilder {
         }
         return this;
     }
+
+    public PA_ProductWrapperBuilder rateAverage() {
+        List<String> productIds = getProductsIds();
+        List<ProductReview__c> allReviews = [
+                SELECT Id, Rating__c, Product__c
+                FROM ProductReview__c
+                WHERE Product__c IN :productIds
+        ];
+        for(PA_ProductWrapper wrapper : wrappers) {
+            wrapper.numberOfReviews = getNumberOfReviews(allReviews, wrapper.product.Id);
+            wrapper.average = (getRatingSum(allReviews, wrapper.product.Id) / wrapper.numberOfReviews);
+        }
+        return this;
+    }
+
+    private Integer getNumberOfReviews(List<ProductReview__c> allReviews, String productId) {
+        Integer result = 0;
+        for(ProductReview__c review : allReviews) {
+            if(review.Product__c == productId) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    private Decimal getRatingSum(List<ProductReview__c> allReviews, String productId){
+        Decimal result = 0;
+        for(ProductReview__c review : allReviews) {
+            if(review.Product__c == productId) {
+                result += review.Rating__c;
+            }
+        }
+        return result;
+    }
+
 }

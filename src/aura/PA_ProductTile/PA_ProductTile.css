@@ -8,7 +8,7 @@
     padding: 10px;
     border: 1px solid #e6e6e6;
     border-radius: 5px;
-    min-height: 253px;
+    /*min-height: 253px;*/
 }
 
 .THIS .tileContainer:hover {

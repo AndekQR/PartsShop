@@ -1,22 +1,20 @@
 public with sharing class PA_CartService {
 
-    public void addToCart(String productId) {
-        Cart__c userCart = this.getUserCart();
+    public static void addToCart(String productId) {
+        Cart__c userCart = getUserCart();
         ProductCart__c productCart = checkIfExists(productId, userCart.Id);
         if(productCart != null) {
             productCart.Quantity__c += 1;
             update productCart;
-            System.debug('update productCart');
         } else {
             ProductCart__c newProductCart = new ProductCart__c();
             newProductCart.Product__c = productId;
             newProductCart.Cart__c = userCart.Id;
             insert newProductCart;
-            System.debug('insert productCart');
         }
     }
 
-    public ProductCart__c checkIfExists(String productId, String cartId) {
+    public static ProductCart__c checkIfExists(String productId, String cartId) {
         List<ProductCart__c> result = [
                 SELECT Id, Quantity__c
                 FROM ProductCart__c
@@ -30,7 +28,7 @@ public with sharing class PA_CartService {
         return null;
     }
 
-    public void removeFromCart(String productId) {
+    public static void removeFromCart(String productId) {
         List<ProductCart__c> productCarts = [
                 SELECT Id
                 FROM ProductCart__c
@@ -40,7 +38,7 @@ public with sharing class PA_CartService {
         delete productCarts;
     }
 
-    public PA_PaginationResponse getCartsProducts(Integer page, Integer pageSize) {
+    public static PA_PaginationResponse getCartsProducts(Integer page, Integer pageSize) {
         Cart__c cart = getUserCart();
         Integer offset = (page - 1) * pageSize;
         List<ProductCart__c> productCarts = [
@@ -63,7 +61,7 @@ public with sharing class PA_CartService {
         return new PA_PaginationResponse(page, getNumberProductsCart(), wrappers, pageSize);
     }
 
-    public Cart__c getUserCart() {
+    public static Cart__c getUserCart() {
         List<Cart__c> carts = [
                 SELECT Id, Price_Sum__c
                 FROM Cart__c
@@ -77,7 +75,7 @@ public with sharing class PA_CartService {
         return carts.get(0);
     }
 
-    private List<Product__c> mapToProducts(List<ProductCart__c> productCarts) {
+    private static List<Product__c> mapToProducts(List<ProductCart__c> productCarts) {
         List<Product__c> products = new List<Product__c>();
         for (ProductCart__c productCart : productCarts) {
             ProductCategory__c category = new ProductCategory__c();
@@ -95,7 +93,7 @@ public with sharing class PA_CartService {
         return products;
     }
 
-    private Integer getNumberProductsCart() {
+    private static Integer getNumberProductsCart() {
         Cart__c cart = getUserCart();
         AggregateResult result = [
                 SELECT count(Id) size
@@ -105,7 +103,7 @@ public with sharing class PA_CartService {
         return (Integer) result.get('size');
     }
 
-    public void updateProductCartQuantity(String productId, Integer quantity) {
+    public static void updateProductCartQuantity(String productId, Integer quantity) {
         Cart__c cart = getUserCart();
         List<ProductCart__c> productCarts = [
                 SELECT Id, Quantity__c, Product__c

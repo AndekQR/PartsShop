@@ -9,4 +9,8 @@ public class PA_ProductWrapper {
     public ProductDiscount__c bestDiscount { get; set; }
     @AuraEnabled
     public Integer cartQuantity { get; set; }
+    @AuraEnabled
+    public Decimal average { get; set; }
+    @AuraEnabled
+    public Integer numberOfReviews { get; set; }
 }

@@ -12,6 +12,15 @@
     margin-top: 10px;
 }
 
+.THIS .personListContainer__body__noProducts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
 .THIS .personListContainer__header {
     text-align: left;
     padding: 10px;

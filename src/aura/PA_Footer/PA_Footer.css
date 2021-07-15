@@ -1,0 +1,11 @@
+.THIS {
+}
+
+.THIS .footerContainer {
+    box-shadow: var(--lwc-shadowHeader,0 2px 4px rgba(0.07, 0, 0, 0));
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px;
+}
