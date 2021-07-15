@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="PA_CategoryChange">
+    <aura:attribute name="categoryId" type="String"/>
+</aura:event>

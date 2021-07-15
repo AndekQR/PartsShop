@@ -1,0 +1,17 @@
+<aura:component description="PA_HomePage" implements="forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="listType" type="String" access="private"/>
+    <aura:attribute name="categoryId" type="String" access="private"/>
+    <aura:handler name="PA_CategoryChange" event="c:PA_CategoryChange" action="{!c.onCategoryChange}"/>
+
+    <div>
+        <div class="homePageContainer slds-grid slds-wrap">
+            <div class="homePageContainer__categories slds-size_2-of-12 slds-medium-size_3-of-12">
+                <c:PA_Categories/>
+            </div>
+            <div class="homePageContainer__list  slds-size_10-of-12 slds-medium-size_9-of-12">
+                <c:PA_ProductList aura:id="productList" whatToShow="{!v.listType}" categoryId="{!v.categoryId}"/>
+            </div>
+        </div>
+    </div>
+</aura:component>

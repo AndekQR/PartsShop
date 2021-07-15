@@ -1,0 +1,31 @@
+.THIS {
+}
+
+.THIS .categoryContainer {
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.THIS .categoryContainer__list {
+    text-align: center;
+}
+
+.THIS .categoryContainer__list li {
+    font-size: 14px;
+    font-weight: 400;
+    height: 40px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.THIS .categoryContainer__list li:hover {
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.THIS .categoryContainer__list__element-active {
+    background-color: #f1f0f4;
+}

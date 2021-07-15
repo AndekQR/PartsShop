@@ -1,12 +1,16 @@
 <aura:component description="PA_ProductList" implements="forceCommunity:availableForAllPageTypes"
                 controller="PA_DataProvider">
 
+    <aura:attribute name="whatToShow" type="String"/>
+    <aura:attribute name="categoryId" type="String"/>
     <aura:attribute name="products" type="Object[]" access="private"/>
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
-    <aura:attribute name="pageSize" type="Integer" default="12" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="12"/>
     <aura:attribute name="allPageSize" type="Integer" access="private"/>
     <aura:attribute name="allProductsSize" type="Integer" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <aura:method name="refresh" action="{!c.init}"/>
 
     <div>
         <div class="slds-align_absolute-center containerList">
