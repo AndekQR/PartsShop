@@ -32,7 +32,7 @@
         let allReviews = component.get('v.reviews');
         if (allReviews !== null) {
             allReviews.forEach(element => {
-                element.CreatedDate = $A.localizationService.formatDateTime(element.CreatedDate);
+                element.CreatedDate = $A.localizationService.formatDateTime(element.createdDate);
             })
         }
         component.set('v.reviews', allReviews);

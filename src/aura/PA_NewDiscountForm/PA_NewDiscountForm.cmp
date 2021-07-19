@@ -1,0 +1,55 @@
+<aura:component description="PA_NewDiscountForm" controller="PA_DataProvider">
+
+    <aura:attribute name="discount" type="PA_Discount" access="private"/>
+    <aura:attribute name="discountProducts" type="String[]" access="private"/>
+    <aura:attribute name="userProducts" type="Object[]" access="private"/>
+    <aura:attribute name="usersEmail" type="Object[]" access="private"/>
+    <aura:attribute name="userEmail" type="String" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="newDiscountFormContainer">
+            <lightning:input value="{!v.discount.startDate}" type="datetime" name="formInput" label="Discount start time"/>
+            <lightning:input value="{!v.discount.endDate}" type="datetime" name="formInput" label="Discount end time"/>
+            <lightning:slider value="{!v.discount.size}" label="Discount percent size"/>
+            <lightning:dualListbox name="languages"
+                                   label="Choose products Covered By Discount"
+                                   sourceLabel="Available"
+                                   selectedLabel="Selected"
+                                   options="{!v.userProducts}"
+                                   value="{!v.discountProducts}"/>
+            <div class="newDiscountFormContainer__emails">
+                <span class="newDiscountFormContainer__emails__title">{!$Label.c.choose_users} (Leave empty to assign discount to all users)</span>
+                <div class="newDiscountFormContainer__emails__new">
+                    <lightning:layout>
+                        <lightning:layoutItem size="8">
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="User Email"
+                                             variant="label-hidden"
+                                             type="text" label="User Email"
+                                             value="{!v.userEmail}"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="4">
+                            <lightning:button label="{!$Label.c.add}" variant="neutral"
+                                              onclick="{!c.onEmailAdd}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="newDiscountFormContainer__emails__all">
+                    <aura:iteration items="{!v.usersEmail}" var="email">
+                        <div class="newDiscountFormContainer__emails__all__element slds-truncate">
+                            <lightning:layout>
+                                <lightning:layoutItem class="slds-text-align_center" size="5">
+                                    <lightning:formattedEmail value="{!email}"/>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+            <div class="newDiscountFormContainer__controls">
+                <lightning:button variant="brand" label="Add Discount" onclick="{!c.onAddDiscount}"/>
+                <lightning:button variant="brand-outline" label="Clear" onclick="{!c.onClear}"/>
+            </div>
+        </div>
+    </div>
+</aura:component>

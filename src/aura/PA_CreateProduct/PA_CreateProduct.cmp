@@ -1,35 +1,35 @@
 <aura:component description="PA_CreateProduct" controller="PA_DataProvider"
                 implements="forceCommunity:availableForAllPageTypes">
 
-    <aura:attribute name="newProduct" type="Product__c" access="private" default="{}"/>
-    <aura:attribute name="allCategories" type="ProductCategory__c[]" access="private"/>
+    <aura:attribute name="newProduct" type="PA_Product" access="private"/>
+    <aura:attribute name="allCategories" type="PA_Category[]" access="private"/>
     <aura:attribute name="productImages" type="Object[]" access="private"/>
-    <aura:attribute name="productSpecifications" type="ProductSpecification__c[]" access="private"/>
+    <aura:attribute name="productSpecifications" type="PA_Specification[]" access="private"/>
     <aura:attribute name="image" type="String" access="private"/>
-    <aura:attribute name="specification" type="ProductSpecification__c" access="private" default="{}"/>
+    <aura:attribute name="specification" type="PA_Specification" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
     <div>
-        <div class="slds-p-horizontal--small">
+        <div class="createProductContainer slds-p-horizontal--small">
             <lightning:input required="true" type="text" aura:id="productField" label="Name" maxlength="80"
-                             value="{!v.newProduct.Name}"/>
+                             value="{!v.newProduct.name}"/>
             <lightning:layout>
                 <lightning:layoutItem size="6">
                     <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField"
                                      label="Price"
-                                     value="{!v.newProduct.Price__c}"/>
+                                     value="{!v.newProduct.price}"/>
                 </lightning:layoutItem>
                 <lightning:layoutItem size="6">
                     <lightning:input required="true" type="number" aura:id="productField" label="Quantity"
-                                     value="{!v.newProduct.Quantity__c}"/>
+                                     value="{!v.newProduct.quantity}"/>
                 </lightning:layoutItem>
             </lightning:layout>
             <lightning:textarea required="true" aura:id="productField" label="Description"
-                                value="{!v.newProduct.Description__c}"/>
+                                value="{!v.newProduct.description}"/>
             <lightning:select aura:id="productField" name="select" label="Category"
-                              value="{!v.newProduct.ProductCategory__c}">
+                              value="{!v.newProduct.category.id}">
                 <aura:iteration items="{!v.allCategories}" var="category">
-                    <option value="{!category.Id}" label="{!category.Name}"></option>
+                    <option value="{!category.id}" label="{!category.name}"></option>
                 </aura:iteration>
             </lightning:select>
 
@@ -54,13 +54,13 @@
                             <lightning:input class="slds-m-right_xxx-small" placeholder="Specification name"
                                              variant="label-hidden" aura:id="productField"
                                              type="text" label="{!$Label.c.name}"
-                                             value="{!v.specification.Name}"/>
+                                             value="{!v.specification.name}"/>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="5">
                             <lightning:input class="slds-m-right_xxx-small" placeholder="Specification value"
                                              variant="label-hidden" aura:id="productField"
                                              type="text" label="{!$Label.c.value}"
-                                             value="{!v.specification.Value__c}"/>
+                                             value="{!v.specification.value}"/>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="2">
                             <lightning:button label="{!$Label.c.add}" variant="neutral"
@@ -73,10 +73,10 @@
                         <div class="specificationChooserContainer__all__element slds-truncate">
                             <lightning:layout>
                                 <lightning:layoutItem class="slds-text-align_center" size="5">
-                                    <lightning:formattedText value="{!spec.Name}"/>
+                                    <lightning:formattedText value="{!spec.name}"/>
                                 </lightning:layoutItem>
                                 <lightning:layoutItem class="slds-text-align_center" size="5">
-                                    <lightning:formattedText value="{!spec.Value__c}"/>
+                                    <lightning:formattedText value="{!spec.value}"/>
                                 </lightning:layoutItem>
                                 <lightning:layoutItem class="slds-text-align_center" size="2">
                                 </lightning:layoutItem>

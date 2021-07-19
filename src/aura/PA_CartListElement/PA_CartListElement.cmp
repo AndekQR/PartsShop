@@ -17,13 +17,13 @@
                              'data:image/png;base64,'+v.imageData)}"/>
             </div>
             <div class="cartListElementContainer__title">
-                    {!v.productWrapper.product.Name}
+                    {!v.productWrapper.product.name}
             </div>
             <div class="cartListElementContainer__controls">
                 <div class="cartListElementContainer__controls__price">
                     <aura:if isTrue="{!not(empty(v.productWrapper.bestDiscount))}">
                         <div class="cartListElementContainer__controls__price__beforeDiscount">
-                            <lightning:formattedNumber value="{!v.productWrapper.product.Price__c}"
+                            <lightning:formattedNumber value="{!v.productWrapper.product.price}"
                                                        style="currency" currencyCode="USD"/>
                         </div>
                     </aura:if>
@@ -33,8 +33,8 @@
                     </div>
                 </div>
                 <div class="cartListElementContainer__controls__quantity">
-                    <lightning:input variant = "label-hidden" max="{!v.productWrapper.product.Quantity__c}" value="{!v.productWrapper.cartQuantity}" label="Quantity"/>
-                    <span>{!$Label.c.available_items + v.productWrapper.product.Quantity__c}</span>
+                    <lightning:input variant = "label-hidden" max="{!v.productWrapper.product.quantity}" value="{!v.productWrapper.cartQuantity}" label="Quantity"/>
+                    <span>{!$Label.c.available_items + v.productWrapper.product.quantity}</span>
                 </div>
                 <div class="cartListElementContainer__controls__button" onclick="{!c.addToWatchList}">
                     <lightning:icon

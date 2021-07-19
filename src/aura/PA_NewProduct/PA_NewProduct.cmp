@@ -1,4 +1,6 @@
-<aura:component description="PA_NewProduct" implements="forceCommunity:availableForAllPageTypes">
+<aura:component description="PA_NewProduct" implements="forceCommunity:availableForAllPageTypes, flexipage:availableForAllPageTypes" >
+
+    <ltng:require styles="{!$Resource.noHeaderLightning}"/>
 
     <div>
         <div class="newProductContainer">

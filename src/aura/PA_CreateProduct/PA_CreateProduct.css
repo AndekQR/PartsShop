@@ -1,6 +1,12 @@
 .THIS {
+
+}
+
+.THIS .createProductContainer {
+    border-radius: 5px;
     background-color: white;
     padding: 10px;
+    margin-right: 10px;
 }
 
 .THIS .imagesChooserContainer {

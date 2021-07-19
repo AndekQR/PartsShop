@@ -21,7 +21,7 @@
             if(state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 component.set('v.product', returnValue);
-                let originalPrice = returnValue.product.Price__c;
+                let originalPrice = returnValue.product.price;
                 let bestDiscount = returnValue.bestDiscount;
                 this.setPriceAfterDiscount(component, originalPrice, bestDiscount);
                 this.hideSpinner(component);
@@ -48,7 +48,7 @@
         if(bestDiscount == null) {
             component.set('v.priceAfterDiscount', originalPrice);
         } else {
-            let percent = bestDiscount.Size__c / 100;
+            let percent = bestDiscount.size / 100;
             let afterDiscount = originalPrice - (originalPrice * percent);
             afterDiscount = Math.round(afterDiscount * 100) / 100;
             component.set('v.priceAfterDiscount', afterDiscount);
@@ -65,8 +65,7 @@
     },
 
     addProductToCart: function (component) {
-        const productId = component.get('v.product').product.Id;
-        console.log(productId);
+        const productId = component.get('v.product').product.id;
         let action = component.get('c.addToUserCart');
         action.setParams({
             productId: productId
@@ -97,7 +96,7 @@
         let product = component.get('v.product').product;
         let action = component.get('c.addToFavorites');
         action.setParams({
-            productId: product.Id
+            productId: product.id
         });
         action.setCallback(this, (response) => {
             let state = response.getState();

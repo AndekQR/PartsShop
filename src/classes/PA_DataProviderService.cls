@@ -12,9 +12,10 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c
+                        Rating__c, Quantity__c, Approved__c
                 FROM Product__c
-                WHERE Name LIKE :query + '%'
+                WHERE Name LIKE :query + '%' AND
+                Approved__c = :true
                 LIMIT :pageSize
                 OFFSET :offset
         ];
@@ -30,8 +31,9 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c
+                        Rating__c, Quantity__c, Approved__c
                 FROM Product__c
+                WHERE Approved__c = :true
                 LIMIT :pageSize
                 OFFSET :offset
         ];
@@ -41,17 +43,20 @@ public with sharing class PA_DataProviderService {
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
     }
 
-    public static List<ProductCategory__c> getAllProductCategories() {
-        return [
+    public static List<PA_Category> getAllProductCategories() {
+        List<ProductCategory__c> productCategories = [
                 SELECT Id, Name
                 FROM ProductCategory__c
                 ORDER BY Name
         ];
+        System.debug('categorise');
+        System.debug(productCategories);
+        return PA_Category.mapToCategories(productCategories);
     }
 
-    public static void saveProduct(Product__c product, Map<String, String> imagesData,
+    public static void saveProduct(PA_Product product, Map<String, String> imagesData,
             Map<String, String> specs) {
-        insert product;
+        insertProduct(product);
         List<ProductSpecification__c> productSpecifications = new List<ProductSpecification__c>();
         for (String key : specs.keySet()) {
             ProductSpecification__c specification = new ProductSpecification__c();
@@ -62,6 +67,11 @@ public with sharing class PA_DataProviderService {
         }
         saveImages(imagesData, product.Id);
         insert productSpecifications;
+    }
+
+    private static void insertProduct(PA_Product product) {
+        Product__c mapped = PA_Product.mapToCustomProduct(product);
+        insert mapped;
     }
 
     private static void saveImages(Map<String, String> imagesData, String imagesOwnerId) {
@@ -118,8 +128,9 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c
+                        Rating__c, Quantity__c,Approved__c
                 FROM Product__c
+                WHERE Approved__c = :true
                 ORDER BY CreatedDate DESC
                 LIMIT :pageSize
                 OFFSET :offset
@@ -129,6 +140,21 @@ public with sharing class PA_DataProviderService {
                 .images()
                 .discount();
         return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
+    }
+
+    public static List<PA_Product> allUserProducts() {
+        String userId = UserInfo.getUserId();
+        List<Product__c> products = [
+                SELECT Id,Name,
+                        Description__c, Price__c,
+                        ProductCategory__r.Name,
+                        Rating__c, Quantity__c, Approved__c
+                FROM Product__c
+                WHERE CreatedById = :userId AND
+                Approved__c = :true
+                ORDER BY Name ASC
+        ];
+        return PA_Product.mapToProducts(products);
     }
 
     public static PA_PaginationResponse userProducts(Integer page, Integer pageSize) {
@@ -141,9 +167,10 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c
+                        Rating__c, Quantity__c, Approved__c
                 FROM Product__c
-                WHERE CreatedById = :userId
+                WHERE CreatedById = :userId AND
+                Approved__c = :true
                 ORDER BY CreatedDate DESC
                 LIMIT :pageSize
                 OFFSET :offset
@@ -163,9 +190,10 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c
+                        Rating__c, Quantity__c, Approved__c
                 FROM Product__c
-                WHERE ProductCategory__c = :categoryId
+                WHERE ProductCategory__c = :categoryId AND
+                Approved__c = :true
                 ORDER BY CreatedDate DESC
                 LIMIT :pageSize
                 OFFSET :offset
@@ -182,9 +210,10 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c
+                        Rating__c, Quantity__c, Approved__c
                 FROM Product__c
-                WHERE Id = :productId
+                WHERE Id = :productId AND
+                Approved__c = :true
                 LIMIT 1
         ];
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(new List<Product__C>{
@@ -218,14 +247,14 @@ public with sharing class PA_DataProviderService {
         pageSize = validatePageData(pageSize, 12);
         Integer offset = (page - 1) * pageSize;
         List<ProductReview__c> reviews = [
-                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name
+                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name, Product__c
                 FROM ProductReview__c
                 WHERE Product__c = :productId
                 ORDER BY CreatedDate DESC
                 LIMIT :pageSize
                 OFFSET :offset
         ];
-        return new PA_PaginationResponse(page, getReviewsSize(productId), reviews, pageSize);
+        return new PA_PaginationResponse(page, getReviewsSize(productId), PA_Review.mapToReviews(reviews), pageSize);
     }
 
     private static Integer validatePageData(Integer currentValue, Integer defaultValue) {

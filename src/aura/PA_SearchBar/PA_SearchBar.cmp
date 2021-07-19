@@ -2,7 +2,7 @@
 
     <aura:attribute name="selectRecordId" type="String" access="private"/>
     <aura:attribute name="selectRecordName" type="String" access="private"/>
-    <aura:attribute name="searchRecords" type="List" access="private"/>
+    <aura:attribute name="searchRecords" type="PA_ProductWrapper[]" access="private"/>
     <aura:attribute name="LoadingText" type="Boolean" default="false"/>
     <c:PA_Navigation aura:id="navigation"/>
 
@@ -48,7 +48,7 @@
                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                                 <aura:iteration items="{!v.searchRecords}" var="record" indexVar="hdtv">
                                     <li role="presentation" class="slds-listbox__item">
-                                        <div id="{!record.product.Id}" data-name="{!record.product.Name}"
+                                        <div id="{!record.product.id}" data-name="{!record.product.name}"
                                              onclick="{!c.setSelectedRecord}"
                                              class="searchRow"
                                              role="option">
@@ -63,7 +63,7 @@
                                             <div class="slds-media__body searchRecordBody">
                                                 <span class="searchRecordBody__item searchRecordBody__item--primary
                                                             slds-listbox__option-text slds-listbox__option-text_entity">
-                                                        {!record.product.Name}
+                                                        {!record.product.name}
                                                 </span>
                                             </div>
                                         </div>

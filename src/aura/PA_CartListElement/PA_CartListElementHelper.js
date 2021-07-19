@@ -3,7 +3,7 @@
         if (bestDiscount == null) {
             component.set('v.priceAfterDiscount', originalPrice);
         } else {
-            let percent = bestDiscount.Size__c / 100;
+            let percent = bestDiscount.size / 100;
             let afterDiscount = originalPrice - (originalPrice * percent);
             afterDiscount = Math.round(afterDiscount * 100) / 100;
             component.set('v.priceAfterDiscount', afterDiscount);
@@ -14,7 +14,7 @@
         let product = component.get('v.productWrapper').product;
         let action = component.get('c.addToFavorites');
         action.setParams({
-            productId: product.Id
+            productId: product.id
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
@@ -29,7 +29,7 @@
     },
 
     removeProductFromCart: function (component) {
-        const productId = component.get('v.productWrapper').product.Id;
+        const productId = component.get('v.productWrapper').product.id;
         let action = component.get('c.removeFromCart');
         action.setParams({
             productId: productId
@@ -84,7 +84,7 @@
         if (productWrapper != null) {
             let action = component.get('c.updateProductCartQuantity');
             action.setParams({
-                productId: productWrapper.product.Id,
+                productId: productWrapper.product.id,
                 quantity: productWrapper.cartQuantity
             });
             $A.enqueueAction(action);

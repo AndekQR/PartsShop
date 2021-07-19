@@ -26,7 +26,7 @@
             let state = response.getState();
             if(state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
-                component.set('v.priceSum', returnValue.Price_Sum__c);
+                component.set('v.priceSum', returnValue.priceSum);
             } else {
                 this.handleError(response);
             }

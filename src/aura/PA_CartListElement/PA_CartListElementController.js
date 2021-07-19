@@ -4,7 +4,7 @@
         if(product.images != null && product.images.length > 0) {
             component.set('v.imageData', product.images[0]);
         }
-        helper.setPriceAfterDiscount(component, product.product.Price__c, product.bestDiscount)
+        helper.setPriceAfterDiscount(component, product.product.price, product.bestDiscount)
     },
 
     addToWatchList: function(component, event, helper) {

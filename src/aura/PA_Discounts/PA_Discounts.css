@@ -1,0 +1,15 @@
+.THIS {
+}
+
+.THIS .discountsContainer {
+    padding: 10px;
+}
+
+.THIS .discountsContainer__title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}

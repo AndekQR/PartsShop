@@ -6,15 +6,15 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static List<ProductCategory__c> getAllProductCategories() {
+    public static List<PA_Category> getAllProductCategories() {
         return PA_DataProviderService.getAllProductCategories();
     }
 
     @AuraEnabled
-    public static void saveProduct(Product__c product,
+    public static void saveProduct(PA_Product product,
             Map<String, String> imagesData,
             Map<String, String> specs) {
-        PA_DataProviderService.saveProduct(product, imagesData, specs);
+        PA_DataProviderService.saveProduct((PA_Product)product, imagesData, specs);
     }
 
     @AuraEnabled
@@ -67,7 +67,7 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static Cart__c getUserCart() {
+    public static PA_Cart getUserCart() {
         return PA_CartService.getUserCart();
     }
 
@@ -81,7 +81,17 @@ public class PA_DataProvider {
         return PA_DataProviderService.userProducts(page, pageSize);
     }
     @AuraEnabled
+    public static List<PA_Product> allUserProducts() {
+        return PA_DataProviderService.allUserProducts();
+    }
+
+    @AuraEnabled
     public static PA_PaginationResponse getProductsByCategory(Integer page, Integer pageSize, String categoryId) {
         return PA_DataProviderService.getProductsByCategory(page, pageSize, categoryId);
+    }
+
+    @AuraEnabled
+    public static void addDiscount(PA_Discount discount, List<String> productsIds, List<String> usersEmails) {
+        PA_DiscountService.addDiscount(discount, productsIds, usersEmails);
     }
 }

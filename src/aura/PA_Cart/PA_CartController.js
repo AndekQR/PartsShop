@@ -25,7 +25,6 @@
     },
 
     onQuantityChange: function(component, event, helper) {
-        console.log('on quantity change cart');
         helper.setCartPriceSum(component);
     },
 

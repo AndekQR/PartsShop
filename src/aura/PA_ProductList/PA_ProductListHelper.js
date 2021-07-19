@@ -198,7 +198,6 @@
             let state = response.getState();
             if(state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
-                console.log(JSON.parse(JSON.stringify(returnValue)));
                 this.setPaginationData(component, returnValue)
             } else {
                 this.handleError(response);

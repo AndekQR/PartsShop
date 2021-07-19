@@ -3,7 +3,7 @@
         let product = component.get('v.product').product;
         let action = component.get('c.addToFavorites');
         action.setParams({
-            productId: product.Id
+            productId: product.id
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
@@ -31,16 +31,16 @@
         let errors = response.getError();
         if (errors) {
             if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
+                console.error("Error message: " +
                     errors[0].message);
             }
         } else {
-            console.log("Unknown error");
+            console.error("Unknown error");
         }
     },
 
     toProductDetails: function (component) {
-        let productId = component.get('v.product').product.Id;
+        let productId = component.get('v.product').product.id;
         let navComponent = component.find('navigation');
         navComponent.navigateToProductDetails(productId);
     },
@@ -49,7 +49,7 @@
         if (bestDiscount == null) {
             component.set('v.priceAfterDiscount', originalPrice);
         } else {
-            let percent = bestDiscount.Size__c / 100;
+            let percent = bestDiscount.size / 100;
             let afterDiscount = originalPrice - (originalPrice * percent);
             afterDiscount = Math.round(afterDiscount * 100) / 100;
             component.set('v.priceAfterDiscount', afterDiscount);
@@ -57,7 +57,7 @@
     },
 
     addProductToCart: function (component) {
-        const productId = component.get('v.product').product.Id;
+        const productId = component.get('v.product').product.id;
         let action = component.get('c.addToUserCart');
         action.setParams({
             productId: productId
@@ -82,7 +82,7 @@
     },
 
     removeFavoriteProduct: function(component) {
-        const productId = component.get('v.product').product.Id;
+        const productId = component.get('v.product').product.id;
         let action = component.get('c.removeFromFavorites');
         action.setParams({
             productId: productId
@@ -90,6 +90,7 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
+                // labelk
                 this.showToast('Success', 'Product removed from your cart!', 'success');
                 this.callRefreshData(component);
             } else {

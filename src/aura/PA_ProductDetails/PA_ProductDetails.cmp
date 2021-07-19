@@ -1,7 +1,7 @@
 <aura:component description="PA_ProductDetails" implements="forceCommunity:availableForAllPageTypes"
                 controller="PA_DataProvider">
 
-    <aura:attribute name="product" type="Object" access="private"/>
+    <aura:attribute name="product" type="PA_ProductWrapper" access="private"/>
     <aura:attribute name="quantity" type="Integer" default="1" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
@@ -9,7 +9,7 @@
     <div>
         <div class="productDetailsContainer">
             <div class="productDetailsContainer__category">
-                <span>/{!v.product.product.ProductCategory__r.Name}</span>
+                <span>/{!v.product.product.category.name}</span>
                 <div class="productDetailsContainer__category__rating">
                     <span>Average rate of {!v.product.numberOfReviews} reviews: </span>
                     <c:PA_FiveStarRating value="{!v.product.average}" readonly="{!true}"/>
@@ -26,7 +26,7 @@
                 <div class="productDetailsContainer__detailsContainer slds-size_12-of-12 slds-medium-size_6-of-12">
                     <div class="slds-grid slds-wrap">
                         <div class="productDetailsContainer__detailsContainer__header slds-size_12-of-12">
-                            <h1>{!v.product.product.Name}</h1>
+                            <h1>{!v.product.product.name}</h1>
                         </div>
                         <div class="slds-size_8-of-12">
                             <div class="productDetailsContainer__detailsContainer__details__specs">
@@ -36,13 +36,13 @@
                         <div class="productDetailsContainer__detailsContainer__details__priceContainer slds-size_4-of-12">
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__container">
                                 <div class="productDetailsContainer__detailsContainer__details__price">
-                                    <lightning:input max="{!v.product.product.Quantity__c}" value="{!v.quantity}" label="Quantity"/>
-                                    <span>{! $Label.c.available_items + v.product.product.Quantity__c}</span>
+                                    <lightning:input max="{!v.product.product.quantity}" value="{!v.quantity}" label="Quantity"/>
+                                    <span>{! $Label.c.available_items + v.product.product.quantity}</span>
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__price">
                                     <aura:if isTrue="{!not(empty(v.product.bestDiscount))}">
                                         <div class="productDetailsContainer__detailsContainer__details__price__beforeDiscount">
-                                            <lightning:formattedNumber value="{!v.product.product.Price__c}"
+                                            <lightning:formattedNumber value="{!v.product.product.price}"
                                                                        style="currency" currencyCode="USD"/>
                                         </div>
                                     </aura:if>
@@ -70,10 +70,10 @@
             <div class="slds-grid slds-wrap secondSection">
                 <div class="title slds-size_12-of-12">Description</div>
                 <div class="productDetailsContainer__description slds-size_12-of-12 slds-medium-size_6-of-12">
-                        {!v.product.product.Description__c}
+                        {!v.product.product.description}
                 </div>
                 <div class="productDetailsContainer__comments slds-size_12-of-12 slds-medium-size_6-of-12">
-                    <c:PA_ProductReview productId="{!v.product.product.Id}"/>
+                    <c:PA_ProductReview productId="{!v.product.product.id}"/>
                 </div>
             </div>
         </div>

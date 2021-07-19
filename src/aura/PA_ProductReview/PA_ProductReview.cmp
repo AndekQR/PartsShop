@@ -1,7 +1,7 @@
 <aura:component description="PA_ProductReview" controller="PA_DataProvider">
 
     <aura:attribute name="productId" type="String"/>
-    <aura:attribute name="reviews" type="Review__c[]" access="private"/>
+    <aura:attribute name="reviews" type="PA_Review[]" access="private"/>
     <aura:attribute name="newReviewContent" type="String" access="private"/>
     <aura:attribute name="newReviewRating" type="Integer" access="private"/>
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
@@ -29,11 +29,11 @@
                     <aura:iteration items="{!v.reviews}" var="item">
                         <div class="reviewItem">
                             <div class="reviewItem__header">
-                                <span>{!item.CreatedBy.Name +' | '+ format(item.CreatedDate)}</span>
-                                <c:PA_FiveStarRating value="{!item.Rating__c}" readonly="true"/>
+                                <span>{!item.createdByName +' | '+ format(item.CreatedDate)}</span>
+                                <c:PA_FiveStarRating value="{!item.rating}" readonly="true"/>
                             </div>
                             <div class="reviewItem__body">
-                                    {!item.Content__c}
+                                    {!item.content}
                             </div>
                         </div>
                     </aura:iteration>

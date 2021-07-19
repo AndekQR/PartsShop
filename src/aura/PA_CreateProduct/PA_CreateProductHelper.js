@@ -7,7 +7,11 @@
             if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 if (returnValue.length > 0) {
-                    product.ProductCategory__c = returnValue[0].Id;
+                    product = {
+                        category: {
+                            id: returnValue[0].id
+                        }
+                    };
                     component.set('v.newProduct', product);
                 }
                 component.set('v.allCategories', returnValue);
@@ -44,12 +48,12 @@
         let productImages = component.get('v.productImages');
         let productSpecifications = component.get('v.productSpecifications');
 
-        productObject.sobjectType = 'Product__c';
         let specsMap = new Map();
-        productSpecifications.forEach(element => specsMap[element.Name] = element.Value__c);
+        productSpecifications.forEach(element => specsMap[element.name] = element.value);
         let imagesMap = new Map();
         productImages.forEach(element => imagesMap[element.name] = element.data.match(/,(.*)$/)[1]);
         let action = component.get('c.saveProduct');
+        console.log(JSON.parse(JSON.stringify(productObject)));
         action.setParams({
             product: productObject,
             imagesData: imagesMap,

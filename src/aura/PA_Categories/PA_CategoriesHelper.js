@@ -17,11 +17,11 @@
         let errors = response.getError();
         if (errors) {
             if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
+                console.error("Error message: " +
                     errors[0].message);
             }
         } else {
-            console.log("Unknown error");
+            console.error("Unknown error");
         }
     },
 

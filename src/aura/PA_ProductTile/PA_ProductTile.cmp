@@ -2,7 +2,7 @@
                 controller="PA_DataProvider">
 
     <aura:attribute name="showControls" type="Boolean" default="true"/>
-    <aura:attribute name="product" type="Object" default='{}'/>
+    <aura:attribute name="product" type="PA_ProductWrapper" default='{}'/>
     <aura:attribute name="imageData" type="String" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
     <aura:attribute name="isWatchList" type="Boolean" access="private" default="false"/>
@@ -19,11 +19,11 @@
                              'data:image/png;base64,'+v.imageData)}"/>
             </div>
             <div class="tileContainer__text">
-                <span class="slds-truncate">{!v.product.product.Name}</span>
+                <span class="slds-truncate">{!v.product.product.name}</span>
                 <div class="tileContainer__text__price">
                     <aura:if isTrue="{!not(empty(v.product.bestDiscount))}">
                         <div class="tileContainer__text__price__beforeDiscount">
-                            <lightning:formattedNumber value="{!v.product.product.Price__c}"
+                            <lightning:formattedNumber value="{!v.product.product.price}"
                                                        style="currency" currencyCode="USD"/>
                         </div>
                         <aura:set attribute="else">

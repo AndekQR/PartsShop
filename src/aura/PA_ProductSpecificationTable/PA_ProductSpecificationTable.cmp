@@ -1,6 +1,6 @@
 <aura:component description="PA_ProductSpecificationTable">
 
-    <aura:attribute name="specification" type="Object[]"/>
+    <aura:attribute name="specification" type="PA_Specification[]"/>
 
     <div>
         <div class="productSpecsContainer">
@@ -15,13 +15,13 @@
             <aura:iteration items="{!v.specification}" var="spec">
                 <div class="productSpecsContainer__row">
                     <div class="productSpecsContainer__row__name slds-truncate">
-                        {!spec.Name}
+                        {!spec.name}
                     </div>
                     <div class="productSpecsContainer__row__delimiter">
                         |
                     </div>
                     <div class="productSpecsContainer__row__value slds-truncate">
-                        {!spec.Value__c}
+                        {!spec.value}
                     </div>
                 </div>
             </aura:iteration>

@@ -1,6 +1,7 @@
 ({
     init: function (component, event, helper) {
         helper.setProductCategories(component);
+        component.set('v.specification', {});
     },
 
     onSaveProduct: function (component, event, helper) {

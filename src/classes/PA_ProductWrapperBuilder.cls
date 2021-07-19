@@ -1,18 +1,18 @@
 public class PA_ProductWrapperBuilder {
 
     private List<PA_ProductWrapper> wrappers = new List<PA_ProductWrapper>();
-    private PA_Service service { get; set; }
+    private PA_DiscountService discountService { get; set; }
 
     public PA_ProductWrapperBuilder(List<Product__c> products) {
         this.products(products);
-        this.service = new PA_Service();
+        this.discountService = new PA_DiscountService();
     }
 
     private void products(List<Product__c> products) {
         Map<Product__c, Integer> occurrences = this.getOccurrences(products);
         for (Product__c product : occurrences.keySet()) {
             PA_ProductWrapper wrapper = new PA_ProductWrapper();
-            wrapper.product = product;
+            wrapper.product = new PA_Product(product);
             wrappers.add(wrapper);
         }
     }
@@ -20,7 +20,7 @@ public class PA_ProductWrapperBuilder {
     public PA_ProductWrapperBuilder cartQuantity(List<ProductCart__c> productCarts) {
         for(ProductCart__c productCart : productCarts) {
             for(PA_ProductWrapper wrapper : wrappers) {
-                if(productCart.Product__c == wrapper.product.Id) {
+                if(productCart.Product__c == wrapper.product.id) {
                     wrapper.cartQuantity = (Integer)productCart.Quantity__c;
                 }
             }
@@ -43,7 +43,7 @@ public class PA_ProductWrapperBuilder {
     public PA_ProductWrapperBuilder images() {
         List<Attachment> attachments = getImages(getProductsIds());
         for (PA_ProductWrapper wrapper : wrappers) {
-            String productId = wrapper.product.Id;
+            String productId = wrapper.product.id;
             wrapper.images = getProductImagesData(attachments, productId);
         }
         return this;
@@ -82,13 +82,13 @@ public class PA_ProductWrapperBuilder {
     public PA_ProductWrapperBuilder specifications() {
         List<ProductSpecification__c> specs = getProductsSpecifications(getProductsIds());
         for (PA_ProductWrapper wrapper : wrappers) {
-            String productId = wrapper.product.Id;
+            String productId = wrapper.product.id;
             wrapper.specifications = findProductSpecifications(specs, productId);
         }
         return this;
     }
 
-    private List<ProductSpecification__c> findProductSpecifications(
+    private List<PA_Specification> findProductSpecifications(
             List<ProductSpecification__c> specs,
             String productId) {
         List<ProductSpecification__c> result = new List<ProductSpecification__c>();
@@ -97,7 +97,7 @@ public class PA_ProductWrapperBuilder {
                 result.add(spec);
             }
         }
-        return result;
+        return PA_Specification.mapToSpecifications(result);
     }
 
     private List<ProductSpecification__c> getProductsSpecifications(List<String> productIds) {
@@ -114,19 +114,19 @@ public class PA_ProductWrapperBuilder {
 
     private List<String> getProductsIds() {
         List<String> result = new List<String>();
-        for (PA_ProductWrapper ob : wrappers) {
-            result.add(ob.product.Id);
+        for (PA_ProductWrapper wrapper : wrappers) {
+            result.add(wrapper.product.id);
         }
         return result;
     }
 
     public PA_ProductWrapperBuilder discount() {
         List<String> productsIds = getProductsIds();
-        List<ProductDiscount__c> allDiscounts = service.getDiscounts(productsIds);
+        List<PA_Discount> allDiscounts = discountService.getDiscounts(productsIds);
         if (!allDiscounts.isEmpty()) {
             for (PA_ProductWrapper wrapper : wrappers) {
-                String productId = wrapper.product.Id;
-                wrapper.bestDiscount = service.findBestProductDiscount(allDiscounts, productId);
+                String productId = wrapper.product.id;
+                wrapper.bestDiscount = discountService.findBestProductDiscount(allDiscounts, productId);
             }
         }
         return this;
@@ -140,8 +140,8 @@ public class PA_ProductWrapperBuilder {
                 WHERE Product__c IN :productIds
         ];
         for(PA_ProductWrapper wrapper : wrappers) {
-            wrapper.numberOfReviews = getNumberOfReviews(allReviews, wrapper.product.Id);
-            wrapper.average = (getRatingSum(allReviews, wrapper.product.Id) / wrapper.numberOfReviews);
+            wrapper.numberOfReviews = getNumberOfReviews(allReviews, wrapper.product.id);
+            wrapper.average = (getRatingSum(allReviews, wrapper.product.id) / wrapper.numberOfReviews);
         }
         return this;
     }

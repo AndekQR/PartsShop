@@ -1,0 +1,16 @@
+<aura:component description="PA_Discounts" implements="flexipage:availableForAllPageTypes">
+
+    <ltng:require styles="{!$Resource.noHeaderLightning}"/>
+
+<!--    discount form, all dscounts from user, discounts requests,-->
+    <div>
+        <div class="discountsContainer">
+            <div class="discountsContainer__title">
+                {!$Label.c.discounts}
+            </div>
+            <div class="discountsContainer__form">
+                <c:PA_NewDiscountForm/>
+            </div>
+        </div>
+    </div>
+</aura:component>

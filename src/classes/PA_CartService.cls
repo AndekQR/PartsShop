@@ -1,7 +1,7 @@
 public with sharing class PA_CartService {
 
     public static void addToCart(String productId) {
-        Cart__c userCart = getUserCart();
+        PA_Cart userCart = getUserCart();
         ProductCart__c productCart = checkIfExists(productId, userCart.Id);
         if(productCart != null) {
             productCart.Quantity__c += 1;
@@ -9,12 +9,12 @@ public with sharing class PA_CartService {
         } else {
             ProductCart__c newProductCart = new ProductCart__c();
             newProductCart.Product__c = productId;
-            newProductCart.Cart__c = userCart.Id;
+            newProductCart.Cart__c = userCart.id;
             insert newProductCart;
         }
     }
 
-    public static ProductCart__c checkIfExists(String productId, String cartId) {
+    private static ProductCart__c checkIfExists(String productId, String cartId) {
         List<ProductCart__c> result = [
                 SELECT Id, Quantity__c
                 FROM ProductCart__c
@@ -39,7 +39,7 @@ public with sharing class PA_CartService {
     }
 
     public static PA_PaginationResponse getCartsProducts(Integer page, Integer pageSize) {
-        Cart__c cart = getUserCart();
+        PA_Cart cart = getUserCart();
         Integer offset = (page - 1) * pageSize;
         List<ProductCart__c> productCarts = [
                 SELECT Id, Product__r.Id,Product__r.Name,
@@ -48,7 +48,7 @@ public with sharing class PA_CartService {
                         Product__r.Rating__c, Product__r.Quantity__c,
                         Quantity__c
                 FROM ProductCart__c
-                WHERE Cart__c = :cart.Id
+                WHERE Cart__c = :cart.id
                 LIMIT :pageSize
                 OFFSET :offset
         ];
@@ -61,7 +61,7 @@ public with sharing class PA_CartService {
         return new PA_PaginationResponse(page, getNumberProductsCart(), wrappers, pageSize);
     }
 
-    public static Cart__c getUserCart() {
+    public static PA_Cart getUserCart() {
         List<Cart__c> carts = [
                 SELECT Id, Price_Sum__c
                 FROM Cart__c
@@ -70,9 +70,9 @@ public with sharing class PA_CartService {
         if (carts.isEmpty()) {
             Cart__c cart = new Cart__c();
             insert cart;
-            return cart;
+            return new PA_Cart(cart);
         }
-        return carts.get(0);
+        return new PA_Cart(carts.get(0));
     }
 
     private static List<Product__c> mapToProducts(List<ProductCart__c> productCarts) {
@@ -94,25 +94,24 @@ public with sharing class PA_CartService {
     }
 
     private static Integer getNumberProductsCart() {
-        Cart__c cart = getUserCart();
+        PA_Cart cart = getUserCart();
         AggregateResult result = [
                 SELECT count(Id) size
                 FROM ProductCart__c
-                WHERE Cart__c = :cart.Id
+                WHERE Cart__c = :cart.id
         ];
         return (Integer) result.get('size');
     }
 
     public static void updateProductCartQuantity(String productId, Integer quantity) {
-        Cart__c cart = getUserCart();
+        PA_Cart cart = getUserCart();
         List<ProductCart__c> productCarts = [
                 SELECT Id, Quantity__c, Product__c
                 FROM ProductCart__c
-                WHERE Cart__c = :cart.Id
+                WHERE Cart__c = :cart.id
         ];
         for (ProductCart__c productCart : productCarts) {
             if (productCart.Product__c == productId) {
-                System.debug('if');
                 productCart.Quantity__c = quantity;
                 update productCart;
                 return;
