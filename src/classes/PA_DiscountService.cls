@@ -1,6 +1,6 @@
 public class PA_DiscountService extends PA_Service {
 
-    public List<PA_Discount> getDiscounts(List<String> productsIds, String status) {
+    public List<PA_Discount> getDiscounts(List<String> productsIds) {
         String userId = UserInfo.getUserId();
         List<String> product_productDiscountNotAssigned = getProductDiscountNotAssignedToUsers();
         List<String> product_productDiscountAssigned = getIdsProductDiscountAssignedToUser(userId);
@@ -9,13 +9,39 @@ public class PA_DiscountService extends PA_Service {
                         ProductDiscount__r.Size__c, ProductDiscount__r.StartDate__c,
                         ProductDiscount__r.EndDate__c, Product__c
                 FROM Product_ProductDiscount__c
-                WHERE ((ProductDiscount__c IN :product_productDiscountAssigned) OR (ProductDiscount__c IN :product_productDiscountNotAssigned)) AND
-                Product__c IN :productsIds AND ProductDiscount__r.Status__c = :status
+                WHERE ((ProductDiscount__c IN :product_productDiscountAssigned) OR
+                (ProductDiscount__c IN :product_productDiscountNotAssigned)) AND
+                Product__c IN :productsIds
         ];
         return PA_Discount.mapToDiscounts(product_productDiscounts);
     }
 
-    public PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize, String status) {
+    public PA_PaginationResponse getRequestedDiscounts(Integer page, Integer pageSize) {
+        Integer offset = (page - 1) * pageSize;
+        List<Product_ProductDiscount__c> product_productDiscounts = [
+                SELECT Id, ProductDiscount__r.Id,
+                        ProductDiscount__r.Size__c, ProductDiscount__r.StartDate__c,
+                        ProductDiscount__r.EndDate__c, Product__c
+                FROM Product_ProductDiscount__c
+                WHERE ProductDiscount__r.Status__c = 'Request'
+                LIMIT :pageSize
+                OFFSET :offset
+        ];
+        return new PA_PaginationResponse(page, countDiscountsRequests(), PA_Discount.mapToDiscounts(product_productDiscounts), pageSize);
+    }
+
+    private Integer countDiscountsRequests() {
+        String userId = UserInfo.getUserId();
+        AggregateResult result = [
+                SELECT count(Id) size
+                FROM Product_ProductDiscount__c
+                WHERE CreatedById = :userId AND
+                ProductDiscount__r.Status__c = 'Request'
+        ];
+        return (Integer) result.get('size');
+    }
+
+    public PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize) {
         String userId = UserInfo.getUserId();
         Integer offset = (page - 1) * pageSize;
         List<String> productDiscountNotAssigned = getProductDiscountNotAssignedToUsers();
@@ -25,8 +51,7 @@ public class PA_DiscountService extends PA_Service {
                         Size__c, StartDate__c,
                         EndDate__c
                 FROM ProductDiscount__c
-                WHERE ((Id IN :productDiscountAssigned) OR (Id IN :productDiscountNotAssigned)) AND
-                Status__c = :status
+                WHERE ((Id IN :productDiscountAssigned) OR (Id IN :productDiscountNotAssigned))
                 LIMIT :pageSize
                 OFFSET :offset
         ];

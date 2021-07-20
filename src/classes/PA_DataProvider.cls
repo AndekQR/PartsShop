@@ -97,15 +97,21 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize, String status) {
+    public static PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize) {
         PA_DiscountService service = new PA_DiscountService();
-        return service.getDiscountsPage(page, pageSize, status);
+        return service.getDiscountsPage(page, pageSize);
+    }
+    @AuraEnabled
+    public static PA_PaginationResponse getRequestedDiscounts(Integer page, Integer pageSize) {
+        PA_DiscountService service = new PA_DiscountService();
+        return service.getRequestedDiscounts(page, pageSize);
     }
 
     @AuraEnabled
     public static PA_PaginationResponse getProductsByDiscount(String discountId, Integer page, Integer pageSize) {
         return PA_DiscountService.getProductsByDiscount(discountId, page, pageSize);
     }
+
     @AuraEnabled
     public static void removeDiscount(String discountId) {
         PA_DiscountService.removeDiscount(discountId);

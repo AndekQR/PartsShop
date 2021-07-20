@@ -1,5 +1,6 @@
 <aura:component description="PA_DiscountsList" controller="PA_DataProvider">
 
+    <aura:attribute name="requests" type="Boolean" default="false"/>
     <aura:attribute name="data" type="PA_Discount[]" access="private"/>
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
     <aura:attribute name="pageSize" type="Integer" default="6"/>
@@ -23,7 +24,9 @@
                         <th>{!$Label.c.size}</th>
                         <th>{!$Label.c.start_date}</th>
                         <th>{!$Label.c.end_date}</th>
-                        <th>{!$Label.c.delete}</th>
+                        <aura:if isTrue="{!not(v.requests)}">
+                            <th>{!$Label.c.delete}</th>
+                        </aura:if>
                     </tr>
                     </thead>
                     <tbody>
@@ -41,13 +44,15 @@
                                 <td>
                                     <lightning:formattedDateTime value="{!element.endDate}"/>
                                 </td>
-                                <td>
-                                    <div class="discountsListContainer__body__deleteButton" data-myid="{!element.id}" onclick="{!c.onDiscountDelete}">
-                                        <lightning:icon
-                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                                                iconName="utility:close" size="x-small" alternativeText="icon"/>
-                                    </div>
-                                </td>
+                                <aura:if isTrue="{!not(v.requests)}">
+                                    <td>
+                                        <div class="discountsListContainer__body__deleteButton" data-myid="{!element.id}" onclick="{!c.onDiscountDelete}">
+                                            <lightning:icon
+                                                    class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                                    iconName="utility:close" size="x-small" alternativeText="icon"/>
+                                        </div>
+                                    </td>
+                                </aura:if>
                             </tr>
                         </aura:iteration>
                         <aura:set attribute="else">

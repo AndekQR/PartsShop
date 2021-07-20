@@ -1,12 +1,45 @@
 ({
+    refreshData: function(component) {
+        let isRequests = component.get('v.requests');
+        switch (isRequests) {
+            case true: {
+                this.refreshRequestsData(component);
+                break;
+            }
+            case false: {
+                this.refreshDiscountData(component);
+                break;
+            }
+        }
+    },
+
+    refreshRequestsData: function(component) {
+        let page = component.get('v.pageNumber');
+        let pageSize = component.get('v.pageSize');
+        let action = component.get('c.getRequestedDiscounts');
+        action.setParams({
+            page: page,
+            pageSize: pageSize
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                let returnValue = response.getReturnValue();
+                this.setPaginationData(component, returnValue);
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
     refreshDiscountData: function(component) {
         let page = component.get('v.pageNumber');
         let pageSize = component.get('v.pageSize');
         let action = component.get('c.getDiscountsPage');
         action.setParams({
             page: page,
-            pageSize: pageSize,
-            status: 'Active'
+            pageSize: pageSize
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
@@ -33,13 +66,13 @@
 
     setFirstPage: function (component) {
         component.set('v.pageNumber', 1);
-        this.refreshDiscountData(component);
+        this.refreshData(component);
     },
 
     setLastPage: function (component) {
         let allPageSize = component.get('v.allPageSize');
         component.set('v.pageNumber', allPageSize);
-        this.refreshDiscountData(component);
+        this.refreshData(component);
     },
 
     setNextPage: function (component) {
@@ -47,7 +80,7 @@
         let allPageSize = component.get('v.allPageSize');
         if (pageNumber < allPageSize) {
             component.set('v.pageNumber', (pageNumber + 1));
-            this.refreshDiscountData(component);
+            this.refreshData(component);
         }
     },
 
@@ -55,7 +88,7 @@
         let pageNumber = component.get('v.pageNumber');
         if (pageNumber > 1) {
             component.set('v.pageNumber', (pageNumber - 1));
-            this.refreshDiscountData(component);
+            this.refreshData(component);
         }
     },
 
@@ -97,7 +130,7 @@
             let state = response.getState();
             if(state === 'SUCCESS') {
                 this.showToast('Success', 'Discount deleted', 'success');
-                this.refreshDiscountData(component);
+                this.refreshData(component);
             } else {
                 this.showToast('Error',  $A.get('$Label.c.something_went_wrong'), 'error');
             }
@@ -114,4 +147,8 @@
         });
         resultsToast.fire();
     },
+
+    fillUpDiscountFormEvent: function (component) {
+
+    }
 })

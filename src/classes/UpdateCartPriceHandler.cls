@@ -10,7 +10,7 @@ public with sharing class UpdateCartPriceHandler {
         Set<String> cartsIds = getCartsIds(productCarts);
         List<ProductCart__c> cartsData = getCartsData(cartsIds);
         List<String> productsIds = getProductsIds(cartsData);
-        List<PA_Discount> discounts = service.getDiscounts(productsIds, 'Active');
+        List<PA_Discount> discounts = service.getDiscounts(productsIds);
         updateCartsPriceSum(cartsData, discounts, cartsIds);
     }
 

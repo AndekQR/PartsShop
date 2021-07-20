@@ -9,8 +9,6 @@ public class PA_Discount {
     @AuraEnabled
     public Datetime endDate {get; set;}
     @AuraEnabled
-    public String productId {get; set;}
-    @AuraEnabled
     public String status {get; set;}
 
     public PA_Discount(){}
@@ -20,7 +18,6 @@ public class PA_Discount {
         this.size = discount.ProductDiscount__r.Size__c;
         this.startDate = discount.ProductDiscount__r.StartDate__c;
         this.endDate = discount.ProductDiscount__r.EndDate__c;
-        this.productId = discount.Product__c;
     }
     public PA_Discount(ProductDiscount__c discount) {
         this.id = discount.Id;

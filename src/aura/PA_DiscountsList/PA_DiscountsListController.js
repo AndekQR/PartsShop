@@ -20,9 +20,14 @@
     },
 
     onRowSelect: function(component, event, helper) {
+        let isRequests = component.get('v.requests');
         let selectedRowId = event.currentTarget.dataset.myid;
         component.set("v.selectedRowId", selectedRowId);
-        helper.fireRowSelectedEvent(component, selectedRowId);
+        if(isRequests) {
+            helper.fillUpDiscountFormEvent(component);
+        } else {
+            helper.fireRowSelectedEvent(component, selectedRowId);
+        }
     },
 
     onDiscountDelete: function(component, event, helper) {

@@ -9,8 +9,17 @@
             <div class="discountsContainer__title">
                     {!$Label.c.discounts}
             </div>
-            <div class="discountsContainer__form">
-                <c:PA_NewDiscountForm/>
+            <div class="discountsContainer__form  slds-grid slds-wrap">
+                <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="discountsContainer__form__left">
+                        <c:PA_NewDiscountForm/>
+                    </div>
+                </div>
+                <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="discountsContainer__form__right">
+                        <c:PA_DiscountsList requests="{!true}"/>
+                    </div>
+                </div>
             </div>
             <div class="discountsContainer__discountsTables slds-grid slds-wrap">
                 <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
