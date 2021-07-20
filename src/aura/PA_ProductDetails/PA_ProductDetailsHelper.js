@@ -109,4 +109,21 @@
         });
         $A.enqueueAction(action);
     },
+
+    showRequestModal: function (component) {
+        let productId = component.get('v.product').product.id;
+        $A.createComponent('c:PA_NewDiscountRequestForm', {
+            'discountProductId': productId
+        }, (resultBody, status, errorMessage) => {
+            if (status === 'SUCCESS') {
+                component.find('overlayLib').showCustomModal({
+                    body: resultBody,
+                    showCloseButton: true,
+                    cssClass: ''
+                });
+            } else {
+                console.log("Error: " + errorMessage);
+            }
+        });
+    }
 })

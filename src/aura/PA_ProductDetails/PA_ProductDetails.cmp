@@ -5,6 +5,7 @@
     <aura:attribute name="quantity" type="Integer" default="1" access="private"/>
     <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div>
         <div class="productDetailsContainer">
