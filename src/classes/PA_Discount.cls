@@ -10,6 +10,8 @@ public class PA_Discount {
     public Datetime endDate {get; set;}
     @AuraEnabled
     public String productId {get; set;}
+    @AuraEnabled
+    public String status {get; set;}
 
     public PA_Discount(){}
 
@@ -19,6 +21,20 @@ public class PA_Discount {
         this.startDate = discount.ProductDiscount__r.StartDate__c;
         this.endDate = discount.ProductDiscount__r.EndDate__c;
         this.productId = discount.Product__c;
+    }
+    public PA_Discount(ProductDiscount__c discount) {
+        this.id = discount.Id;
+        this.size = discount.Size__c;
+        this.startDate = discount.StartDate__c;
+        this.endDate = discount.EndDate__c;
+    }
+
+    public static List<PA_Discount> mapToDiscounts(List<ProductDiscount__c> discounts) {
+        List<PA_Discount> pa_discounts = new List<PA_Discount>();
+        for (ProductDiscount__c product_productDiscount : discounts) {
+            pa_discounts.add(new PA_Discount(product_productDiscount));
+        }
+        return pa_discounts;
     }
 
     public static List<PA_Discount> mapToDiscounts(List<Product_ProductDiscount__c> discounts) {
@@ -35,6 +51,7 @@ public class PA_Discount {
         productDiscount.Size__c = discount.size;
         productDiscount.StartDate__c = discount.startDate;
         productDiscount.EndDate__c = discount.endDate;
+        productDiscount.Status__c = discount.status;
         return productDiscount;
     }
 }

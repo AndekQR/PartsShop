@@ -13,17 +13,17 @@
 
     <div>
         <div class="title">
-            Your Discounts
+            {!$Label.c.your_discounts}
         </div>
         <div class="discountsListContainer">
             <div class="discountsListContainer__body">
                 <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-box_border">
                     <thead>
                     <tr class="slds-text-title_caps">
-                        <th>Size</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Delete</th>
+                        <th>{!$Label.c.size}</th>
+                        <th>{!$Label.c.start_date}</th>
+                        <th>{!$Label.c.end_date}</th>
+                        <th>{!$Label.c.delete}</th>
                     </tr>
                     </thead>
                     <tbody>

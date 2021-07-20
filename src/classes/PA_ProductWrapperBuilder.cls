@@ -122,7 +122,7 @@ public class PA_ProductWrapperBuilder {
 
     public PA_ProductWrapperBuilder discount() {
         List<String> productsIds = getProductsIds();
-        List<PA_Discount> allDiscounts = discountService.getDiscounts(productsIds);
+        List<PA_Discount> allDiscounts = discountService.getDiscounts(productsIds, 'Active');
         if (!allDiscounts.isEmpty()) {
             for (PA_ProductWrapper wrapper : wrappers) {
                 String productId = wrapper.product.id;

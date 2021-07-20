@@ -49,8 +49,6 @@ public with sharing class PA_DataProviderService {
                 FROM ProductCategory__c
                 ORDER BY Name
         ];
-        System.debug('categorise');
-        System.debug(productCategories);
         return PA_Category.mapToCategories(productCategories);
     }
 

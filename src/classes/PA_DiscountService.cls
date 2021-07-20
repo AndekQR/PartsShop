@@ -1,6 +1,6 @@
 public class PA_DiscountService extends PA_Service {
 
-    public List<PA_Discount> getDiscounts(List<String> productsIds) {
+    public List<PA_Discount> getDiscounts(List<String> productsIds, String status) {
         String userId = UserInfo.getUserId();
         List<String> product_productDiscountNotAssigned = getProductDiscountNotAssignedToUsers();
         List<String> product_productDiscountAssigned = getIdsProductDiscountAssignedToUser(userId);
@@ -9,28 +9,28 @@ public class PA_DiscountService extends PA_Service {
                         ProductDiscount__r.Size__c, ProductDiscount__r.StartDate__c,
                         ProductDiscount__r.EndDate__c, Product__c
                 FROM Product_ProductDiscount__c
-                WHERE ((Id IN :product_productDiscountAssigned) OR (Id IN :product_productDiscountNotAssigned)) AND
-                Product__c IN :productsIds
+                WHERE ((ProductDiscount__c IN :product_productDiscountAssigned) OR (ProductDiscount__c IN :product_productDiscountNotAssigned)) AND
+                Product__c IN :productsIds AND ProductDiscount__r.Status__c = :status
         ];
         return PA_Discount.mapToDiscounts(product_productDiscounts);
     }
 
-    public PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize) {
+    public PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize, String status) {
         String userId = UserInfo.getUserId();
         Integer offset = (page - 1) * pageSize;
-        List<String> product_productDiscountNotAssigned = getProductDiscountNotAssignedToUsers();
-        List<String> product_productDiscountAssigned = getIdsProductDiscountAssignedToUser(userId);
-        List<Product_ProductDiscount__c> product_productDiscounts = [
-                SELECT Id, ProductDiscount__r.Id,
-                        ProductDiscount__r.Size__c, ProductDiscount__r.StartDate__c,
-                        ProductDiscount__r.EndDate__c, Product__c
-                FROM Product_ProductDiscount__c
-                WHERE ((Id IN :product_productDiscountAssigned) OR (Id IN :product_productDiscountNotAssigned))
-                GROUP BY ProductDiscount__c
+        List<String> productDiscountNotAssigned = getProductDiscountNotAssignedToUsers();
+        List<String> productDiscountAssigned = getIdsProductDiscountAssignedToUser(userId);
+        List<ProductDiscount__c> product_productDiscounts = [
+                SELECT Id,
+                        Size__c, StartDate__c,
+                        EndDate__c
+                FROM ProductDiscount__c
+                WHERE ((Id IN :productDiscountAssigned) OR (Id IN :productDiscountNotAssigned)) AND
+                Status__c = :status
                 LIMIT :pageSize
                 OFFSET :offset
         ];
-        Integer allRecordCount = product_productDiscountNotAssigned.size() + product_productDiscountAssigned.size();
+        Integer allRecordCount = productDiscountNotAssigned.size() + productDiscountAssigned.size();
         return new PA_PaginationResponse(page, allRecordCount, PA_Discount.mapToDiscounts(product_productDiscounts), pageSize);
     }
 
@@ -46,7 +46,7 @@ public class PA_DiscountService extends PA_Service {
                 LIMIT :pageSize
                 OFFSET :offset
         ];
-        List<PA_Product> result =  PA_Product.mapToProducts(product_productDiscounts);
+        List<PA_Product> result = PA_Product.mapToProducts(product_productDiscounts);
         return new PA_PaginationResponse(page, countProductsByDiscount(discountId), result, pageSize);
     }
 
@@ -62,30 +62,37 @@ public class PA_DiscountService extends PA_Service {
     }
 
     private List<String> getProductDiscountNotAssignedToUsers() {
-        List<Product_ProductDiscount__c> result = [
-                SELECT Id
+        List<AggregateResult> product_productDiscounts = [
+                SELECT ProductDiscount__c
                 FROM Product_ProductDiscount__c
                 WHERE Id NOT IN (SELECT Product_ProductDiscount__c FROM ProductDiscountAssign__c)
+                GROUP BY ProductDiscount__c
         ];
-        return getIds(result);
+        List<String> ids = new List<String>();
+        for (AggregateResult aggregateResult : product_productDiscounts) {
+            String id = (String) aggregateResult.get('ProductDiscount__c');
+            if (id != null) {
+                ids.add(id);
+            }
+        }
+        return ids;
     }
 
     private List<String> getIdsProductDiscountAssignedToUser(String userId) {
-        List<ProductDiscountAssign__c> userDiscountsAssigns = [
-                SELECT Id, Product_ProductDiscount__c
-                FROM ProductDiscountAssign__c
-                WHERE User__c = :userId
+        List<AggregateResult> userDiscountsAssigns = [
+                SELECT ProductDiscount__c
+                FROM Product_ProductDiscount__c
+                WHERE Id IN (SELECT Product_ProductDiscount__c FROM ProductDiscountAssign__c WHERE User__c = :userId)
+                GROUP BY ProductDiscount__c
         ];
-        return getProduct_ProductDiscountIds(userDiscountsAssigns);
+        List<String> ids = new List<String>();
+        for (AggregateResult aggregateResult : userDiscountsAssigns) {
+            String id = (String) aggregateResult.get('ProductDiscount__c');
+            ids.add(id);
+        }
+        return ids;
     }
 
-    public List<String> getProduct_ProductDiscountIds(List<ProductDiscountAssign__c> objects) {
-        List<String> idStrings = new List<String>();
-        for (ProductDiscountAssign__c sobj : objects) {
-            idStrings.add(sobj.Product_ProductDiscount__c);
-        }
-        return idStrings;
-    }
 
     public PA_Discount findBestProductDiscount(List<PA_Discount> results, String productId) {
         List<PA_Discount> discounts = new List<PA_Discount>();
@@ -129,7 +136,7 @@ public class PA_DiscountService extends PA_Service {
             product_productDiscounts.add(product_productDiscount);
         }
         insert product_productDiscounts;
-        if(!usersEmails.isEmpty()) {
+        if (!usersEmails.isEmpty()) {
             List<ProductDiscountAssign__c> discountAssigns = new List<ProductDiscountAssign__c>();
             List<User> users = getUsersByEmails(usersEmails);
             for (User user : users) {

@@ -97,9 +97,9 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize) {
+    public static PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize, String status) {
         PA_DiscountService service = new PA_DiscountService();
-        return service.getDiscountsPage(page, pageSize);
+        return service.getDiscountsPage(page, pageSize, status);
     }
 
     @AuraEnabled

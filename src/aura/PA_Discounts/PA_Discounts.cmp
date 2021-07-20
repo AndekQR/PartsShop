@@ -4,7 +4,6 @@
     <aura:handler name="PA_DiscountIdChangeEvent" event="c:PA_DiscountIdChangeEvent" action="{!c.onDiscountIdChange}"/>
     <aura:handler name="PA_NewRecordEvent" event="c:PA_NewRecordEvent" action="{!c.onDiscountAdd}"/>
 
-    <!--    discount form, all dscounts from user, discounts requests,-->
     <div>
         <div class="discountsContainer">
             <div class="discountsContainer__title">

@@ -5,7 +5,8 @@
         let action = component.get('c.getDiscountsPage');
         action.setParams({
             page: page,
-            pageSize: pageSize
+            pageSize: pageSize,
+            status: 'Active'
         });
         action.setCallback(this, (response) => {
             let state = response.getState();

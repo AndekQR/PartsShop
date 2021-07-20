@@ -23,10 +23,10 @@
         }))
     },
 
-
     clearForm: function(component) {
         let discount = {
-            size: 5
+            size: 5,
+            status: 'Active'
         };
         component.set('v.discount', discount);
         component.set('v.discountProducts', []);

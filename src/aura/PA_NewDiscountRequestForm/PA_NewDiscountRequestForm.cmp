@@ -1,0 +1,16 @@
+<aura:component description="PA_NewDiscountRequestForm" controller="PA_DataProvider">
+
+    <div>
+        <div class="newDiscountRequestContainer">
+            <div class="newDiscountRequestContainer__title">
+
+            </div>
+            <div class="newDiscountRequestContainer__body">
+
+            </div>
+            <div class="newDiscountRequestContainer__controls">
+
+            </div>
+        </div>
+    </div>
+</aura:component>
