@@ -106,4 +106,8 @@ public class PA_DataProvider {
     public static PA_PaginationResponse getProductsByDiscount(String discountId, Integer page, Integer pageSize) {
         return PA_DiscountService.getProductsByDiscount(discountId, page, pageSize);
     }
+    @AuraEnabled
+    public static void removeDiscount(String discountId) {
+        PA_DiscountService.removeDiscount(discountId);
+    }
 }

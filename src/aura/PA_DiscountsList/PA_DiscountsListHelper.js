@@ -1,6 +1,5 @@
 ({
     refreshDiscountData: function(component) {
-        console.log('refresh discount size');
         let page = component.get('v.pageNumber');
         let pageSize = component.get('v.pageSize');
         let action = component.get('c.getDiscountsPage');
@@ -12,7 +11,6 @@
             let state = response.getState();
             if(state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
-                console.log(JSON.parse(JSON.stringify(returnValue)));
                 this.setPaginationData(component, returnValue);
             } else {
                 this.handleError(response);
@@ -90,6 +88,29 @@
 
     removeDiscount: function(component, event) {
         let discountId = event.currentTarget.dataset.myid;
+        let action = component.get('c.removeDiscount');
+        action.setParams({
+            discountId: discountId
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                this.showToast('Success', 'Discount deleted', 'success');
+                this.refreshDiscountData(component);
+            } else {
+                this.showToast('Error',  $A.get('$Label.c.something_went_wrong'), 'error');
+            }
+        });
+        $A.enqueueAction(action);
+    },
 
-    }
+    showToast: function (title, message, type) {
+        let resultsToast = $A.get("e.force:showToast");
+        resultsToast.setParams({
+            "title": title,
+            "message": message,
+            "type": type
+        });
+        resultsToast.fire();
+    },
 })

@@ -49,8 +49,9 @@
             if(state === 'SUCCESS') {
                 this.showToast('Success', 'Discount is now available', 'success');
                 this.clearForm(component);
+                this.fireNewRecordEvent(component);
             } else {
-                this.showToast('Error', 'Something went wrong! Try again.', 'error');
+                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
             }
         });
         $A.enqueueAction(action);
@@ -85,4 +86,9 @@
             console.error("Unknown error");
         }
     },
+
+    fireNewRecordEvent: function(component) {
+        let event = component.getEvent('PA_NewRecordEvent');
+        event.fire();
+    }
 })

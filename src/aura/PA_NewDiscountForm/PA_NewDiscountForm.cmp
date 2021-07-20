@@ -6,6 +6,7 @@
     <aura:attribute name="usersEmail" type="Object[]" access="private"/>
     <aura:attribute name="userEmail" type="String" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:registerEvent name="PA_NewRecordEvent" type="c:PA_NewRecordEvent"/>
 
     <div>
         <div class="newDiscountFormContainer">

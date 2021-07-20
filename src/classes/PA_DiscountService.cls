@@ -26,6 +26,7 @@ public class PA_DiscountService extends PA_Service {
                         ProductDiscount__r.EndDate__c, Product__c
                 FROM Product_ProductDiscount__c
                 WHERE ((Id IN :product_productDiscountAssigned) OR (Id IN :product_productDiscountNotAssigned))
+                GROUP BY ProductDiscount__c
                 LIMIT :pageSize
                 OFFSET :offset
         ];
@@ -162,6 +163,8 @@ public class PA_DiscountService extends PA_Service {
     }
 
     public static void removeDiscount(String discountId) {
-
+        ProductDiscount__c productDiscount = new ProductDiscount__c();
+        productDiscount.Id = discountId;
+        delete productDiscount;
     }
 }

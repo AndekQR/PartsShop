@@ -76,7 +76,7 @@
                 this.showToast('Success', 'Product went to your cart!', 'success');
             } else {
                 this.handleError(response);
-                this.showToast('Error', 'Something went wrong. Try again!', 'error');
+                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
             }
         });
         $A.enqueueAction(action);

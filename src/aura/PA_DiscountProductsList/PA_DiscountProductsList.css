@@ -34,4 +34,5 @@
 
 .THIS .discountProductsListContainer__body__noRows {
     padding: 10px;
+    display: block;
 }

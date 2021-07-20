@@ -2,6 +2,7 @@
 
     <ltng:require styles="{!$Resource.noHeaderLightning}"/>
     <aura:handler name="PA_DiscountIdChangeEvent" event="c:PA_DiscountIdChangeEvent" action="{!c.onDiscountIdChange}"/>
+    <aura:handler name="PA_NewRecordEvent" event="c:PA_NewRecordEvent" action="{!c.onDiscountAdd}"/>
 
     <!--    discount form, all dscounts from user, discounts requests,-->
     <div>
@@ -15,7 +16,7 @@
             <div class="discountsContainer__discountsTables slds-grid slds-wrap">
                 <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
                     <div class="discountsContainer__discountsTables__leftSection">
-                        <c:PA_DiscountsList/>
+                        <c:PA_DiscountsList aura:id="discountsList"/>
                     </div>
                 </div>
                 <div class=" slds-size_12-of-12 slds-medium-size_6-of-12">
