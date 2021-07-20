@@ -1,0 +1,76 @@
+<aura:component description="PA_DiscountsList" controller="PA_DataProvider">
+
+    <aura:attribute name="data" type="PA_Discount[]" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="6"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private"/>
+    <aura:attribute name="allProductsSize" type="Integer" access="private"/>
+    <aura:attribute name="selectedRowId" type="String" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:registerEvent name="PA_DiscountIdChangeEvent" type="c:PA_DiscountIdChangeEvent"/>
+
+    <div>
+        <div class="title">
+            Your Discounts
+        </div>
+        <div class="discountsListContainer">
+            <div class="discountsListContainer__body">
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-box_border">
+                    <thead>
+                    <tr class="slds-text-title_caps">
+                        <th>Size</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <aura:if isTrue="{!not(empty(v.data))}">
+                        <aura:iteration items="{!v.data}" var="element">
+                            <tr data-myid="{!element.id}"
+                                onclick="{!c.onRowSelect}"
+                                class="{!(element.id == v.selectedRowId) ? 'selectedRow' : ''}">
+                                <td>
+                                    <lightning:formattedNumber value="{!element.size}"/>
+                                </td>
+                                <td>
+                                    <lightning:formattedDateTime value="{!element.startDate}"/>
+                                </td>
+                                <td>
+                                    <lightning:formattedDateTime value="{!element.endDate}"/>
+                                </td>
+                                <td>
+                                    <div class="discountsListContainer__body__deleteButton" data-myid="{!element.id}" onclick="{!c.onDiscountDelete}">
+                                        <lightning:icon
+                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                                iconName="utility:close" size="x-small" alternativeText="icon"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                                <span class="discountsListContainer__body__noElements">{!$Label.c.no_records}</span>
+                        </aura:set>
+                    </aura:if>
+                    </tbody>
+                </table>
+            </div>
+            <div class="discountsListContainer__paginationControls">
+                <div class="discountsListContainer__paginationControls__controls">
+                    <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}"
+                                      onclick="{!c.firstPage}"/>
+                    <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}"
+                                      label="{!$Label.c.previous_page}"
+                                      onclick="{!c.previousPage}"/>
+                    <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                      label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
+                    <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                      label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
+                </div>
+                <div class="discountsListContainer__paginationControls__info">
+                        {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

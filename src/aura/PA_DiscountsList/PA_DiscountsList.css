@@ -1,0 +1,50 @@
+.THIS {
+}
+
+.THIS .title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.THIS .discountsListContainer {
+    border-radius: 5px;
+    background-color: white;
+}
+
+.THIS .selectedRow {
+    background-color: rgba(229, 235, 236, 0.5);
+}
+
+.THIS .discountsListContainer__body__noElements {
+    padding: 10px;
+    display: block;
+}
+
+.THIS .discountsListContainer__paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.THIS .discountsListContainer__paginationControls__info {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.THIS .discountsListContainer__paginationControls__controls {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.THIS .discountsListContainer__body__deleteButton {
+    padding-left: 10px;
+}
+
+.THIS .discountsListContainer__body__deleteButton:hover {
+    cursor: pointer;
+}

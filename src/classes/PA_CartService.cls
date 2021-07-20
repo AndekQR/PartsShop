@@ -45,7 +45,7 @@ public with sharing class PA_CartService {
                 SELECT Id, Product__r.Id,Product__r.Name,
                         Product__r.Description__c, Product__r.Price__c,
                         Product__r.ProductCategory__r.Name,
-                        Product__r.Rating__c, Product__r.Quantity__c,
+                         Product__r.Quantity__c,
                         Quantity__c
                 FROM ProductCart__c
                 WHERE Cart__c = :cart.id
@@ -85,7 +85,7 @@ public with sharing class PA_CartService {
             product.Name = productCart.Product__r.Name;
             product.Description__c = productCart.Product__r.Description__c;
             product.Price__c = productCart.Product__r.Price__c;
-            product.Rating__c = productCart.Product__r.Rating__c;
+//            product.Rating__c = productCart.Product__r.Rating__c;
             product.Quantity__c = productCart.Product__r.Quantity__c;
             product.ProductCategory__r = category;
             products.add(product);

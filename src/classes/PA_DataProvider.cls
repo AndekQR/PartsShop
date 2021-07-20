@@ -80,6 +80,7 @@ public class PA_DataProvider {
     public static PA_PaginationResponse userProducts(Integer page, Integer pageSize) {
         return PA_DataProviderService.userProducts(page, pageSize);
     }
+
     @AuraEnabled
     public static List<PA_Product> allUserProducts() {
         return PA_DataProviderService.allUserProducts();
@@ -93,5 +94,16 @@ public class PA_DataProvider {
     @AuraEnabled
     public static void addDiscount(PA_Discount discount, List<String> productsIds, List<String> usersEmails) {
         PA_DiscountService.addDiscount(discount, productsIds, usersEmails);
+    }
+
+    @AuraEnabled
+    public static PA_PaginationResponse getDiscountsPage(Integer page, Integer pageSize) {
+        PA_DiscountService service = new PA_DiscountService();
+        return service.getDiscountsPage(page, pageSize);
+    }
+
+    @AuraEnabled
+    public static PA_PaginationResponse getProductsByDiscount(String discountId, Integer page, Integer pageSize) {
+        return PA_DiscountService.getProductsByDiscount(discountId, page, pageSize);
     }
 }

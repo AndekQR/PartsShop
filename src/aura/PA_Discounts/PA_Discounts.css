@@ -1,8 +1,10 @@
 .THIS {
+    width: 100% !important;
 }
 
 .THIS .discountsContainer {
     padding: 10px;
+
 }
 
 .THIS .discountsContainer__title {
@@ -12,4 +14,16 @@
     background-color: #f1f0f4;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.THIS .discountsContainer__discountsTables {
+    margin-top: 10px;
+}
+
+.THIS .discountsContainer__discountsTables__leftSection {
+    margin-right: 5px;
+}
+
+.THIS .discountsContainer__discountsTables__rightSection {
+    margin-left: 5px;
 }

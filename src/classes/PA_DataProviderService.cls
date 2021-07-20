@@ -12,7 +12,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c, Approved__c
+                         Quantity__c, Approved__c
                 FROM Product__c
                 WHERE Name LIKE :query + '%' AND
                 Approved__c = :true
@@ -31,7 +31,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c, Approved__c
+                         Quantity__c, Approved__c
                 FROM Product__c
                 WHERE Approved__c = :true
                 LIMIT :pageSize
@@ -128,7 +128,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c,Approved__c
+                         Quantity__c,Approved__c
                 FROM Product__c
                 WHERE Approved__c = :true
                 ORDER BY CreatedDate DESC
@@ -148,7 +148,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c, Approved__c
+                        Quantity__c, Approved__c
                 FROM Product__c
                 WHERE CreatedById = :userId AND
                 Approved__c = :true
@@ -167,7 +167,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c, Approved__c
+                         Quantity__c, Approved__c
                 FROM Product__c
                 WHERE CreatedById = :userId AND
                 Approved__c = :true
@@ -190,7 +190,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c, Approved__c
+                         Quantity__c, Approved__c
                 FROM Product__c
                 WHERE ProductCategory__c = :categoryId AND
                 Approved__c = :true
@@ -210,7 +210,7 @@ public with sharing class PA_DataProviderService {
                 SELECT Id,Name,
                         Description__c, Price__c,
                         ProductCategory__r.Name,
-                        Rating__c, Quantity__c, Approved__c
+                        Quantity__c, Approved__c
                 FROM Product__c
                 WHERE Id = :productId AND
                 Approved__c = :true
