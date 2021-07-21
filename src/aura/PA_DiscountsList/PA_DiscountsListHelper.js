@@ -129,7 +129,7 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if(state === 'SUCCESS') {
-                this.showToast('Success', 'Discount deleted', 'success');
+                this.showToast('Success', $A.get('$Label.c.discount_deleted'), 'success');
                 this.refreshData(component);
             } else {
                 this.showToast('Error',  $A.get('$Label.c.something_went_wrong'), 'error');
@@ -148,7 +148,11 @@
         resultsToast.fire();
     },
 
-    fillUpDiscountFormEvent: function (component) {
-
+    fillUpDiscountFormEvent: function (component, selectedRowId) {
+        let event = component.getEvent('PA_DiscountFormFillEvent');
+        event.setParams({
+            discountId: selectedRowId
+        });
+        event.fire();
     }
 })

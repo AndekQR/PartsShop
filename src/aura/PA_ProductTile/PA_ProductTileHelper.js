@@ -8,7 +8,7 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', 'Product went to your favorites!', 'success');
+                this.showToast('Success', $A.get('$Label.c.product_went_favorites'), 'success');
             } else {
                 this.handleError(response);
                 this.showToast('Warning', response.getError()[0].message, 'warning');
@@ -65,10 +65,10 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', 'Product went to your cart!', 'success');
+                this.showToast('Success', $A.get('$Label.c.product_went_cart'), 'success');
             } else {
                 this.handleError(response);
-                this.showToast('Error', 'Something went wrong. Try again!', 'error');
+                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
             }
         });
         $A.enqueueAction(action);
@@ -91,11 +91,11 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 // labelk
-                this.showToast('Success', 'Product removed from your cart!', 'success');
+                this.showToast('Success', $A.get('$Label.c.product_removed_cart'), 'success');
                 this.callRefreshData(component);
             } else {
                 this.handleError(response);
-                this.showToast('Error', 'Something went wrong. Try again!', 'error');
+                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
             }
         });
         $A.enqueueAction(action);

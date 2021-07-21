@@ -24,7 +24,7 @@
         let selectedRowId = event.currentTarget.dataset.myid;
         component.set("v.selectedRowId", selectedRowId);
         if(isRequests) {
-            helper.fillUpDiscountFormEvent(component);
+            helper.fillUpDiscountFormEvent(component, selectedRowId);
         } else {
             helper.fireRowSelectedEvent(component, selectedRowId);
         }

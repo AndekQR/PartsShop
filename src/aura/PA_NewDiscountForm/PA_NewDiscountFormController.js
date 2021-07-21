@@ -16,4 +16,8 @@
         helper.addToEmailList(component);
     },
 
+    fillForm: function(component, event, helper) {
+        helper.setFormData(component, event);
+    },
+
 })

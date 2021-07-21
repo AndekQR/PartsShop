@@ -9,7 +9,7 @@
     <div>
         <div class="newDiscountRequestContainer">
             <div class="newDiscountRequestContainer__title">
-                New Discount Request
+                {!$Label.c.new_discount_request}
             </div>
             <div class="newDiscountRequestContainer__body">
                 <lightning:input aura:id="requestForm" required="true" value="{!v.discount.startDate}" type="datetime" name="formInput" label="Discount start time"/>

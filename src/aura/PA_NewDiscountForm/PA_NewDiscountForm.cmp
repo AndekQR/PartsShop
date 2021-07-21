@@ -8,6 +8,10 @@
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:registerEvent name="PA_NewRecordEvent" type="c:PA_NewRecordEvent"/>
 
+    <aura:method name="fillForm" action="{!c.fillForm}">
+        <aura:attribute name="discountId" type="String"/>
+    </aura:method>
+
     <div>
         <div class="newDiscountFormContainer">
             <lightning:input value="{!v.discount.startDate}" type="datetime" name="formInput" label="Discount start time"/>
@@ -20,7 +24,7 @@
                                    options="{!v.userProducts}"
                                    value="{!v.discountProducts}"/>
             <div class="newDiscountFormContainer__emails">
-                <span class="newDiscountFormContainer__emails__title">{!$Label.c.choose_users} (Leave empty to assign discount to all users)</span>
+                <span class="newDiscountFormContainer__emails__title">{!$Label.c.choose_users} ({!$Label.c.leave_empty_to_assign_discount_to_all_users})</span>
                 <div class="newDiscountFormContainer__emails__new">
                     <lightning:layout>
                         <lightning:layoutItem size="8">

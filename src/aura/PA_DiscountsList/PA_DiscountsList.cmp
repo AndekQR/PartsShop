@@ -9,12 +9,18 @@
     <aura:attribute name="selectedRowId" type="String" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:registerEvent name="PA_DiscountIdChangeEvent" type="c:PA_DiscountIdChangeEvent"/>
+    <aura:registerEvent name="PA_DiscountFormFillEvent" type="c:PA_DiscountFormFillEvent"/>
 
     <aura:method name="refresh" action="{!c.init}"/>
 
     <div>
         <div class="title">
-            {!$Label.c.your_discounts}
+            <aura:if isTrue="{!v.requests}">
+                {!$Label.c.discount_requests}
+                <aura:set attribute="else">
+                        {!$Label.c.your_discounts}
+                </aura:set>
+            </aura:if>
         </div>
         <div class="discountsListContainer">
             <div class="discountsListContainer__body">

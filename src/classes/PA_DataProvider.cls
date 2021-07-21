@@ -113,6 +113,19 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
+    public static List<String> getDiscountAssignedUsersEmails(String discountId) {
+        Set<String> result = PA_DiscountService.getAssignedUserEmails(discountId);
+        List<String> toReturn = new List<String>();
+        toReturn.addAll(result);
+        return toReturn;
+    }
+
+    @AuraEnabled
+    public static PA_Discount getDiscountFullData(String discountId) {
+        return PA_DiscountService.getDiscountFullData(discountId);
+    }
+
+    @AuraEnabled
     public static void removeDiscount(String discountId) {
         PA_DiscountService.removeDiscount(discountId);
     }

@@ -1,9 +1,9 @@
 ({
-    setUserProducts: function(component) {
+    setUserProducts: function (component) {
         let action = component.get('c.allUserProducts');
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 let mapped = this.mapToDualListOptions(returnValue);
                 component.set('v.userProducts', mapped);
@@ -14,7 +14,7 @@
         $A.enqueueAction(action);
     },
 
-    mapToDualListOptions: function(products) {
+    mapToDualListOptions: function (products) {
         return products.map((element => {
             return {
                 label: element.name,
@@ -23,7 +23,7 @@
         }))
     },
 
-    clearForm: function(component) {
+    clearForm: function (component) {
         let discount = {
             size: 5,
             status: 'Active'
@@ -34,7 +34,7 @@
         component.set('v.userEmail', '');
     },
 
-    addDiscount: function(component) {
+    addDiscount: function (component) {
         let discount = component.get('v.discount');
         let discountProducts = component.get('v.discountProducts');
         let emails = component.get('v.usersEmail');
@@ -46,11 +46,12 @@
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 this.showToast('Success', 'Discount is now available', 'success');
                 this.clearForm(component);
                 this.fireNewRecordEvent(component);
             } else {
+                this.handleError(response);
                 this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
             }
         });
@@ -67,7 +68,7 @@
         resultsToast.fire();
     },
 
-    addToEmailList: function(component) {
+    addToEmailList: function (component) {
         let email = component.get('v.userEmail');
         let emailList = component.get('v.usersEmail');
         emailList.push(email);
@@ -87,8 +88,36 @@
         }
     },
 
-    fireNewRecordEvent: function(component) {
+    fireNewRecordEvent: function (component) {
         let event = component.getEvent('PA_NewRecordEvent');
         event.fire();
+    },
+
+    setFormData: function (component, event) {
+        let params = event.getParam('arguments');
+        this.getDiscountDetails(component, params.discountId);
+    },
+
+    getDiscountDetails: function (component, discountId) {
+        let action = component.get('c.getDiscountFullData');
+        action.setParams({
+            discountId: discountId
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if (state === 'SUCCESS') {
+                let returnValue = response.getReturnValue();
+                component.set('v.discountProducts', returnValue.products.map(element => element.id));
+                component.set('v.usersEmail', returnValue.usersEmail);
+                returnValue.products = null;
+                returnValue.usersEmail = null;
+                returnValue.status = 'Active';
+                component.set('v.discount', returnValue);
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
+
     }
 })

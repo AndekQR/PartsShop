@@ -3,7 +3,7 @@
     <aura:attribute name="discountId" type="String"/>
     <aura:attribute name="data" type="PA_Product[]" access="private"/>
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
-    <aura:attribute name="pageSize" type="Integer" default="6"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
     <aura:attribute name="allPageSize" type="Integer" access="private" default="1"/>
     <aura:attribute name="allProductsSize" type="Integer" access="private"/>
     <aura:attribute name="selectedRowId" type="String" access="private"/>

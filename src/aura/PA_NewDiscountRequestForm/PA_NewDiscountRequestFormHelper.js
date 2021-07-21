@@ -15,7 +15,7 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', 'Request sent', 'success');
+                this.showToast('Success', $A.get('$Label.c.request_sent'), 'success');
                 this.clearForm(component);
                 this.closeModal(component);
             } else {

@@ -11,7 +11,7 @@ public class PA_DiscountService extends PA_Service {
                 FROM Product_ProductDiscount__c
                 WHERE ((ProductDiscount__c IN :product_productDiscountAssigned) OR
                 (ProductDiscount__c IN :product_productDiscountNotAssigned)) AND
-                Product__c IN :productsIds
+                Product__c IN :productsIds AND ProductDiscount__r.Status__c = 'Active'
         ];
         return PA_Discount.mapToDiscounts(product_productDiscounts);
     }
@@ -51,7 +51,8 @@ public class PA_DiscountService extends PA_Service {
                         Size__c, StartDate__c,
                         EndDate__c
                 FROM ProductDiscount__c
-                WHERE ((Id IN :productDiscountAssigned) OR (Id IN :productDiscountNotAssigned))
+                WHERE ((Id IN :productDiscountAssigned) OR (Id IN :productDiscountNotAssigned)) AND
+                Status__c = 'Active'
                 LIMIT :pageSize
                 OFFSET :offset
         ];
@@ -61,18 +62,42 @@ public class PA_DiscountService extends PA_Service {
 
     public static PA_PaginationResponse getProductsByDiscount(String discountId, Integer page, Integer pageSize) {
         String userId = UserInfo.getUserId();
-        Integer offset = (page - 1) * pageSize;
-        List<Product_ProductDiscount__c> product_productDiscounts = [
-                SELECT Id, Product__r.Name, Product__r.Quantity__c, Product__r.Rating__c, Product__r.Id,
-                        Product__r.Approved__c, Product__r.Price__c, Product__r.Description__c, Product__r.ProductCategory__r.Name
-                FROM Product_ProductDiscount__c
-                WHERE CreatedById = :userId AND
-                ProductDiscount__c = :discountId
-                LIMIT :pageSize
-                OFFSET :offset
-        ];
+        List<Product_ProductDiscount__c> product_productDiscounts = new List<Product_ProductDiscount__c>();
+        if (page == null || pageSize == null) {
+            product_productDiscounts = [
+                    SELECT Id, Product__r.Name, Product__r.Quantity__c, Product__r.Rating__c, Product__r.Id,
+                            Product__r.Approved__c, Product__r.Price__c, Product__r.Description__c, Product__r.ProductCategory__r.Name
+                    FROM Product_ProductDiscount__c
+                    WHERE CreatedById = :userId AND
+                    ProductDiscount__c = :discountId
+            ];
+        } else {
+            Integer offset = (page - 1) * pageSize;
+            product_productDiscounts = [
+                    SELECT Id, Product__r.Name, Product__r.Quantity__c, Product__r.Rating__c, Product__r.Id,
+                            Product__r.Approved__c, Product__r.Price__c, Product__r.Description__c, Product__r.ProductCategory__r.Name
+                    FROM Product_ProductDiscount__c
+                    WHERE CreatedById = :userId AND
+                    ProductDiscount__c = :discountId
+                    LIMIT :pageSize
+                    OFFSET :offset
+            ];
+        }
         List<PA_Product> result = PA_Product.mapToProducts(product_productDiscounts);
         return new PA_PaginationResponse(page, countProductsByDiscount(discountId), result, pageSize);
+    }
+
+    public static Set<String> getAssignedUserEmails(String discountId) {
+        List<ProductDiscountAssign__c> productDiscountAssigns = [
+                SELECT Id, User__r.Email
+                FROM ProductDiscountAssign__c
+                WHERE Product_ProductDiscount__r.ProductDiscount__c = :discountId
+        ];
+        Set<String> emails = new Set<String>();
+        for (ProductDiscountAssign__c productDiscountAssign : productDiscountAssigns) {
+            emails.add(productDiscountAssign.User__r.Email);
+        }
+        return emails;
     }
 
     public static Integer countProductsByDiscount(String discountId) {
@@ -151,6 +176,14 @@ public class PA_DiscountService extends PA_Service {
     }
 
     public static void addDiscount(PA_Discount discount, List<String> productsIds, List<String> usersEmails) {
+        System.debug('removeDiscount');
+        System.debug(discount);
+        System.debug(productsIds);
+        System.debug(usersEmails);
+        if(discount.id != null) {
+            removeDiscount(discount.id);
+            discount.id = null;
+        }
         ProductDiscount__c mappedDiscount = PA_Discount.mapToDiscount(discount);
         insert mappedDiscount;
         List<Product_ProductDiscount__c> product_productDiscounts = new List<Product_ProductDiscount__c>();
@@ -198,5 +231,20 @@ public class PA_DiscountService extends PA_Service {
         ProductDiscount__c productDiscount = new ProductDiscount__c();
         productDiscount.Id = discountId;
         delete productDiscount;
+    }
+
+    public static PA_Discount getDiscountFullData(String discountId) {
+        ProductDiscount__c stndDiscount = [
+                SELECT Id,
+                        Size__c, StartDate__c,
+                        EndDate__c
+                FROM ProductDiscount__c
+                WHERE Id = :discountId
+                LIMIT 1
+        ];
+        PA_Discount discount = new PA_Discount(stndDiscount);
+        discount.products = (List<PA_Product>)getProductsByDiscount(discountId, null, null).data;
+        discount.usersEmail = getAssignedUserEmails(discountId);
+        return discount;
     }
 }

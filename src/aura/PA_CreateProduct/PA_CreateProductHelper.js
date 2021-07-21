@@ -64,9 +64,9 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 this.clearForm(component);
-                this.showToast('Approve Process', 'Product successfully send to approve process.', 'success');
+                this.showToast('Approve Process', $A.get('$Label.c.product_send_approve_process'), 'success');
             } else {
-                this.showToast('Error', 'Something went wrong. Try again!', 'error');
+                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
                 this.handleError(response);
             }
         });
@@ -96,7 +96,7 @@
             return;
         }
         if (!file.type.match(/(image.*)/)) {
-            this.showToast('Error', 'Image file not supported', 'error');
+            this.showToast('Error', $A.get('$label.c.image_file_format_not_supported'), 'error');
             return;
         }
         let allImages = component.get('v.productImages');
