@@ -21,12 +21,12 @@
 .THIS .CartListElementContainer__image {
     margin-right: 10px;
     margin-left: 10px;
+    width: 90px;
 }
 
 .THIS .CartListElementContainer__image img {
     object-fit: contain;
-    height: 70px;
-    width: 80px;
+
 }
 
 .THIS .cartListElementContainer__title {

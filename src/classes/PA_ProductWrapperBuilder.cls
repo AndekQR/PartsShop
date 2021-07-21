@@ -141,7 +141,11 @@ public class PA_ProductWrapperBuilder {
         ];
         for(PA_ProductWrapper wrapper : wrappers) {
             wrapper.numberOfReviews = getNumberOfReviews(allReviews, wrapper.product.id);
-            wrapper.average = (getRatingSum(allReviews, wrapper.product.id) / wrapper.numberOfReviews);
+            if(wrapper.numberOfReviews == 0) {
+                wrapper.average = 0;
+            } else {
+                wrapper.average = (getRatingSum(allReviews, wrapper.product.id) / wrapper.numberOfReviews);
+            }
         }
         return this;
     }

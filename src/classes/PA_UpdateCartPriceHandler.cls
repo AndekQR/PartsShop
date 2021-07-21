@@ -1,8 +1,8 @@
-public with sharing class UpdateCartPriceHandler {
+public with sharing class PA_UpdateCartPriceHandler {
 
     private PA_DiscountService service { get; set; }
 
-    public UpdateCartPriceHandler() {
+    public PA_UpdateCartPriceHandler() {
         this.service = new PA_DiscountService();
     }
 

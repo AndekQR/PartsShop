@@ -72,3 +72,11 @@
     background-color: #4e6fd1;
     cursor: pointer;
 }
+
+.THIS .cartContainer__leftSection__emptyCart {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

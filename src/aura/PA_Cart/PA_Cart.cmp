@@ -16,9 +16,16 @@
         </div>
         <div class="cartContainer slds-grid slds-wrap">
             <div class="cartContainer__leftSection slds-size_12-of-12 slds-medium-size_8-of-12">
-                <aura:iteration items="{!v.productWrappers}" var="wrapper">
-                    <c:PA_CartListElement productWrapper="{!wrapper}"/>
-                </aura:iteration>
+                <aura:if isTrue="{!not(empty(v.productWrappers))}">
+                    <aura:iteration items="{!v.productWrappers}" var="wrapper">
+                        <c:PA_CartListElement productWrapper="{!wrapper}"/>
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        <div class="cartContainer__leftSection__emptyCart">
+                            Your Cart is Empty
+                        </div>
+                    </aura:set>
+                </aura:if>
                 <div class="paginationControls">
                     <div class="paginationControls__controls">
                         <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}"

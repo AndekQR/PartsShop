@@ -65,7 +65,8 @@ public with sharing class PA_CartService {
         List<Cart__c> carts = [
                 SELECT Id, Price_Sum__c
                 FROM Cart__c
-                WHERE CreatedById = :UserInfo.getUserId()
+                WHERE CreatedById = :UserInfo.getUserId() AND
+                Type__c = 'Cart'
         ];
         if (carts.isEmpty()) {
             Cart__c cart = new Cart__c();
@@ -73,6 +74,24 @@ public with sharing class PA_CartService {
             return new PA_Cart(cart);
         }
         return new PA_Cart(carts.get(0));
+    }
+
+    private static List<PA_Cart> getUserOrdersCarts() {
+        return [
+                SELECT Id, Price_Sum__c
+                FROM Cart__c
+                WHERE CreatedById = :UserInfo.getUserId() AND
+                Type__c = 'Order'
+        ];
+    }
+
+    private static List<PA_Cart> getUserReturns() {
+        return [
+                SELECT Id, Price_Sum__c
+                FROM Cart__c
+                WHERE CreatedById = :UserInfo.getUserId() AND
+                Type__c = 'Return'
+        ];
     }
 
     private static List<Product__c> mapToProducts(List<ProductCart__c> productCarts) {
@@ -85,7 +104,6 @@ public with sharing class PA_CartService {
             product.Name = productCart.Product__r.Name;
             product.Description__c = productCart.Product__r.Description__c;
             product.Price__c = productCart.Product__r.Price__c;
-//            product.Rating__c = productCart.Product__r.Rating__c;
             product.Quantity__c = productCart.Product__r.Quantity__c;
             product.ProductCategory__r = category;
             products.add(product);
