@@ -1,0 +1,79 @@
+.THIS {
+    /*width: 70%;*/
+    /*min-width: 70%;*/
+}
+
+.THIS .slds-leftpad {
+    padding-left: 2rem;
+}
+
+.THIS .iconheight {
+    top: 65%;
+}
+
+.THIS .leftspace {
+    display: flex;
+}
+
+.THIS .leftspace input {
+    padding-left: 2rem;
+}
+
+.THIS .dropdown::-webkit-scrollbar {
+    display: none;
+}
+
+.THIS .searchRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    transition: transform .3s;
+}
+
+.THIS .searchRow:hover {
+    cursor: pointer;
+    background-color: #e3eaf1;
+}
+
+.THIS .searchRow__imageContainer {
+    padding: 5px;
+}
+.THIS .searchRow__imageContainer .slds-icon {
+    line-height: 2;
+    margin-left: 5px;
+}
+
+.THIS .searchRow__imageContainer__image {
+    height: 60px;
+    border-radius: 5px;
+}
+
+.THIS .searchRecordBody {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.THIS .searchRecordBody__item {
+
+}
+
+.THIS .searchRecordBody__item--primary {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.THIS .slds-form-element__label {
+    display: none;
+}
+
+.THIS .noResultsText {
+    padding-left: 10px;
+}
+
+.THIS .customCancelButton {
+    display: flex;
+    align-items: center;
+}
+

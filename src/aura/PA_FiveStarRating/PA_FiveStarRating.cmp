@@ -1,0 +1,17 @@
+<aura:component description="PA_FiveStarRating">
+
+    <aura:attribute name="value" type="Decimal" default="0"/>
+    <aura:attribute name="readonly" type="Boolean" default="false"/>
+    <aura:handler name="change" value="{!v.value}" action="{!c.onValueChange}"/>
+
+    <ltng:require scripts="{!$Resource.fivestar_community + '/rating.js'}"
+                  styles="{!$Resource.fivestar_community + '/rating.css'}"
+                  afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+
+    <div>
+        <div class="fiveStarContainer">
+            <div aura:id="ratingarea" class="{! (v.readonly) ? 'readonly c-rating' : 'c-rating'}"/>
+        </div>
+    </div>
+
+</aura:component>

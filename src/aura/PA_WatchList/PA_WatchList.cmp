@@ -1,0 +1,11 @@
+<aura:component description="PA_WatchList" implements="forceCommunity:availableForAllPageTypes">
+
+    <div>
+        <div class="watchListContainer">
+            <div class="watchListContainer__title">
+                {!$Label.c.watch_list}
+            </div>
+            <c:PA_ProductList whatToShow="watchList"/>
+        </div>
+    </div>
+</aura:component>

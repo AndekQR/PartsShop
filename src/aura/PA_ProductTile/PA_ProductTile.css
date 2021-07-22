@@ -1,0 +1,100 @@
+.THIS {
+    width: 150px;
+    margin: 5px;
+}
+
+.THIS .tileContainer {
+    transition: transform .2s;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    /*min-height: 253px;*/
+}
+
+.THIS .tileContainer:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+}
+
+.THIS .tileContainer__image {
+    padding-bottom: 10px;
+    height: 120px;
+}
+.THIS .tileContainer__image img {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+
+.THIS .tileContainer__text {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+    white-space: normal;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.THIS .tileContainer__watchList {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    align-content: center;
+    transition: transform .2s;
+
+}
+
+.THIS .tileContainer__watchList svg:hover {
+    height: 20px;
+    width: 20px;
+}
+
+.THIS .tileContainer__text svg:hover {
+    height: 20px;
+    width: 20px;
+}
+
+
+.THIS .tileContainer__watchList__inner {
+    /*position: relative;*/
+}
+
+.THIS .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    width: 120px;
+    bottom: -20px;
+    left: 50%;
+    margin-left: -60px;
+    position: absolute;
+    z-index: 1;
+}
+.THIS .tileContainer__watchList__inner:hover .tooltiptext {
+    visibility: visible;
+}
+
+.THIS .tileContainer__text__price {
+   text-align: right;
+    font-weight: bold;
+}
+
+.THIS .tileContainer__text__price__beforeDiscount {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 24px;
+    margin-right: 8px;
+    text-decoration: line-through;
+    color: rgb(148, 148, 148);
+    text-align: left;
+}
+
+

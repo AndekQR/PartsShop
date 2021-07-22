@@ -1,0 +1,54 @@
+<aura:component description="PA_CartListElement" controller="PA_DataProvider">
+
+    <aura:attribute name="productWrapper" type="Object"/>
+    <aura:attribute name="imageData" type="String" access="private"/>
+    <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
+    <aura:registerEvent name="PA_ProductRemovedFromCart" type="c:PA_ProductRemovedFromCart"/>
+    <aura:registerEvent name="PA_OnProductQuantityChange" type="c:PA_OnProductQuantityChange"/>
+    <aura:handler name="change" value="{!v.productWrapper.cartQuantity}" action="{!c.onQuantityChange}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="cartListElementContainer">
+            <div class="CartListElementContainer__image">
+                <img alt="Product Image"
+                     src="{!(empty(v.imageData) ?
+                             $Resource.defaultMovieImage :
+                             'data:image/png;base64,'+v.imageData)}"/>
+            </div>
+            <div class="cartListElementContainer__title">
+                    {!v.productWrapper.product.name}
+            </div>
+            <div class="cartListElementContainer__controls">
+                <div class="cartListElementContainer__controls__price">
+                    <aura:if isTrue="{!not(empty(v.productWrapper.bestDiscount))}">
+                        <div class="cartListElementContainer__controls__price__beforeDiscount">
+                            <lightning:formattedNumber value="{!v.productWrapper.product.price}"
+                                                       style="currency" currencyCode="USD"/>
+                        </div>
+                    </aura:if>
+                    <div class="cartListElementContainer__controls__price__afterDiscount">
+                        <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
+                                                   currencyCode="USD"/>
+                    </div>
+                </div>
+                <div class="cartListElementContainer__controls__quantity">
+                    <lightning:input variant = "label-hidden" max="{!v.productWrapper.product.quantity}" value="{!v.productWrapper.cartQuantity}" label="Quantity"/>
+                    <span>{!$Label.c.available_items + v.productWrapper.product.quantity}</span>
+                </div>
+                <div class="cartListElementContainer__controls__button" onclick="{!c.addToWatchList}">
+                    <lightning:icon
+                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                            iconName="utility:pin" size="x-small" alternativeText="icon"/>
+                    <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
+                </div>
+                <div class="cartListElementContainer__controls__button" onclick="{!c.removeProduct}">
+                    <lightning:icon
+                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                            iconName="utility:close" size="x-small" alternativeText="icon"/>
+                    <span class="tooltiptext">{!$Label.c.remove_from_cart}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

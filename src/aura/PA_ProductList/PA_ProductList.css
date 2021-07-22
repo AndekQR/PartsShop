@@ -1,0 +1,93 @@
+.THIS {
+}
+
+.THIS .containerList {
+}
+
+.THIS .personListContainer{
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #e6e6e6;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.THIS .personListContainer__body__noProducts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.THIS .personListContainer__header {
+    text-align: left;
+    padding: 10px;
+}
+
+.THIS .personListContainer__header__title {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.THIS .personListContainer__body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.THIS .item {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    align-items: flex-end;
+    border: 1px solid #f3f3f3;
+    width: 49%;
+    margin: 3px;
+    transition: transform .2s;
+}
+
+.THIS .item:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.THIS .item__imageContainer {
+    border-radius: 5px;
+}
+
+.THIS .item__imageContainer img {
+    object-fit: fill;
+    width: 100px;
+    height: 150px;
+}
+
+.THIS .item__body {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.THIS .personName {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.THIS .paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.THIS .paginationControls__info {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.THIS .paginationControls__controls {
+    display: flex;
+    justify-content: flex-end;
+}

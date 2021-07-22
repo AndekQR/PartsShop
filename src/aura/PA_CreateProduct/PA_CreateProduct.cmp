@@ -1,0 +1,92 @@
+<aura:component description="PA_CreateProduct" controller="PA_DataProvider"
+                implements="forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="newProduct" type="PA_Product" access="private"/>
+    <aura:attribute name="allCategories" type="PA_Category[]" access="private"/>
+    <aura:attribute name="productImages" type="Object[]" access="private"/>
+    <aura:attribute name="productSpecifications" type="PA_Specification[]" access="private"/>
+    <aura:attribute name="image" type="String" access="private"/>
+    <aura:attribute name="specification" type="PA_Specification" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="createProductContainer slds-p-horizontal--small">
+            <lightning:input required="true" type="text" aura:id="productField" label="Name" maxlength="80"
+                             value="{!v.newProduct.name}"/>
+            <lightning:layout>
+                <lightning:layoutItem size="6">
+                    <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField"
+                                     label="{!$Label.c.price}"
+                                     value="{!v.newProduct.price}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="6">
+                    <lightning:input required="true" type="number" aura:id="productField" label="{!$Label.c.quantity}"
+                                     value="{!v.newProduct.quantity}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <lightning:textarea required="true" aura:id="productField" label="{!$Label.c.description}"
+                                value="{!v.newProduct.description}"/>
+            <lightning:select aura:id="productField" name="select" label="{!$label.c.category}"
+                              value="{!v.newProduct.category.id}">
+                <aura:iteration items="{!v.allCategories}" var="category">
+                    <option value="{!category.id}" label="{!category.name}"></option>
+                </aura:iteration>
+            </lightning:select>
+
+            <div class="imagesChooserContainer">
+                <span class="chooser__title">{!$Label.c.images}</span>
+                <div class="imagesChooserContainer__newImage" ondragover="{!c.onDragOver}" ondrop="{!c.onDrop}">
+                        {!$Label.c.drop_images_here}
+                </div>
+                <div class="imagesChooserContainer__allImages">
+                    <aura:iteration items="{!v.productImages}" var="imageObject">
+                        <div class="imagesChooserContainer__allImages__element slds-truncate">
+                            <img alt="Image Element" src="{!imageObject.data}"/>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+            <div class="specificationChooserContainer">
+                <span class="chooser__title">{!$Label.c.specification}</span>
+                <div class="specificationChooserContainer__new">
+                    <lightning:layout>
+                        <lightning:layoutItem size="5">
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="{!$Label.c.specification_name}"
+                                             variant="label-hidden" aura:id="productField"
+                                             type="text" label="{!$Label.c.name}"
+                                             value="{!v.specification.name}"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="5">
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="{!$Label.c.specification_value}"
+                                             variant="label-hidden" aura:id="productField"
+                                             type="text" label="{!$Label.c.value}"
+                                             value="{!v.specification.value}"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="2">
+                            <lightning:button label="{!$Label.c.add}" variant="neutral"
+                                              onclick="{!c.onSpecificationAdd}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+                <div class="specificationChooserContainer__all">
+                    <aura:iteration items="{!v.productSpecifications}" var="spec">
+                        <div class="specificationChooserContainer__all__element slds-truncate">
+                            <lightning:layout>
+                                <lightning:layoutItem class="slds-text-align_center" size="5">
+                                    <lightning:formattedText value="{!spec.name}"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-text-align_center" size="5">
+                                    <lightning:formattedText value="{!spec.value}"/>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem class="slds-text-align_center" size="2">
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+            <lightning:button label="{!$Label.c.save_product}" variant="brand" onclick="{!c.onSaveProduct}"/>
+        </div>
+        <c:Spinner aura:id="spinner"/>
+    </div>
+</aura:component>

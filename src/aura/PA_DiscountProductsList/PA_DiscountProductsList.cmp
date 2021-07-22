@@ -1,0 +1,71 @@
+<aura:component description="PA_DiscountProductsList" controller="PA_DataProvider">
+    
+    <aura:attribute name="discountId" type="String"/>
+    <aura:attribute name="data" type="PA_Product[]" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private" default="1"/>
+    <aura:attribute name="allProductsSize" type="Integer" access="private"/>
+    <aura:attribute name="selectedRowId" type="String" access="private"/>
+
+    <aura:method name="changeDiscountId" action="{!c.onDiscountIdChange}">
+        <aura:attribute name="id" type="String"/>
+    </aura:method>
+
+    <div>
+        <div class="title">
+            {!$Label.c.discount_products}
+        </div>
+        <div class="discountProductsListContainer">
+            <div class="discountProductsListContainer__body">
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-box_border">
+                    <thead>
+                    <tr class="slds-text-title_caps">
+                        <th>{!$Label.c.name}</th>
+                        <th>{!$Label.c.price}</th>
+                        <th>{!$Label.c.quantity}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <aura:if isTrue="{!not(empty(v.data))}">
+                        <aura:iteration items="{!v.data}" var="element">
+                            <tr data-myid="{!element.id}">
+                                <td style="white-space: normal; text-overflow:ellipsis; overflow: hidden; max-width:100px;">
+                                    <lightning:formattedText value="{!element.name}"/>
+                                </td>
+                                <td>
+                                    <lightning:formattedNumber value="{!element.price}"/>
+                                </td>
+                                <td>
+                                    <lightning:formattedNumber value="{!element.quantity}"/>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                                <span class="discountProductsListContainer__body__noRows">
+                                        {!$Label.c.no_records}
+                                </span>
+                        </aura:set>
+                    </aura:if>
+                    </tbody>
+                </table>
+            </div>
+            <div class="discountProductsListContainer__paginationControls">
+                <div class="discountProductsListContainer__paginationControls__controls">
+                    <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}"
+                                      onclick="{!c.firstPage}"/>
+                    <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}"
+                                      label="{!$Label.c.previous_page}"
+                                      onclick="{!c.previousPage}"/>
+                    <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                      label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
+                    <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                      label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
+                </div>
+                <div class="discountProductsListContainer__paginationControls__info">
+                        {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

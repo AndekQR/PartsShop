@@ -1,0 +1,39 @@
+.THIS {
+    margin: 5px;
+}
+
+.THIS .title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.THIS .discountProductsListContainer {
+    border-radius: 5px;
+    background-color: white;
+}
+
+.THIS .discountProductsListContainer__paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.THIS .discountProductsListContainer__paginationControls__info {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.THIS .discountProductsListContainer__paginationControls__controls {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.THIS .discountProductsListContainer__body__noRows {
+    padding: 10px;
+    display: block;
+}

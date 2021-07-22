@@ -1,0 +1,51 @@
+<aura:component description="PA_ProductList" implements="forceCommunity:availableForAllPageTypes"
+                controller="PA_DataProvider">
+
+    <aura:attribute name="showTileControls" type="Boolean" default="true"/>
+    <aura:attribute name="whatToShow" type="String"/>
+    <aura:attribute name="categoryId" type="String"/>
+    <aura:attribute name="products" type="PA_ProductWrapper[]" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="12"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private"/>
+    <aura:attribute name="allProductsSize" type="Integer" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <aura:method name="refresh" action="{!c.init}"/>
+
+    <div>
+        <div class="slds-align_absolute-center containerList">
+            <div class="personListContainer">
+                <div class="personListContainer__body">
+                    <aura:if isTrue="{!not(empty(v.products))}">
+                        <aura:iteration items="{!v.products}" var="product">
+                            <c:PA_ProductTile showControls="{!v.showTileControls}" refreshDataMethod="{!c.init}" product="{!product}"/>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <div class="personListContainer__body__noProducts">
+                                    {!$Label.c.no_products}
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <div class="paginationControls">
+                    <div class="paginationControls__controls">
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}"
+                                          onclick="{!c.firstPage}"/>
+                        <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}"
+                                          label="{!$Label.c.previous_page}"
+                                          onclick="{!c.previousPage}"/>
+                        <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                          label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
+                        <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}"
+                                          label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
+                    </div>
+                    <div class="paginationControls__info">
+                            {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
+                    </div>
+                </div>
+            </div>
+            <c:Spinner aura:id="spinner"/>
+        </div>
+    </div>
+</aura:component>

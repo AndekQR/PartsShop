@@ -1,0 +1,41 @@
+.THIS {
+}
+
+.THIS .productSpecsContainer {
+    border: 1px solid rgb(158, 158, 158);
+    border-radius: 5px;
+}
+
+.THIS .productSpecsContainer .productSpecsContainer__title {
+    font-weight: 500;
+    background-color: #f1f0f4;
+}
+
+.THIS .productSpecsContainer__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgb(158, 158, 158);
+    font-size: 16px;
+    font-weight: 500;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+.THIS .productSpecsContainer__row:not(:first-child) {
+    border-top: none;
+}
+
+.THIS .productSpecsContainer__row__name {
+    text-align: center;
+    width: 46%;
+}
+
+.THIS .productSpecsContainer__row__delimiter {
+    text-align: center;
+    width: 5%;
+}
+
+.THIS .productSpecsContainer__row__value {
+    text-align: center;
+    width: 46%;
+}

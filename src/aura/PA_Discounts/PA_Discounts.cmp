@@ -1,0 +1,39 @@
+<aura:component description="PA_Discounts" implements="flexipage:availableForAllPageTypes">
+
+    <ltng:require styles="{!$Resource.noHeaderLightning}"/>
+    <aura:handler name="PA_DiscountIdChangeEvent" event="c:PA_DiscountIdChangeEvent" action="{!c.onDiscountIdChange}"/>
+    <aura:handler event="c:PA_NewRecordEvent" action="{!c.onDiscountAdd}"/>
+    <aura:handler name="PA_DiscountFormFillEvent" event="c:PA_DiscountFormFillEvent" action="{!c.onFormFill}"/>
+
+    <div>
+        <div class="discountsContainer">
+            <div class="discountsContainer__title">
+                    {!$Label.c.discounts}
+            </div>
+            <div class="discountsContainer__form  slds-grid slds-wrap">
+                <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="discountsContainer__form__left">
+                        <c:PA_NewDiscountForm aura:id="discountForm"/>
+                    </div>
+                </div>
+                <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="discountsContainer__form__right">
+                        <c:PA_DiscountsList aura:id="discountsList" requests="{!true}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="discountsContainer__discountsTables slds-grid slds-wrap">
+                <div class="slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="discountsContainer__discountsTables__leftSection">
+                        <c:PA_DiscountsList aura:id="discountsList"/>
+                    </div>
+                </div>
+                <div class=" slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="discountsContainer__discountsTables__rightSection">
+                        <c:PA_DiscountProductsList aura:id="productListComp"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

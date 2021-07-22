@@ -1,0 +1,76 @@
+<aura:component description="PA_NewOrder" controller="PA_DataProvider">
+
+    <aura:attribute name="wrappers" type="PA_ProductWrapper[]" access="private"/>
+    <aura:attribute name="priceSum" type="Decimal"/>
+    <aura:attribute name="allAddresses" type="PA_OrderAddress[]" access="private"/>
+    <aura:attribute name="choosedAddressId" type="String" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:registerEvent name="PA_NewOrderEvent" type="c:PA_NewOrderEvent"/>
+    <lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowStatusChange}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div>
+        <div class="newOrderContainer">
+            <div class="newOrderContainer__title">
+                New Order
+            </div>
+            <div class="newOrderContainer__body">
+                <div class="newOrderContainer__body__productList">
+                    <aura:iteration items="{!v.wrappers}" var="wrapper">
+                        <div class="newOrderContainer__body__productList__element">
+                            <div class="newOrderContainer__body__productList__element__name slds-truncate">
+                                {!wrapper.product.name}
+                            </div>
+                            <div class="newOrderContainer__body__productList__element__quantity">
+                                {!wrapper.cartQuantity}
+                            </div>
+                        </div>
+                    </aura:iteration>
+                </div>
+                <div class="newOrderContainer__body__summary">
+                    Total Cost:&nbsp;
+                    <lightning:formattedNumber value="{!v.priceSum}" style="currency"
+                                               currencyCode="USD"/>
+                    <!--                    <div class="newOrderContainer__body__summary__title">-->
+                    <!--                       -->
+                    <!--                    </div>-->
+                    <!--                    <div class="newOrderContainer__body__summary__details">-->
+                    <!--                        -->
+                    <!--                    </div>-->
+                </div>
+                <div class="newOrderContainer__body__address">
+                    <div class="newOrderContainer__body__address__all">
+                        <aura:if isTrue="{!not(empty(v.allAddresses))}">
+                            <aura:iteration items="{!v.allAddresses}" var="address">
+                                <div data-id="{!address.id}" onclick="{!c.onAddressChoose}"
+                                     class="{!(equals(address.id, v.choosedAddressId) ? 'newOrderContainer__body__address__all__element__selected newOrderContainer__body__address__all__element': 'newOrderContainer__body__address__all__element')}">
+                                    <div class="newOrderContainer__body__address__all__element__text ">
+                                            {!'Street: '+address.city+', Postal Code: '+address.postalCode+', City: '+address.city+', State: '+address.state+', Country: '+address.country}
+                                    </div>
+                                    <div data-id="{!address.id}" onclick="{!c.onAddressRemove}" class="newOrderContainer__body__address__all__element__button">
+                                        <lightning:icon
+                                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default
+                                                        customCancelButton"
+                                                iconName="utility:clear" size="x-small" alternativeText="icon"/>
+                                    </div>
+                                </div>
+                            </aura:iteration>
+                            <aura:set attribute="else">
+                                No Addresses! Add New One.
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="newOrderContainer__body__address__controls">
+                        <lightning:button variant="brand-outline" label="New Address" onclick="{!c.onNewAddress}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="newOrderContainer__controls">
+                <lightning:button variant="brand-outline" label="Cancel" onclick="{!c.onCancel}"/>
+                <lightning:button disabled="{!empty(v.choosedAddressId)}" variant="brand" label="Make Order"
+                                  onclick="{!c.onNewOrder}"/>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

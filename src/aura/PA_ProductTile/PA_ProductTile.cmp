@@ -1,0 +1,67 @@
+<aura:component description="PA_ProductTile" implements="forceCommunity:availableForAllPageTypes"
+                controller="PA_DataProvider">
+
+    <aura:attribute name="showControls" type="Boolean" default="true"/>
+    <aura:attribute name="product" type="PA_ProductWrapper" default='{}'/>
+    <aura:attribute name="imageData" type="String" access="private"/>
+    <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
+    <aura:attribute name="isWatchList" type="Boolean" access="private" default="false"/>
+    <aura:attribute name="refreshDataMethod" type="Aura.Action"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <c:PA_Navigation aura:id="navigation"/>
+    <div>
+        <div class="tileContainer" onclick="{!c.productDetails}">
+            <div class="tileContainer__image">
+                <img alt="Product Image"
+                     src="{!(empty(v.imageData) ?
+                             $Resource.defaultMovieImage :
+                             'data:image/png;base64,'+v.imageData)}"/>
+            </div>
+            <div class="tileContainer__text">
+                <span class="slds-truncate">{!v.product.product.name}</span>
+                <div class="tileContainer__text__price">
+                    <aura:if isTrue="{!not(empty(v.product.bestDiscount))}">
+                        <div class="tileContainer__text__price__beforeDiscount">
+                            <lightning:formattedNumber value="{!v.product.product.price}"
+                                                       style="currency" currencyCode="USD"/>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="tileContainer__text__price__beforeDiscount">
+                                <div style="width: 100%; height: 20px;"></div>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                    <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
+                                               currencyCode="USD"/>
+                </div>
+                <aura:if isTrue="{!v.showControls}">
+                    <div class="tileContainer__watchList">
+                        <div class="tileContainer__watchList__inner" onclick="{!c.addToCart}">
+                            <lightning:icon
+                                    class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                    iconName="utility:checkout" size="x-small" alternativeText="icon"/>
+                            <span class="tooltiptext">{!$Label.c.add_to_cart}</span>
+                        </div>
+                        <aura:if isTrue="{!v.isWatchList}">
+                            <div class="tileContainer__watchList__inner" onclick="{!c.removeFromWatchList}">
+                                <lightning:icon
+                                        class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                        iconName="utility:close" size="x-small" alternativeText="icon"/>
+                                <span class="tooltiptext">{!$Label.c.remove_from_watchlist}</span>
+                            </div>
+                            <aura:set attribute="else">
+                                <div class="tileContainer__watchList__inner" onclick="{!c.addToWatchList}">
+                                    <lightning:icon
+                                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                            iconName="utility:pin" size="x-small" alternativeText="icon"/>
+                                    <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

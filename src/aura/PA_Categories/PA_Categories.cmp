@@ -1,0 +1,19 @@
+<aura:component description="PA_Categories" controller="PA_DataProvider">
+
+    <aura:attribute name="categories" type="PA_Category[]" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:registerEvent name="PA_CategoryChange" type="c:PA_CategoryChange"/>
+
+    <div>
+        <div class="categoryContainer">
+            <div class="categoryContainer__list">
+                <ul>
+                    <aura:iteration items="{!v.categories}" var="category">
+                        <li data-id="{!category.id}" onclick="{!c.onCategoryClick}">{!category.name}</li>
+                    </aura:iteration>
+                    <li class="categoryContainer__list__element-active" onclick="{!c.onCategoryClick}">{!$Label.c.latest_products}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aura:component>

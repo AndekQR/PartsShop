@@ -1,0 +1,2 @@
+<aura:event type="APPLICATION" description="PA_NewOrderEvent">
+</aura:event>

@@ -1,0 +1,84 @@
+<aura:component description="PA_ProductDetails" implements="forceCommunity:availableForAllPageTypes"
+                controller="PA_DataProvider">
+
+    <aura:attribute name="product" type="PA_ProductWrapper" access="private"/>
+    <aura:attribute name="quantity" type="Integer" default="1" access="private"/>
+    <aura:attribute name="priceAfterDiscount" type="decimal" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div>
+        <div class="productDetailsContainer">
+            <div class="productDetailsContainer__category">
+                <span>/{!v.product.product.category.name}</span>
+                <div class="productDetailsContainer__category__rating">
+                    <span>Average rate of {!v.product.numberOfReviews} reviews: </span>
+                    <c:PA_FiveStarRating value="{!v.product.average}" readonly="{!true}"/>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="productDetailsContainer__imageContainer slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <lightning:carousel disableAutoScroll="true">
+                        <aura:iteration items="{!v.product.images}" var="imageData">
+                            <lightning:carouselImage src="{!'data:image/png;base64,' + imageData}"/>
+                        </aura:iteration>
+                    </lightning:carousel>
+                </div>
+                <div class="productDetailsContainer__detailsContainer slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <div class="slds-grid slds-wrap">
+                        <div class="productDetailsContainer__detailsContainer__header slds-size_12-of-12">
+                            <h1>{!v.product.product.name}</h1>
+                        </div>
+                        <div class="slds-size_8-of-12">
+                            <div class="productDetailsContainer__detailsContainer__details__specs">
+                                <c:PA_ProductSpecificationTable specification="{!v.product.specifications}"/>
+                            </div>
+                        </div>
+                        <div class="productDetailsContainer__detailsContainer__details__priceContainer slds-size_4-of-12">
+                            <div class="productDetailsContainer__detailsContainer__details__priceContainer__container">
+                                <div class="productDetailsContainer__detailsContainer__details__price">
+                                    <lightning:input max="{!v.product.product.quantity}" value="{!v.quantity}" label="{!$Label.c.quantity}"/>
+                                    <span>{! $Label.c.available_items + v.product.product.quantity}</span>
+                                </div>
+                                <div class="productDetailsContainer__detailsContainer__details__price__price">
+                                    <aura:if isTrue="{!not(empty(v.product.bestDiscount))}">
+                                        <div class="productDetailsContainer__detailsContainer__details__price__beforeDiscount">
+                                            <lightning:formattedNumber value="{!v.product.product.price}"
+                                                                       style="currency" currencyCode="USD"/>
+                                        </div>
+                                    </aura:if>
+                                    <div class="productDetailsContainer__detailsContainer__details__price__afterDiscount">
+                                        <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
+                                                                   currencyCode="USD"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="productDetailsContainer__detailsContainer__details__priceContainer__secondContainer">
+                                <div class="productDetailsContainer__detailsContainer__details__price__watchListButton" onclick="{!c.addToWatchlist}">
+                                    {!$Label.c.add_to_watchlist}
+                                </div>
+                                <div class="productDetailsContainer__detailsContainer__details__price__discountButton" onclick="{!c.applyForDiscount}">
+                                    {!$Label.c.apply_for_discount}
+                                </div>
+                                <div class="productDetailsContainer__detailsContainer__details__price__cartButton" onclick="{!c.addToCart}">
+                                    {!$Label.c.add_to_cart}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-grid slds-wrap secondSection">
+                <div class="title slds-size_12-of-12">Description</div>
+                <div class="productDetailsContainer__description slds-size_12-of-12 slds-medium-size_6-of-12">
+                        {!v.product.product.description}
+                </div>
+                <div class="productDetailsContainer__comments slds-size_12-of-12 slds-medium-size_6-of-12">
+                    <c:PA_ProductReview productId="{!v.product.product.id}"/>
+                </div>
+            </div>
+        </div>
+        <c:Spinner aura:id="spinner"/>
+    </div>
+
+</aura:component>

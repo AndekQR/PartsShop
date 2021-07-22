@@ -1,0 +1,26 @@
+.THIS {
+    margin: 5px;
+
+}
+
+.THIS .newDiscountFormContainer {
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.THIS .newDiscountFormContainer__emails__title {
+    color: rgb(62, 62, 60);
+    font-size: 0.75rem;
+    padding-top: 0.25rem;
+    margin-bottom: 0.125rem;
+    font-weight: bold;
+}
+
+.THIS .newDiscountFormContainer__emails__new button {
+    width: 100%;
+}
+
+.THIS .newDiscountFormContainer__controls {
+    margin-top: 10px;
+}

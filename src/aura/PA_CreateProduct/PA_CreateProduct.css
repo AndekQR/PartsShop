@@ -1,0 +1,75 @@
+.THIS {
+
+}
+
+.THIS .createProductContainer {
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.THIS .imagesChooserContainer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.THIS .chooser__title {
+    hyphens: auto;
+    display: inline-block;
+    color: var(--lwc-colorTextLabel,#696969);
+    font-size: var(--lwc-formLabelFontSize,0.75rem);
+    padding-right: var(--lwc-spacingXSmall,0.5rem);
+    padding-top: var(--lwc-spacingXxSmall,0.25rem);
+    margin-bottom: var(--lwc-spacingXxxSmall,0.125rem);
+}
+
+.THIS .imagesChooserContainer__newImage {
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    text-align: center;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.THIS .imagesChooserContainer__newImage button {
+    width: 100%;
+}
+
+.THIS .imagesChooserContainer__allImages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.THIS .imagesChooserContainer__allImages__element {
+   padding: 5px;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.THIS .specificationChooserContainer {
+    padding-bottom: 10px;
+}
+
+.THIS .specificationChooserContainer__new button {
+    width: 100%;
+}
+
+.THIS .specificationChooserContainer__all__element {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.THIS .title {
+    line-height: 1.25;
+    font-size: 1rem;
+    font-weight: 700;
+}
+

@@ -1,0 +1,31 @@
+<aura:component description="PA_ProductSpecificationTable">
+
+    <aura:attribute name="specification" type="PA_Specification[]"/>
+
+    <div>
+        <div class="productSpecsContainer">
+            <div class="productSpecsContainer__row productSpecsContainer__title">
+                <div class="productSpecsContainer__row__name">
+                    {!$Label.c.name}
+                </div>
+                <div class="productSpecsContainer__row__value">
+                    {!$Label.c.value}
+                </div>
+            </div>
+            <aura:iteration items="{!v.specification}" var="spec">
+                <div class="productSpecsContainer__row">
+                    <div class="productSpecsContainer__row__name slds-truncate">
+                        {!spec.name}
+                    </div>
+                    <div class="productSpecsContainer__row__delimiter">
+                        |
+                    </div>
+                    <div class="productSpecsContainer__row__value slds-truncate">
+                        {!spec.value}
+                    </div>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+
+</aura:component>

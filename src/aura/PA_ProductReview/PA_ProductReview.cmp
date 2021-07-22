@@ -1,0 +1,58 @@
+<aura:component description="PA_ProductReview" controller="PA_DataProvider">
+
+    <aura:attribute name="productId" type="String"/>
+    <aura:attribute name="reviews" type="PA_Review[]" access="private"/>
+    <aura:attribute name="newReviewContent" type="String" access="private"/>
+    <aura:attribute name="newReviewRating" type="Integer" access="private"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
+    <aura:attribute name="pageSize" type="Integer" default="4" access="private"/>
+    <aura:attribute name="allDataSize" type="Integer" access="private"/>
+    <aura:attribute name="allPageSize" type="Integer" access="private"/>
+    <aura:handler name="change" value="{!v.productId}" action="{!c.setReviews}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <div>
+        <div class="reviewContainer">
+            <lightning:tabset selectedTabId="two">
+                <lightning:tab label="{!$Label.c.write_review}" id="one">
+                    <div class="inputReviewTabContainer">
+                        <lightning:textarea placeholder="{!$Label.c.review_box_description}" label="" aura:id="description"
+                                            value="{!v.newReviewContent}"/>
+                        <div class="inputReviewTabContainer__footer">
+                            <lightning:button label="{!$Label.c.submit}" iconName="utility:save" variant="brand"
+                                              onclick="{!c.onSave}"/>
+                            <c:PA_FiveStarRating value="{!v.newReviewRating}" readonly="false"/>
+                        </div>
+                    </div>
+                </lightning:tab>
+                <lightning:tab label="{!$Label.c.reviews}" id="two">
+                    <aura:iteration items="{!v.reviews}" var="item">
+                        <div class="reviewItem">
+                            <div class="reviewItem__header">
+                                <span>{!item.createdByName +' | '+ format(item.CreatedDate)}</span>
+                                <c:PA_FiveStarRating value="{!item.rating}" readonly="true"/>
+                            </div>
+                            <div class="reviewItem__body">
+                                    {!item.content}
+                            </div>
+                        </div>
+                    </aura:iteration>
+                    <aura:if isTrue="{!empty(v.reviews)}">
+                        {!$Label.c.no_reviews}
+                    </aura:if>
+                    <div class="paginationControls">
+                        <div class="paginationControls__controls">
+                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.first_page}" onclick="{!c.firstPage}"/>
+                            <lightning:button disabled="{!lessthanorequal(v.pageNumber, 1)}" label="{!$Label.c.previous_page}" onclick="{!c.previousPage}"/>
+                            <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="{!$Label.c.next_page}" onclick="{!c.nextPage}"/>
+                            <lightning:button disabled="{!greaterthanorequal(v.pageNumber, v.allPageSize)}" label="{!$Label.c.last_page}" onclick="{!c.lastPage}"/>
+                        </div>
+                        <div class="paginationControls__info">
+                                {!format($Label.c.page_number_info, v.pageNumber, v.allPageSize)}
+                        </div>
+                    </div>
+                </lightning:tab>
+            </lightning:tabset>
+        </div>
+    </div>
+</aura:component>
