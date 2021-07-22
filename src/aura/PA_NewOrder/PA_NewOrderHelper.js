@@ -39,6 +39,7 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if(state === 'SUCCESS') {
+                this.fireNewOrderEvent();
                 this.showToast('Success', $A.get('$Label.c.new_order_created'), 'success');
                 this.closeModal(component);
             } else {
@@ -114,5 +115,10 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    fireNewOrderEvent: function() {
+        let event = $A.get('e.c:PA_NewOrderEvent');
+        event.fire();
     }
 })

@@ -9,6 +9,7 @@
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <aura:handler name="PA_ProductRemovedFromCart" event="c:PA_ProductRemovedFromCart" action="{!c.onProductRemovedFromCart}"/>
     <aura:handler name="PA_OnProductQuantityChange" event="c:PA_OnProductQuantityChange" action="{!c.onQuantityChange}"/>
+    <aura:handler event="c:PA_NewOrderEvent" action="{!c.onNewOrder}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <div>

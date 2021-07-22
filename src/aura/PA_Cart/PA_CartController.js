@@ -31,4 +31,9 @@
     onMakeOrder: function(component, event, helper) {
         helper.showNewOrderModal(component);
     },
+
+    onNewOrder: function(component, event, helper) {
+        helper.setFirstPage(component);
+        helper.setCartPriceSum(component);
+    },
 })
