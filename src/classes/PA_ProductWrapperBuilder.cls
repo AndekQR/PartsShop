@@ -160,6 +160,25 @@ public class PA_ProductWrapperBuilder {
         return result;
     }
 
+    public PA_ProductWrapperBuilder watchListNotifications() {
+        List<String> productIds = getProductsIds();
+        String userId = UserInfo.getUserId();
+        List<FavoriteProduct__c> favoriteProducts = [
+                SELECT Id, Notifications__c, Product__c
+                FROM FavoriteProduct__c
+                WHERE Product__c IN :productIds AND
+                CreatedById = :userId
+        ];
+        for (PA_ProductWrapper wrapper : wrappers) {
+            for (FavoriteProduct__c favoriteProduct : favoriteProducts) {
+                if(wrapper.product.id == favoriteProduct.Product__c) {
+                    wrapper.watchListNotifications = favoriteProduct.Notifications__c;
+                }
+            }
+        }
+        return this;
+    }
+
     private Decimal getRatingSum(List<ProductReview__c> allReviews, String productId){
         Decimal result = 0;
         for(ProductReview__c review : allReviews) {

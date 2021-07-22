@@ -104,5 +104,22 @@
     callRefreshData: function(component) {
         let method = component.get('v.refreshDataMethod');
         $A.enqueueAction(method);
+    },
+    
+    toggleNotifications: function(component) {
+        let wrapper = component.get('v.product');
+        let action = component.get('c.toggleNotifications');
+        action.setParams({
+            productId: wrapper.product.id
+        });
+        action.setCallback(this, (response) => {
+            let state = response.getState();
+            if(state === 'SUCCESS') {
+                
+            } else {
+                this.handleError(response);
+            }
+        });
+        $A.enqueueAction(action);
     }
 })

@@ -12,7 +12,7 @@
     <div>
         <div class="newOrderContainer">
             <div class="newOrderContainer__title">
-                New Order
+                {!$Label.c.new_order}
             </div>
             <div class="newOrderContainer__body">
                 <div class="newOrderContainer__body__productList">
@@ -28,15 +28,9 @@
                     </aura:iteration>
                 </div>
                 <div class="newOrderContainer__body__summary">
-                    Total Cost:&nbsp;
+                    {!$label.c.total_cost}:&nbsp;
                     <lightning:formattedNumber value="{!v.priceSum}" style="currency"
                                                currencyCode="USD"/>
-                    <!--                    <div class="newOrderContainer__body__summary__title">-->
-                    <!--                       -->
-                    <!--                    </div>-->
-                    <!--                    <div class="newOrderContainer__body__summary__details">-->
-                    <!--                        -->
-                    <!--                    </div>-->
                 </div>
                 <div class="newOrderContainer__body__address">
                     <div class="newOrderContainer__body__address__all">
@@ -56,18 +50,18 @@
                                 </div>
                             </aura:iteration>
                             <aura:set attribute="else">
-                                No Addresses! Add New One.
+                                {!$Label.c.no_addresses_add_new_one}
                             </aura:set>
                         </aura:if>
                     </div>
                     <div class="newOrderContainer__body__address__controls">
-                        <lightning:button variant="brand-outline" label="New Address" onclick="{!c.onNewAddress}"/>
+                        <lightning:button variant="brand-outline" label="{!$Label.c.new_address}" onclick="{!c.onNewAddress}"/>
                     </div>
                 </div>
             </div>
             <div class="newOrderContainer__controls">
-                <lightning:button variant="brand-outline" label="Cancel" onclick="{!c.onCancel}"/>
-                <lightning:button disabled="{!empty(v.choosedAddressId)}" variant="brand" label="Make Order"
+                <lightning:button variant="brand-outline" label="{!$Label.c.cancel}" onclick="{!c.onCancel}"/>
+                <lightning:button disabled="{!empty(v.choosedAddressId)}" variant="brand" label="{!$Label.c.make_order}"
                                   onclick="{!c.onNewOrder}"/>
             </div>
         </div>

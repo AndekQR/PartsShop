@@ -39,8 +39,29 @@ public with sharing class PA_FavoriteService {
         List<PA_ProductWrapper> wrappers = new PA_ProductWrapperBuilder(mapped)
                 .images()
                 .discount()
+                .watchListNotifications()
                 .build();
         return new PA_PaginationResponse(page, getNumberOfFavorites(), wrappers, pageSize);
+    }
+
+    public static void toggleNotifications(String productId) {
+        String userId = UserInfo.getUserId();
+        FavoriteProduct__c favoriteProduct = [
+                SELECT Id, Notifications__c
+                FROM FavoriteProduct__c
+                WHERE CreatedById = :userId AND
+                Product__c = :productId
+                LIMIT 1
+        ];
+        if(favoriteProduct != null) {
+            if(favoriteProduct.Notifications__c == true) {
+                favoriteProduct.Notifications__c = false;
+                update favoriteProduct;
+                return;
+            }
+            favoriteProduct.Notifications__c = true;
+            update favoriteProduct;
+        }
     }
 
     private static List<Product__c> mapToProducts(List<FavoriteProduct__c> favorites) {

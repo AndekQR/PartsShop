@@ -33,6 +33,11 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
+    public static void toggleNotifications(String productId) {
+        PA_FavoriteService.toggleNotifications(productId);
+    }
+
+    @AuraEnabled
     public static PA_PaginationResponse latestProducts(Integer page, Integer pageSize) {
         return PA_DataProviderService.latestProducts(page, pageSize);
     }

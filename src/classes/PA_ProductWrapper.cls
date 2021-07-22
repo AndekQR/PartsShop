@@ -13,4 +13,6 @@ public class PA_ProductWrapper {
     public Decimal average { get; set; }
     @AuraEnabled
     public Integer numberOfReviews { get; set; }
+    @AuraEnabled
+    public Boolean watchListNotifications { get; set; }
 }

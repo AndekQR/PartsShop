@@ -1,5 +1,5 @@
 ({
-    insertAddress: function(component) {
+    insertAddress: function (component) {
         let address = component.get('v.choosedAddress');
         let action = component.get('c.createAddress');
         action.setParams({
@@ -7,7 +7,7 @@
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 this.setAllUserAddresses(component);
             } else {
                 this.handleError(response);
@@ -16,11 +16,11 @@
         $A.enqueueAction(action);
     },
 
-    setAllUserAddresses: function(component) {
+    setAllUserAddresses: function (component) {
         let action = component.get('c.getCartAllAddresses');
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 component.set('v.allAddresses', returnValue);
             } else {
@@ -30,7 +30,7 @@
         $A.enqueueAction(action);
     },
 
-    convertCartToOrder: function(component) {
+    convertCartToOrder: function (component) {
         let addressId = component.get('v.choosedAddressId');
         let action = component.get('c.convertToOrder');
         action.setParams({
@@ -38,7 +38,7 @@
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 this.fireNewOrderEvent();
                 this.showToast('Success', $A.get('$Label.c.new_order_created'), 'success');
                 this.closeModal(component);
@@ -62,7 +62,7 @@
         }
     },
 
-    showNewAddressFlow: function(component) {
+    showNewAddressFlow: function (component) {
         let flow = component.find("flowData");
         flow.startFlow("New_Order_Address_Flow");
     },
@@ -77,11 +77,11 @@
         resultsToast.fire();
     },
 
-    setAllCartProducts: function(component) {
+    setAllCartProducts: function (component) {
         let action = component.get('c.getAllProductsCart');
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
+            if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
                 component.set('v.wrappers', returnValue);
             } else {
@@ -95,9 +95,9 @@
         component.find('overlayLib').notifyClose();
     },
 
-    removeAddress: function(component, addressId) {
+    removeAddress: function (component, addressId) {
         let choosedAddressId = component.get('v.choosedAddressId');
-        if(choosedAddressId === addressId) {
+        if (choosedAddressId === addressId) {
             component.set('v.choosedAddressId', null);
         }
         let action = component.get('c.removeAddress');
@@ -106,8 +106,8 @@
         });
         action.setCallback(this, (response) => {
             let state = response.getState();
-            if(state === 'SUCCESS') {
-                this.showToast('Success', 'Address record deleted', 'success')
+            if (state === 'SUCCESS') {
+                this.showToast('Success', $A.get('$Label.c.address_record_deleted'), 'success');
                 this.setAllUserAddresses(component);
             } else {
                 this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
@@ -117,7 +117,7 @@
         $A.enqueueAction(action);
     },
 
-    fireNewOrderEvent: function() {
+    fireNewOrderEvent: function () {
         let event = $A.get('e.c:PA_NewOrderEvent');
         event.fire();
     }

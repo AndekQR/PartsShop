@@ -16,11 +16,11 @@ public with sharing class PA_UserDiscountNotifier implements Database.Batchable<
         if (usersEmails == null || usersEmails.isEmpty()) {
             return Database.getQueryLocator('SELECT Id, Product__r.Id, Product__r.Name, CreatedBy.Name, CreatedBy.Email ' +
                     'FROM FavoriteProduct__c ' +
-                    'WHERE Product__c IN :productsIds');
+                    'WHERE Product__c IN :productsIds AND Notifications__c = true');
         }
         return Database.getQueryLocator('SELECT Id, Product__r.Id, Product__r.Name, CreatedBy.Name, CreatedBy.Email ' +
                 'FROM FavoriteProduct__c ' +
-                'WHERE CreatedBy.Email IN :usersEmails AND Product__c IN :productsIds');
+                'WHERE CreatedBy.Email IN :usersEmails AND Product__c IN :productsIds AND Notifications__c = true');
     }
 
     public void execute(Database.BatchableContext BC, List<SObject> objects) {
