@@ -33,10 +33,12 @@
                         </aura:set>
                     </aura:if>
                     <div class="tileContainer__text__price__afterDiscount">
-                        <div onclick="{!c.onNotificationChange}">
-                            <ui:inputCheckbox aura:id="checkbox" value="{!v.product.watchListNotifications}" />
-                            <span class="tooltiptext">Notifications</span>
-                        </div>
+                        <aura:if isTrue="{!v.isWatchList}">
+                            <div onclick="{!c.onNotificationChange}">
+                                <ui:inputCheckbox aura:id="checkbox" value="{!v.product.watchListNotifications}" />
+                                <span class="tooltiptext">Notifications</span>
+                            </div>
+                        </aura:if>
                         <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
                                                    currencyCode="USD"/>
                     </div>

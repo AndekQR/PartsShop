@@ -17,6 +17,5 @@
 
     onQuantityChange: function(component, event, helper) {
         helper.updateProductQuantity(component);
-        helper.fireQuantityChangeEvent(component);
     },
 })

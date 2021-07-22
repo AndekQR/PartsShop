@@ -81,11 +81,27 @@
 
     updateProductQuantity: function (component) {
         let productWrapper = component.get('v.productWrapper');
+        let quantityToSet = 0;
+        if(productWrapper.cartQuantity > productWrapper.product.quantity) {
+            quantityToSet = productWrapper.product.quantity;
+            component.set('v.productWrapper.cartQuantity', quantityToSet);
+        } else {
+            quantityToSet = productWrapper.cartQuantity;
+        }
         if (productWrapper != null) {
             let action = component.get('c.updateProductCartQuantity');
             action.setParams({
                 productId: productWrapper.product.id,
-                quantity: productWrapper.cartQuantity
+                quantity: quantityToSet
+            });
+            action.setCallback(this, (response) => {
+                let state = response.getState();
+                if (state === 'SUCCESS') {
+                    this.fireQuantityChangeEvent(component);
+
+                } else {
+                    this.handleError(response);
+                }
             });
             $A.enqueueAction(action);
         }

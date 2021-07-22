@@ -28,7 +28,7 @@
                     </aura:iteration>
                 </div>
                 <div class="newOrderContainer__body__summary">
-                    {!$label.c.total_cost}:&nbsp;
+                    {!$Label.c.total_cost}:&nbsp;
                     <lightning:formattedNumber value="{!v.priceSum}" style="currency"
                                                currencyCode="USD"/>
                 </div>
