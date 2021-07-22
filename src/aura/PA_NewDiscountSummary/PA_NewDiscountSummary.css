@@ -1,0 +1,66 @@
+.THIS {
+}
+
+.THIS .newDiscountSummaryContainer {
+    font-weight: 400;
+}
+
+.THIS .newDiscountSummaryContainer__subtitle {
+    font-weight: bold;
+}
+
+.THIS .newDiscountSummaryContainer__title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .newDiscountSummaryContainer__body {
+
+}
+
+.THIS .newDiscountSummaryContainer__body__discount {
+    border-radius: 5px;
+    border: 1px solid #eef8ea;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.THIS .newDiscountSummaryContainer__body__discount__element {
+}
+
+.THIS .newDiscountSummaryContainer__products {
+    border-radius: 5px;
+    border: 1px solid #eef8ea;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.THIS .newDiscountSummaryContainer__products__element {
+    background-color: #f2f3f1;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.THIS .newDiscountSummaryContainer__products__element__el {
+
+}
+
+.THIS .newDiscountSummaryContainer__emails {
+    border-radius: 5px;
+    border: 1px solid #eef8ea;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.THIS .newDiscountSummaryContainer__emails__element {
+
+}
+
+.THIS .newDiscountSummaryContainer__controls {
+    padding: 10px;
+}

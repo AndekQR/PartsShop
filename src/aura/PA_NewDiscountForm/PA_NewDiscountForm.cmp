@@ -1,12 +1,14 @@
 <aura:component description="PA_NewDiscountForm" controller="PA_DataProvider">
 
     <aura:attribute name="discount" type="PA_Discount" access="private"/>
-    <aura:attribute name="discountProducts" type="String[]" access="private"/>
+    <aura:attribute name="discountProducts" type="Object[]" access="private"/>
     <aura:attribute name="userProducts" type="Object[]" access="private"/>
+    <aura:attribute name="products" type="PA_Product[]" access="private"/>
     <aura:attribute name="usersEmail" type="Object[]" access="private"/>
     <aura:attribute name="userEmail" type="String" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <aura:registerEvent name="PA_NewRecordEvent" type="c:PA_NewRecordEvent"/>
+    <aura:handler event="c:PA_NewRecordEvent" action="{!c.onNewRecord}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
 
     <aura:method name="fillForm" action="{!c.fillForm}">
         <aura:attribute name="discountId" type="String"/>
@@ -14,7 +16,8 @@
 
     <div>
         <div class="newDiscountFormContainer">
-            <lightning:input value="{!v.discount.startDate}" type="datetime" name="formInput" label="Discount start time"/>
+            <lightning:input value="{!v.discount.startDate}" type="datetime" name="formInput"
+                             label="Discount start time"/>
             <lightning:input value="{!v.discount.endDate}" type="datetime" name="formInput" label="Discount end time"/>
             <lightning:slider value="{!v.discount.size}" label="Discount percent size"/>
             <lightning:dualListbox name="languages"
@@ -23,8 +26,11 @@
                                    selectedLabel="Selected"
                                    options="{!v.userProducts}"
                                    value="{!v.discountProducts}"/>
+
             <div class="newDiscountFormContainer__emails">
-                <span class="newDiscountFormContainer__emails__title">{!$Label.c.choose_users} ({!$Label.c.leave_empty_to_assign_discount_to_all_users})</span>
+                <span class="newDiscountFormContainer__emails__title">
+                    {!$Label.c.choose_users} ({!$Label.c.leave_empty_to_assign_discount_to_all_users})
+                </span>
                 <div class="newDiscountFormContainer__emails__new">
                     <lightning:layout>
                         <lightning:layoutItem size="8">
@@ -52,7 +58,7 @@
                 </div>
             </div>
             <div class="newDiscountFormContainer__controls">
-                <lightning:button variant="brand" label="Add Discount" onclick="{!c.onAddDiscount}"/>
+                <lightning:button variant="brand" label="Add Discount" onclick="{!c.showSummaryModal}"/>
                 <lightning:button variant="brand-outline" label="Clear" onclick="{!c.onClear}"/>
             </div>
         </div>

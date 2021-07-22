@@ -14,7 +14,7 @@ public class PA_DataProvider {
     public static void saveProduct(PA_Product product,
             Map<String, String> imagesData,
             Map<String, String> specs) {
-        PA_DataProviderService.saveProduct((PA_Product)product, imagesData, specs);
+        PA_DataProviderService.saveProduct((PA_Product) product, imagesData, specs);
     }
 
     @AuraEnabled
@@ -53,17 +53,22 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static void addToUserCart(String productId){
+    public static void addToUserCart(String productId) {
         PA_CartService.addToCart(productId);
     }
     @AuraEnabled
-    public static void removeFromCart(String productId){
+    public static void removeFromCart(String productId) {
         PA_CartService.removeFromCart(productId);
     }
 
     @AuraEnabled
     public static PA_PaginationResponse getCartsProducts(Integer page, Integer pageSize) {
         return PA_CartService.getCartsProducts(page, pageSize);
+    }
+
+    @AuraEnabled
+    public static List<PA_ProductWrapper> getAllProductsCart() {
+        return PA_CartService.getAllProductsCart();
     }
 
     @AuraEnabled
@@ -128,5 +133,25 @@ public class PA_DataProvider {
     @AuraEnabled
     public static void removeDiscount(String discountId) {
         PA_DiscountService.removeDiscount(discountId);
+    }
+
+    @AuraEnabled
+    public static List<PA_OrderAddress> getCartAllAddresses() {
+        return PA_CartService.getCartAllAddresses();
+    }
+
+    @AuraEnabled
+    public static void createAddress(PA_OrderAddress address) {
+        PA_CartService.createAddress(address);
+    }
+
+    @AuraEnabled
+    public static void removeAddress(String addressId) {
+        PA_CartService.removeAddress(addressId);
+    }
+
+    @AuraEnabled
+    public static void convertToOrder(String addressId) {
+        PA_CartService.convertToOrder(addressId);
     }
 }

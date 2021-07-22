@@ -16,17 +16,17 @@
             <lightning:layout>
                 <lightning:layoutItem size="6">
                     <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField"
-                                     label="Price"
+                                     label="{!$Label.c.price}"
                                      value="{!v.newProduct.price}"/>
                 </lightning:layoutItem>
                 <lightning:layoutItem size="6">
-                    <lightning:input required="true" type="number" aura:id="productField" label="Quantity"
+                    <lightning:input required="true" type="number" aura:id="productField" label="{!$Label.c.quantity}"
                                      value="{!v.newProduct.quantity}"/>
                 </lightning:layoutItem>
             </lightning:layout>
-            <lightning:textarea required="true" aura:id="productField" label="Description"
+            <lightning:textarea required="true" aura:id="productField" label="{!$Label.c.description}"
                                 value="{!v.newProduct.description}"/>
-            <lightning:select aura:id="productField" name="select" label="Category"
+            <lightning:select aura:id="productField" name="select" label="{!$label.c.category}"
                               value="{!v.newProduct.category.id}">
                 <aura:iteration items="{!v.allCategories}" var="category">
                     <option value="{!category.id}" label="{!category.name}"></option>
@@ -51,13 +51,13 @@
                 <div class="specificationChooserContainer__new">
                     <lightning:layout>
                         <lightning:layoutItem size="5">
-                            <lightning:input class="slds-m-right_xxx-small" placeholder="Specification name"
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="{!$Label.c.specification_name}"
                                              variant="label-hidden" aura:id="productField"
                                              type="text" label="{!$Label.c.name}"
                                              value="{!v.specification.name}"/>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="5">
-                            <lightning:input class="slds-m-right_xxx-small" placeholder="Specification value"
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="{!$Label.c.specification_value}"
                                              variant="label-hidden" aura:id="productField"
                                              type="text" label="{!$Label.c.value}"
                                              value="{!v.specification.value}"/>

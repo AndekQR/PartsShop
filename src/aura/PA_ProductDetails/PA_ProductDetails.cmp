@@ -37,7 +37,7 @@
                         <div class="productDetailsContainer__detailsContainer__details__priceContainer slds-size_4-of-12">
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__container">
                                 <div class="productDetailsContainer__detailsContainer__details__price">
-                                    <lightning:input max="{!v.product.product.quantity}" value="{!v.quantity}" label="Quantity"/>
+                                    <lightning:input max="{!v.product.product.quantity}" value="{!v.quantity}" label="{!$Label.c.quantity}"/>
                                     <span>{! $Label.c.available_items + v.product.product.quantity}</span>
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__price">

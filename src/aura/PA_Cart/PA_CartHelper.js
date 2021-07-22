@@ -91,4 +91,21 @@
         let spinnerComponent = component.find('spinner');
         spinnerComponent.turnOff();
     },
+
+    showNewOrderModal: function(component) {
+        let priceSum = component.get('v.priceSum');
+        $A.createComponent('c:PA_NewOrder', {
+            priceSum: priceSum
+        }, (resultBody, status, errorMessage) => {
+            if (status === 'SUCCESS') {
+                component.find('overlayLib').showCustomModal({
+                    body: resultBody,
+                    showCloseButton: true,
+                    cssClass: ''
+                });
+            } else {
+                console.log("Error: " + errorMessage);
+            }
+        });
+    }
 })

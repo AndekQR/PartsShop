@@ -111,9 +111,9 @@
     },
 
     showRequestModal: function (component) {
-        let productId = component.get('v.product').product.id;
+        let product = component.get('v.product').product;
         $A.createComponent('c:PA_NewDiscountRequestForm', {
-            'discountProductId': productId
+            'product': product
         }, (resultBody, status, errorMessage) => {
             if (status === 'SUCCESS') {
                 component.find('overlayLib').showCustomModal({

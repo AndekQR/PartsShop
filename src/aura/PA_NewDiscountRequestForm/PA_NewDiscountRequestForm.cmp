@@ -1,7 +1,7 @@
 <aura:component description="PA_NewDiscountRequestForm" controller="PA_DataProvider">
 
     <aura:attribute name="discount" type="PA_Discount" access="private"/>
-    <aura:attribute name="discountProductId" type="String"/>
+    <aura:attribute name="product" type="PA_Product"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <lightning:overlayLibrary aura:id="overlayLib"/>
 
@@ -15,6 +15,15 @@
                 <lightning:input aura:id="requestForm" required="true" value="{!v.discount.startDate}" type="datetime" name="formInput" label="Discount start time"/>
                 <lightning:input aura:id="requestForm" required="true" value="{!v.discount.endDate}" type="datetime" name="formInput" label="Discount end time"/>
                 <lightning:slider value="{!v.discount.size}" label="Discount percent size"/>
+            </div>
+            <div class="newDiscountRequestContainer__price">
+                Original price:
+                <lightning:formattedNumber value="{!v.product.price}" style="currency"
+                                           currencyCode="USD"/>
+                Price after discount:
+                <lightning:formattedNumber value="{! (v.product.price - (v.product.price * (v.discount.size / 100)))}" style="currency"
+                                           currencyCode="USD"/>
+
             </div>
             <div class="newDiscountRequestContainer__controls">
                 <lightning:button variant="brand" label="Send Discount Request" onclick="{!c.onRequestSend}"/>

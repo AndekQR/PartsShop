@@ -2,7 +2,7 @@
 
     <ltng:require styles="{!$Resource.noHeaderLightning}"/>
     <aura:handler name="PA_DiscountIdChangeEvent" event="c:PA_DiscountIdChangeEvent" action="{!c.onDiscountIdChange}"/>
-    <aura:handler name="PA_NewRecordEvent" event="c:PA_NewRecordEvent" action="{!c.onDiscountAdd}"/>
+    <aura:handler event="c:PA_NewRecordEvent" action="{!c.onDiscountAdd}"/>
     <aura:handler name="PA_DiscountFormFillEvent" event="c:PA_DiscountFormFillEvent" action="{!c.onFormFill}"/>
 
     <div>

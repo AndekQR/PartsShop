@@ -3,7 +3,7 @@ public with sharing class PA_CartService {
     public static void addToCart(String productId) {
         PA_Cart userCart = getUserCart();
         ProductCart__c productCart = checkIfExists(productId, userCart.Id);
-        if(productCart != null) {
+        if (productCart != null) {
             productCart.Quantity__c += 1;
             update productCart;
         } else {
@@ -22,7 +22,7 @@ public with sharing class PA_CartService {
                 Product__c = :productId
                 LIMIT 1
         ];
-        if(!result.isEmpty()) {
+        if (!result.isEmpty()) {
             return result.get(0);
         }
         return null;
@@ -45,7 +45,7 @@ public with sharing class PA_CartService {
                 SELECT Id, Product__r.Id,Product__r.Name,
                         Product__r.Description__c, Product__r.Price__c,
                         Product__r.ProductCategory__r.Name,
-                         Product__r.Quantity__c,
+                        Product__r.Quantity__c,
                         Quantity__c
                 FROM ProductCart__c
                 WHERE Cart__c = :cart.id
@@ -61,9 +61,28 @@ public with sharing class PA_CartService {
         return new PA_PaginationResponse(page, getNumberProductsCart(), wrappers, pageSize);
     }
 
+    public static List<PA_ProductWrapper> getAllProductsCart() {
+        PA_Cart cart = getUserCart();
+        List<ProductCart__c> productCarts = [
+                SELECT Id, Product__r.Id,Product__r.Name,
+                        Product__r.Description__c, Product__r.Price__c,
+                        Product__r.ProductCategory__r.Name,
+                        Product__r.Quantity__c,
+                        Quantity__c
+                FROM ProductCart__c
+                WHERE Cart__c = :cart.id
+        ];
+        List<Product__c> mapped = mapToProducts(productCarts);
+        List<PA_ProductWrapper> wrappers = new PA_ProductWrapperBuilder(mapped)
+                .discount()
+                .cartQuantity(productCarts)
+                .build();
+        return wrappers;
+    }
+
     public static PA_Cart getUserCart() {
         List<Cart__c> carts = [
-                SELECT Id, Price_Sum__c
+                SELECT Id, Price_Sum__c, Type__c
                 FROM Cart__c
                 WHERE CreatedById = :UserInfo.getUserId() AND
                 Type__c = 'Cart'
@@ -76,18 +95,18 @@ public with sharing class PA_CartService {
         return new PA_Cart(carts.get(0));
     }
 
-    private static List<PA_Cart> getUserOrdersCarts() {
+    private static List<Cart__c> getUserOrdersCarts() {
         return [
-                SELECT Id, Price_Sum__c
+                SELECT Id, Price_Sum__c, Type__c
                 FROM Cart__c
                 WHERE CreatedById = :UserInfo.getUserId() AND
                 Type__c = 'Order'
         ];
     }
 
-    private static List<PA_Cart> getUserReturns() {
+    private static List<Cart__c> getUserReturns() {
         return [
-                SELECT Id, Price_Sum__c
+                SELECT Id, Price_Sum__c, Type__c
                 FROM Cart__c
                 WHERE CreatedById = :UserInfo.getUserId() AND
                 Type__c = 'Return'
@@ -136,4 +155,33 @@ public with sharing class PA_CartService {
             }
         }
     }
+
+    public static List<PA_OrderAddress> getCartAllAddresses() {
+        List<OrderAddress__c> addresses = [
+                SELECT Id, City__c, Country__c, PostalCode__c, State__c, Street__c
+                FROM OrderAddress__c
+                WHERE CreatedById = :UserInfo.getUserId()
+        ];
+        return PA_OrderAddress.mapToOrderAddresses(addresses);
+    }
+
+    public static void createAddress(PA_OrderAddress address) {
+        OrderAddress__c orderAddress = PA_OrderAddress.mapToCustomOrderAddress(address);
+        insert orderAddress;
+    }
+
+    public static void removeAddress(String addressId) {
+        OrderAddress__c orderAddress = new OrderAddress__c();
+        orderAddress.Id = addressId;
+        delete orderAddress;
+    }
+
+    public static void convertToOrder(String orderAddressId) {
+        PA_Cart cart = getUserCart();
+        Cart__c mapped = PA_Cart.mapToCustomCart(cart);
+        mapped.OrderAddress__c = orderAddressId;
+        mapped.Type__c = 'Order';
+        update mapped;
+    }
+
 }

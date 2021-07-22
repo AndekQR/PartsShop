@@ -5,6 +5,7 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 let returnValue = response.getReturnValue();
+                component.set('v.products', returnValue);
                 let mapped = this.mapToDualListOptions(returnValue);
                 component.set('v.userProducts', mapped);
             } else {
@@ -34,29 +35,6 @@
         component.set('v.userEmail', '');
     },
 
-    addDiscount: function (component) {
-        let discount = component.get('v.discount');
-        let discountProducts = component.get('v.discountProducts');
-        let emails = component.get('v.usersEmail');
-        let action = component.get('c.addDiscount');
-        action.setParams({
-            discount: discount,
-            productsIds: discountProducts,
-            usersEmails: emails
-        });
-        action.setCallback(this, (response) => {
-            let state = response.getState();
-            if (state === 'SUCCESS') {
-                this.showToast('Success', 'Discount is now available', 'success');
-                this.clearForm(component);
-                this.fireNewRecordEvent(component);
-            } else {
-                this.handleError(response);
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
-            }
-        });
-        $A.enqueueAction(action);
-    },
 
     showToast: function (title, message, type) {
         let resultsToast = $A.get("e.force:showToast");
@@ -118,6 +96,27 @@
             }
         });
         $A.enqueueAction(action);
+    },
 
+    showDiscountSummaryModal: function (component) {
+        let discount = component.get('v.discount');
+        let productsIds = component.get('v.discountProducts');
+        let products = component.get('v.products').filter(element => productsIds.includes(element.id));
+        let usersEmail = component.get('v.usersEmail');
+        $A.createComponent('c:PA_NewDiscountSummary', {
+            discount: discount,
+            discountProducts: products,
+            usersEmails: usersEmail
+        }, (resultBody, status, errorMessage) => {
+            if (status === 'SUCCESS') {
+                component.find('overlayLib').showCustomModal({
+                    body: resultBody,
+                    showCloseButton: true,
+                    cssClass: ''
+                });
+            } else {
+                console.log("Error: " + errorMessage);
+            }
+        });
     }
 })

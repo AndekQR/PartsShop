@@ -1,2 +1,2 @@
-<aura:event type="COMPONENT" description="PA_NewRecordEvent">
+<aura:event type="APPLICATION" description="PA_NewRecordEvent">
 </aura:event>

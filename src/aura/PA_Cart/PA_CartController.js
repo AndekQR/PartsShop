@@ -29,6 +29,6 @@
     },
 
     onMakeOrder: function(component, event, helper) {
-
+        helper.showNewOrderModal(component);
     },
 })

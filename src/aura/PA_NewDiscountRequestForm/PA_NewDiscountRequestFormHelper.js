@@ -4,7 +4,7 @@
             return;
         }
         let discount = component.get('v.discount');
-        let productId = component.get('v.discountProductId');
+        let productId = component.get('v.product').id;
         let userEmail = $A.get("$SObjectType.CurrentUser.Email");
         let action = component.get('c.addDiscount');
         action.setParams({

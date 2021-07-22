@@ -1,0 +1,79 @@
+<aura:component description="PA_NewDiscountSummary" controller="PA_DataProvider">
+
+    <aura:attribute name="discount" type="PA_Discount"/>
+    <aura:attribute name="discountProducts" type="PA_Product[]"/>
+    <aura:attribute name="usersEmails" type="String[]"/>
+    <aura:registerEvent name="PA_NewRecordEvent" type="c:PA_NewRecordEvent"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div>
+        <div class="newDiscountSummaryContainer">
+            <div class="newDiscountSummaryContainer__title">
+                    {!$Label.c.discount_summary}
+            </div>
+            <div class="newDiscountSummaryContainer__body">
+                <div class="newDiscountSummaryContainer__body__discount">
+                    <div class="newDiscountSummaryContainer__body__discount__element">
+                        <span class="newDiscountSummaryContainer__subtitle">{!$Label.c.discount_start_time}: </span>
+                        <lightning:formattedDateTime value="{!v.discount.startDate}"/>
+                    </div>
+                    <div class="newDiscountSummaryContainer__body__discount__element">
+                        <span class="newDiscountSummaryContainer__subtitle">{!$Label.c.discount_end_time}: </span>
+                        <lightning:formattedDateTime value="{!v.discount.endDate}"/>
+                    </div>
+                    <div class="newDiscountSummaryContainer__body__discount__element">
+                        <span class="newDiscountSummaryContainer__subtitle">{!$Label.c.discount_size}: </span>
+                        <lightning:formattedNumber
+                                value="{!v.discount.size / 100}"
+                                style="percent"
+                                maximumFractionDigits="2"
+                                minimumFractionDigits="2"
+                        />
+                    </div>
+                </div>
+                <div class="newDiscountSummaryContainer__products">
+                    <div class="newDiscountSummaryContainer__title">
+                            {!$label.c.products}
+                    </div>
+                    <aura:iteration items="{!v.discountProducts}" var="product">
+                        <div class="newDiscountSummaryContainer__products__element">
+                            <div class="newDiscountSummaryContainer__products__element__el">
+                                    {!product.name}
+                            </div>
+                            <div class="newDiscountSummaryContainer__products__element__el">
+                                <span class="newDiscountSummaryContainer__subtitle">Original price: </span>
+                                <lightning:formattedNumber value="{!product.price}" style="currency"
+                                                           currencyCode="USD"/>
+                            </div>
+                            <div class="newDiscountSummaryContainer__products__element__el">
+                                <span class="newDiscountSummaryContainer__subtitle">Price after discount: </span>
+                                <lightning:formattedNumber
+                                        value="{! (product.price - (product.price * (v.discount.size / 100)))}"
+                                        style="currency"
+                                        currencyCode="USD"/>
+                            </div>
+                        </div>
+                    </aura:iteration>
+                </div>
+                <div class="newDiscountSummaryContainer__emails">
+                    <div class="newDiscountSummaryContainer__title">
+                            {!$Label.c.users_emails}
+                    </div>
+                    <aura:if isTrue="{!not(empty(v.usersEmails))}">
+                        <aura:iteration items="{!v.usersEmails}" var="email">
+                            <div class="newDiscountSummaryContainer__emails__element">
+                                <lightning:formattedEmail value="{!email}"/>
+                            </div>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                                {!$Label.c.all_users}
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+            <div class="newDiscountSummaryContainer__controls">
+                <lightning:button variant="brand" label="Add Discount" onclick="{!c.onAddDiscount}"/>
+                <lightning:button variant="brand-outline" label="Cancel" onclick="{!c.onCancel}"/>
+            </div>
+        </div>
+    </div>
+</aura:component>
