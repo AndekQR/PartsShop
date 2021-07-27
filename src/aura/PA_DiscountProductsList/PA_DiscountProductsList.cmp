@@ -1,5 +1,5 @@
 <aura:component description="PA_DiscountProductsList" controller="PA_DataProvider">
-    
+
     <aura:attribute name="discountId" type="String"/>
     <aura:attribute name="discountSize" type="Decimal"/>
     <aura:attribute name="data" type="PA_Product[]" access="private"/>
@@ -16,7 +16,7 @@
 
     <div>
         <div class="title">
-            {!$Label.c.discount_products}
+                {!$Label.c.discount_products}
         </div>
         <div class="discountProductsListContainer">
             <div class="discountProductsListContainer__body">
@@ -41,8 +41,9 @@
                                                                style="currency" currencyCode="USD"/>
                                 </td>
                                 <td>
-                                    <lightning:formattedNumber value="{!element.price - (element.price * (v.discountSize / 100))}"
-                                                               style="currency" currencyCode="USD"/>
+                                    <lightning:formattedNumber
+                                            value="{!element.price - (element.price * (v.discountSize / 100))}"
+                                            style="currency" currencyCode="USD"/>
                                 </td>
                                 <td>
                                     <lightning:formattedNumber value="{!element.quantity}"/>

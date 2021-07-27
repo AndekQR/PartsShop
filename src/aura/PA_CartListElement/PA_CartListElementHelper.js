@@ -19,10 +19,9 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', $A.get('$Label.c.product_went_favorites'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.product_went_favorites'));
             } else {
-                this.handleError(response);
-                this.showToast('Warning', response.getError()[0].message, 'warning');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -38,35 +37,12 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 this.fireRemoveFromCartEvent(component);
-                this.showToast('Success', $A.get('$Label.c.product_removed_cart'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.product_removed_cart'));
             } else {
-                this.handleError(response);
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.log("Unknown error");
-        }
-    },
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
     },
 
     fireRemoveFromCartEvent: function (component) {
@@ -80,9 +56,7 @@
     },
 
     updateProductQuantity: function (component) {
-        console.log('updateProductQuantity');
         let productWrapper = component.get('v.productWrapper');
-        console.log(productWrapper);
         if (productWrapper != null) {
             let quantityToSet = 0;
             if(productWrapper.cartQuantity > productWrapper.product.quantity) {
@@ -102,10 +76,14 @@
                     this.fireQuantityChangeEvent(component);
 
                 } else {
-                    this.handleError(response);
+                    this.getNotificationHandler(component).handleActionError(response);
                 }
             });
             $A.enqueueAction(action);
         }
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

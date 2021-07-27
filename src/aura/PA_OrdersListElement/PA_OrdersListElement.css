@@ -10,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    background-color: white;
 }
 
 .THIS .ordersListElementContainer__products {

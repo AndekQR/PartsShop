@@ -1,0 +1,43 @@
+<aura:component
+        description="PA_CartButtonComponent"
+        controller="PA_DataProvider"
+        implements="forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="wrappers" type="PA_ProductWrapper[]" access="private"/>
+    <aura:attribute name="priceSum" type="Decimal" access="private"/>
+
+    <div>
+        <div class="cartButtonContainer">
+            <div class="cartButtonContainer__button" onmouseenter="{!c.refreshData}" onclick="{!c.navigateToCart}">
+                <img src="{!$Resource.cartImage}"/>
+            </div>
+            <div class="cartButtonContainer__modal">
+                <div class="cartButtonContainer__modal__element">
+                    <div class="cartButtonContainer__modal__element__name">
+                            <span class="subtitle">{!$Label.c.name}</span>
+                    </div>
+                    <div class="cartButtonContainer__modal__element__quantity">
+                            <span class="subtitle">{!$Label.c.quantity}</span>
+                    </div>
+                </div>
+                <aura:iteration items="{!v.wrappers}" var="wrapper">
+                    <div class="cartButtonContainer__modal__element">
+                        <div class="cartButtonContainer__modal__element__name">
+                                {!wrapper.product.name}
+                        </div>
+                        <div class="cartButtonContainer__modal__element__quantity">
+                                {!wrapper.cartQuantity}
+                        </div>
+                    </div>
+                </aura:iteration>
+                <div class="cartButtonContainer__modal__summary">
+                    <span class="subtitle">{!$Label.c.total+' '} </span>
+                    <lightning:formattedNumber value="{!v.priceSum}"
+                                               style="currency" currencyCode="USD"/>
+                </div>
+            </div>
+        </div>
+        <c:PA_NotificationHandler aura:id="notificationHandler"/>
+        <c:PA_Navigation aura:id="navigation"/>
+    </div>
+</aura:component>

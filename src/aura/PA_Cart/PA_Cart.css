@@ -1,6 +1,11 @@
 .THIS {
 }
 
+.THIS .mainContainer {
+    background-color: white;
+    padding: 5px;
+}
+
 .THIS .cartContainer {
     display: flex;
 }

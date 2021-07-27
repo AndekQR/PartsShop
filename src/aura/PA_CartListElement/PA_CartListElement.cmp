@@ -51,5 +51,6 @@
                 </div>
             </div>
         </div>
+        <c:PA_NotificationHandler aura:id="notificationHandler"/>
     </div>
 </aura:component>

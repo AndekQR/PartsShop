@@ -1,0 +1,78 @@
+.THIS {
+}
+
+.THIS .cartButtonContainer {
+    position: relative;
+}
+
+.THIS .cartButtonContainer__button {
+    display: flex;
+    justify-content: center;
+}
+
+.THIS .cartButtonContainer__button:hover {
+    cursor: pointer;
+    background-color: #f1eff0;
+}
+
+.THIS .cartButtonContainer:hover .cartButtonContainer__modal {
+    display: block;
+}
+
+.THIS .cartButtonContainer img {
+    object-fit: contain;
+    height: 40px;
+}
+
+.THIS .cartButtonContainer__modal {
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    max-height: 200px;
+    width: 400px;
+    z-index: 999999;
+    border-radius: 5px;
+    display: none;
+    position: absolute;
+    right: 10px;
+    padding: 10px;
+    -webkit-box-shadow: 15px 8px 36px -4px rgba(0,0,0,0.61);
+    box-shadow: 15px 8px 36px -4px rgba(0,0,0,0.61);
+    overflow-y: scroll
+}
+
+.THIS .cartButtonContainer__modal {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.THIS .cartButtonContainer__modal::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+.THIS .cartButtonContainer__modal__element {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.THIS .cartButtonContainer__modal__element__name {
+
+}
+
+.THIS .cartButtonContainer__modal__element__quantity {
+    width: 60px;
+    text-align: center;
+}
+
+.THIS .cartButtonContainer__modal__summary {
+    border-top: 1px solid #bfbfbf;
+    font-weight: bold;
+    font-size:14px;
+    margin-top: 10px;
+}
+
+.THIS .subtitle {
+    font-weight: bold;
+    padding-bottom: 4px;
+}

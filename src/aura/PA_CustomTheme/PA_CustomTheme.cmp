@@ -1,0 +1,41 @@
+<aura:component implements="forceCommunity:themeLayout" access="global" description="PA_CustomTheme">
+
+    <aura:attribute name="search" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="footer" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="cartButtonComponent" type="Aura.Component[]" required="false"/>
+
+    <div>
+        <div class="customThemeContainer">
+            <div class="customThemeContainer__navbar slds-grid slds-wrap slds-align_absolute-center">
+                <div class="slds-size_12-of-12 slds-medium-size_5-of-12">
+                    <div class="customThemeContainer__navbar__navigation">
+                            {!v.navBar}
+                    </div>
+                </div>
+                <div class="slds-size_12-of-12 slds-medium-size_4-of-12">
+                    <div class="customThemeContainer__navbar__searchRegion">
+                            {!v.search}
+                    </div>
+                </div>
+                <div class="slds-size_6-of-12 slds-medium-size_1-of-12">
+                    <div class="customThemeContainer__navbar__cartButton">
+                            {!v.cartButtonComponent}
+                    </div>
+                </div>
+                <div class="slds-size_6-of-12 slds-medium-size_2-of-12">
+                    <div class="customThemeContainer__navbar__profileMenuRegion">
+                            {!v.profileMenu}
+                    </div>
+                </div>
+            </div>
+            <div class="customThemeContainer__mainContentArea">
+                    {!v.body}
+            </div>
+            <div class="customThemeContainer__footer">
+                    {!v.footer}
+            </div>
+        </div>
+    </div>
+</aura:component>

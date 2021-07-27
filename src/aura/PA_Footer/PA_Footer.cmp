@@ -1,4 +1,4 @@
-<aura:component description="PA_Footer"  implements="forceCommunity:availableForAllPageTypes">
+<aura:component description="PA_Footer" implements="forceCommunity:availableForAllPageTypes">
 
     <div>
         <div class="footerContainer">

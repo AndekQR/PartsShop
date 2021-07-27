@@ -14,7 +14,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -28,7 +28,7 @@
                 let returnValue = response.getReturnValue();
                 component.set('v.priceSum', returnValue.priceSum);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -107,5 +107,9 @@
                 console.log("Error: " + errorMessage);
             }
         });
+    },
+    
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

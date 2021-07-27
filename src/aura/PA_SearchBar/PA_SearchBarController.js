@@ -1,4 +1,5 @@
 ({
+
     searchField: function (component, event, helper) {
         const searchQuery = event.getSource().get('v.value');
         helper.searchRecords(component, searchQuery);

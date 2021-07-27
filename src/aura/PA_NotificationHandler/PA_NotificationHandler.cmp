@@ -1,0 +1,13 @@
+<aura:component description="PA_NotificationHandler">
+
+    <aura:method name="showSuccessToast" action="{!c.showSuccessToast}">
+        <aura:attribute name="message" type="String"/>
+    </aura:method>
+    <aura:method name="showWarningToast" action="{!c.showWarningToast}">
+        <aura:attribute name="message" type="String"/>
+    </aura:method>
+    <aura:method name="handleActionError" action="{!c.handleActionError}">
+        <aura:attribute name="response" type="Object"/>
+    </aura:method>
+
+</aura:component>

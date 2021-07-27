@@ -1,0 +1,33 @@
+.THIS {
+}
+
+.THIS .customThemeContainer {
+
+}
+
+.THIS .customThemeContainer__navbar {
+
+    background-color: white;
+    border-bottom: 1px solid #ede9ed;
+    padding: 10px;
+}
+
+.THIS .customThemeContainer__navbar__navigation {
+    margin-right: 10px;
+}
+
+.THIS .customThemeContainer__navbar__searchRegion {
+    margin-right: 10px;
+}
+
+.THIS .customThemeContainer__navbar__cartButton {
+    margin-right: 10px;
+}
+
+.THIS .customThemeContainer__navbar__profileMenuRegion {
+    color: black;
+}
+
+.THIS .selfServiceProfileMenuTrigger a {
+    color: black;
+}

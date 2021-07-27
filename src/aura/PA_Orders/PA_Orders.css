@@ -1,2 +1,6 @@
 .THIS {
 }
+
+.THIS .ordersContainer {
+    background-color: white;
+}
