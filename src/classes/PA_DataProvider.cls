@@ -142,21 +142,41 @@ public class PA_DataProvider {
 
     @AuraEnabled
     public static List<PA_OrderAddress> getCartAllAddresses() {
-        return PA_CartService.getCartAllAddresses();
+        return PA_OrderService.getUserAddresses();
     }
 
     @AuraEnabled
     public static void createAddress(PA_OrderAddress address) {
-        PA_CartService.createAddress(address);
+        PA_OrderService.createAddress(address);
     }
 
     @AuraEnabled
     public static void removeAddress(String addressId) {
-        PA_CartService.removeAddress(addressId);
+        PA_OrderService.removeAddress(addressId);
     }
 
     @AuraEnabled
-    public static void convertToOrder(String addressId) {
-        PA_CartService.convertToOrder(addressId);
+    public static void makeOrder(String addressId) {
+        PA_OrderService.createOrder(addressId);
+    }
+
+    @AuraEnabled
+    public static PA_PaginationResponse getUsersOrders(Integer page, Integer pageSize) {
+        return PA_OrderService.getOrders(page, pageSize);
+    }
+
+    @AuraEnabled
+    public static void saveCase(PA_Case caseToSave) {
+        PA_CaseService.saveCase(caseToSave);
+    }
+
+    @AuraEnabled
+    public static PA_Case getCase(String caseId) {
+        return PA_CaseService.getCase(caseId);
+    }
+
+    @AuraEnabled
+    public static PA_Discount getDiscount(String discountId) {
+        return PA_DiscountService.getDiscount(discountId);
     }
 }

@@ -33,7 +33,8 @@
                     </div>
                 </div>
                 <div class="cartListElementContainer__controls__quantity">
-                    <lightning:input variant = "label-hidden" max="{!v.productWrapper.product.quantity}" value="{!v.productWrapper.cartQuantity}" label="Quantity"/>
+                    <lightning:input variant="label-hidden" max="{!v.productWrapper.product.quantity}"
+                                     value="{!v.productWrapper.cartQuantity}" label="{!$Label.c.quantity}"/>
                     <span>{!$Label.c.available_items + v.productWrapper.product.quantity}</span>
                 </div>
                 <div class="cartListElementContainer__controls__button" onclick="{!c.addToWatchList}">

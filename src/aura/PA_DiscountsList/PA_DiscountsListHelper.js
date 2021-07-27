@@ -112,10 +112,11 @@
         }
     },
 
-    fireRowSelectedEvent: function(component, discountId) {
+    fireRowSelectedEvent: function(component, discountId, discountSize) {
         let event = component.getEvent('PA_DiscountIdChangeEvent');
         event.setParams({
             id: discountId,
+            discountSize: discountSize
         });
         event.fire();
     },

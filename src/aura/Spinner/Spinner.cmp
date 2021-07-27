@@ -8,7 +8,7 @@
     <aura:if isTrue="{!v.state}">
         <div aura:id="spinnerId" class="slds-spinner_container">
             <div class="slds-spinner--brand  slds-spinner slds-spinner--medium" role="alert">
-                <span class="slds-assistive-text">Loading...</span>
+                <span class="slds-assistive-text">{!$Label.c.loading}...</span>
                 <div class="slds-spinner__dot-a"></div>
                 <div class="slds-spinner__dot-b"></div>
             </div>

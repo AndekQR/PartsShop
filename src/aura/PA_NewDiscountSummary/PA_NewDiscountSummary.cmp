@@ -40,12 +40,12 @@
                                     {!product.name}
                             </div>
                             <div class="newDiscountSummaryContainer__products__element__el">
-                                <span class="newDiscountSummaryContainer__subtitle">Original price: </span>
+                                <span class="newDiscountSummaryContainer__subtitle">{!$Label.c.original_price}: </span>
                                 <lightning:formattedNumber value="{!product.price}" style="currency"
                                                            currencyCode="USD"/>
                             </div>
                             <div class="newDiscountSummaryContainer__products__element__el">
-                                <span class="newDiscountSummaryContainer__subtitle">Price after discount: </span>
+                                <span class="newDiscountSummaryContainer__subtitle">{!$Label.c.price_after_discount}: </span>
                                 <lightning:formattedNumber
                                         value="{! (product.price - (product.price * (v.discount.size / 100)))}"
                                         style="currency"
@@ -71,8 +71,8 @@
                 </div>
             </div>
             <div class="newDiscountSummaryContainer__controls">
-                <lightning:button variant="brand" label="Add Discount" onclick="{!c.onAddDiscount}"/>
-                <lightning:button variant="brand-outline" label="Cancel" onclick="{!c.onCancel}"/>
+                <lightning:button variant="brand" label="{!$Label.c.add_discount}" onclick="{!c.onAddDiscount}"/>
+                <lightning:button variant="brand-outline" label="{!$Label.c.cancel}" onclick="{!c.onCancel}"/>
             </div>
         </div>
     </div>

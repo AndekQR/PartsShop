@@ -6,5 +6,4 @@
     onCancel: function(component, event, helper) {
         helper.closeModal(component);
     },
-
 })

@@ -1,0 +1,45 @@
+.THIS {
+}
+
+.THIS .ordersListContainer {
+
+}
+
+.THIS .ordersListContainer__title {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .ordersListContainer__body {
+
+}
+
+.THIS .ordersListContainer__body__noProducts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.THIS .paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.THIS .paginationControls__controls {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.THIS .paginationControls__info {
+    font-size: 14px;
+    font-weight: 400;
+}

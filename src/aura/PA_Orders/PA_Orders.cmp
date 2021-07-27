@@ -1,0 +1,8 @@
+<aura:component description="PA_Orders" implements="forceCommunity:availableForAllPageTypes">
+
+    <div>
+        <div class="ordersContainer">
+            <c:PA_OrdersList/>
+        </div>
+    </div>
+</aura:component>

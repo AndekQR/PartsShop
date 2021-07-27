@@ -11,7 +11,7 @@
 
     <div>
         <div class="createProductContainer slds-p-horizontal--small">
-            <lightning:input required="true" type="text" aura:id="productField" label="Name" maxlength="80"
+            <lightning:input required="true" type="text" aura:id="productField" label="{!$Label.c.name}" maxlength="80"
                              value="{!v.newProduct.name}"/>
             <lightning:layout>
                 <lightning:layoutItem size="6">

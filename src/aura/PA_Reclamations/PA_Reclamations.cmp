@@ -1,0 +1,10 @@
+<aura:component description="PA_Reclamations"  implements="flexipage:availableForAllPageTypes">
+
+    <ltng:require styles="{!$Resource.noHeaderLightning}"/>
+
+    <div>
+        <div class="reclamationsContainer">
+
+        </div>
+    </div>
+</aura:component>

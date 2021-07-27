@@ -34,6 +34,16 @@ public class PA_DiscountService extends PA_Service {
                 pageSize
         );
     }
+    
+    public static PA_Discount getDiscount(String discountId) {
+        ProductDiscount__c discount = [
+                SELECT Id, Size__c, StartDate__c, EndDate__c
+                FROM ProductDiscount__c
+                WHERE Id = :discountId
+                LIMIT 1
+        ];
+        return new PA_Discount(discount);
+    }
 
     private Integer countDiscountsRequests() {
         String userId = UserInfo.getUserId();
@@ -188,10 +198,6 @@ public class PA_DiscountService extends PA_Service {
     }
 
     public static void addDiscount(PA_Discount discount, List<String> productsIds, List<String> usersEmails) {
-        System.debug('addDiscount');
-        System.debug(discount);
-        System.debug(productsIds);
-        System.debug(usersEmails);
         if (discount.id != null) {
             removeDiscount(discount.id);
             discount.id = null;

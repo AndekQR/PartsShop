@@ -32,7 +32,7 @@
 
     convertCartToOrder: function (component) {
         let addressId = component.get('v.choosedAddressId');
-        let action = component.get('c.convertToOrder');
+        let action = component.get('c.makeOrder');
         action.setParams({
             addressId: addressId
         });

@@ -1,6 +1,7 @@
 <aura:component description="PA_DiscountProductsList" controller="PA_DataProvider">
     
     <aura:attribute name="discountId" type="String"/>
+    <aura:attribute name="discountSize" type="Decimal"/>
     <aura:attribute name="data" type="PA_Product[]" access="private"/>
     <aura:attribute name="pageNumber" type="Integer" default="1" access="private"/>
     <aura:attribute name="pageSize" type="Integer" default="5"/>
@@ -10,6 +11,7 @@
 
     <aura:method name="changeDiscountId" action="{!c.onDiscountIdChange}">
         <aura:attribute name="id" type="String"/>
+        <aura:attribute name="discountSize" type="Decimal"/>
     </aura:method>
 
     <div>
@@ -18,11 +20,12 @@
         </div>
         <div class="discountProductsListContainer">
             <div class="discountProductsListContainer__body">
-                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-box_border">
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-box_border slds-text-align_center">
                     <thead>
                     <tr class="slds-text-title_caps">
                         <th>{!$Label.c.name}</th>
                         <th>{!$Label.c.price}</th>
+                        <th>{!$Label.c.price_after_discount}</th>
                         <th>{!$Label.c.quantity}</th>
                     </tr>
                     </thead>
@@ -34,7 +37,12 @@
                                     <lightning:formattedText value="{!element.name}"/>
                                 </td>
                                 <td>
-                                    <lightning:formattedNumber value="{!element.price}"/>
+                                    <lightning:formattedNumber value="{!element.price}"
+                                                               style="currency" currencyCode="USD"/>
+                                </td>
+                                <td>
+                                    <lightning:formattedNumber value="{!element.price - (element.price * (v.discountSize / 100))}"
+                                                               style="currency" currencyCode="USD"/>
                                 </td>
                                 <td>
                                     <lightning:formattedNumber value="{!element.quantity}"/>

@@ -1,0 +1,87 @@
+<aura:component description="PA_OrdersListElement">
+
+    <aura:attribute name="order" type="PA_Order"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div>
+        <div class="ordersListElementContainer ">
+            <div class="ordersListElementContainer__products">
+                <div class="ordersListElementContainer__products__product">
+                    <div class="ordersListElementContainer__products__product__name slds-truncate">
+                        <span class="subtitle">{!$Label.c.name}: </span>
+                    </div>
+                    <div class="ordersListElementContainer__products__product__details">
+                        <div class="ordersListElementContainer__products__product__details__quantity">
+                            <span class="subtitle">{!$Label.c.quantity}: </span>
+                        </div>
+                        <div class="ordersListElementContainer__products__product__details_sum">
+                            <span class="subtitle">{!$Label.c.price}: </span>
+                        </div>
+                    </div>
+                </div>
+                <aura:iteration items="{!v.order.products}" var="product">
+                    <div class="ordersListElementContainer__products__product">
+                        <div class="ordersListElementContainer__products__product__name slds-truncate">
+                            <lightning:formattedUrl
+                                    value="{!$Label.c.partsshop_community_base_address + 'product-detail?productId='+product.id}"
+                                    label="{!product.name}"
+                                    target="_blank"
+                            />
+                        </div>
+                        <div class="ordersListElementContainer__products__product__details">
+                            <div class="ordersListElementContainer__products__product__details__quantity">
+                                <lightning:formattedNumber value="{!product.quantity}"/>
+                                <span> piece(s)</span>
+
+                            </div>
+                            <div class="ordersListElementContainer__products__product__details_sum">
+                                <lightning:formattedNumber value="{!product.quantity * product.price}" style="currency"
+                                                           currencyCode="USD"/>
+
+                            </div>
+                        </div>
+                    </div>
+                </aura:iteration>
+            </div>
+            <div class="ordersListElementContainer__address">
+                <span class="subtitle">{!$Label.c.address}: </span>
+                <div class="ordersListElementContainer__address__element">
+                    <span class="subtitle">{!$Label.c.street}: </span>
+                        {!v.order.street}
+                </div>
+                <div class="ordersListElementContainer__address__element">
+                    <span class="subtitle">{!$Label.c.postal_code}: </span>
+                        {!v.order.postalCode}
+                </div>
+                <div class="ordersListElementContainer__address__element">
+                    <span class="subtitle">{!$Label.c.city}: </span>
+                        {!v.order.city}
+                </div>
+                <div class="ordersListElementContainer__address__element">
+                    <span class="subtitle">{!$Label.c.state}: </span>
+                        {!v.order.state}
+                </div>
+                <div class="ordersListElementContainer__address__element">
+                    <span class="subtitle">{!$Label.c.country}: </span>
+                        {!v.order.country}
+                </div>
+            </div>
+            <div class="ordersListElementContainer_summary">
+                <div class="ordersListElementContainer_summary__date">
+                    <lightning:formattedDateTime value="{!v.order.orderTime}"/>
+                </div>
+                <div class="ordersListElementContainer_summary__priceSum">
+                    <lightning:formattedNumber value="{!v.order.priceSum}" style="currency" currencyCode="USD"/>
+                </div>
+                <div class="ordersListElementContainer_summary__reclamationButton" onclick="{!c.onNewReclamation}">
+                    <aura:if isTrue="{!empty(v.order.caseId)}">
+                    {!$Label.c.reclamation}
+                        <aura:set attribute="else">
+                            Reclamation Details
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,45 @@
+.THIS {
+}
+
+.THIS .caseFormContainer {
+
+}
+
+.THIS .caseFormContainer__titleContainer {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #f1f0f4;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.THIS .caseFormContainer_body {
+
+}
+
+.THIS .caseFormContainer_body__relatedProducts {
+
+}
+
+.THIS .caseFormContainer_body__relatedProducts__element {
+    display: flex;
+}
+.THIS .caseFormContainer_body__relatedProducts__element input {
+    margin-right: 10px;
+}
+
+.THIS .caseFormContainer__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.THIS .caseFormContainer__controls__status {
+    font-weight: bold;
+    font-size: 14px;
+
+}

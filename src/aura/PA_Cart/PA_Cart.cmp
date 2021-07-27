@@ -24,7 +24,7 @@
                     </aura:iteration>
                     <aura:set attribute="else">
                         <div class="cartContainer__leftSection__emptyCart">
-                            Your Cart is Empty
+                            {!$Label.c.your_cart_is_empty}
                         </div>
                     </aura:set>
                 </aura:if>

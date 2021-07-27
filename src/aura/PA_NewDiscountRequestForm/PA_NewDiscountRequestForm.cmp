@@ -9,25 +9,33 @@
     <div>
         <div class="newDiscountRequestContainer">
             <div class="newDiscountRequestContainer__title">
-                {!$Label.c.new_discount_request}
+                    {!$Label.c.new_discount_request}
             </div>
             <div class="newDiscountRequestContainer__body">
-                <lightning:input aura:id="requestForm" required="true" value="{!v.discount.startDate}" type="datetime" name="formInput" label="Discount start time"/>
-                <lightning:input aura:id="requestForm" required="true" value="{!v.discount.endDate}" type="datetime" name="formInput" label="Discount end time"/>
-                <lightning:slider value="{!v.discount.size}" label="Discount percent size"/>
+                <lightning:input
+                        aura:id="requestForm" required="true" value="{!v.discount.startDate}" type="datetime"
+                        name="formInput" label="{!$Label.c.discount_start_time}"
+                />
+                <lightning:input
+                        aura:id="requestForm" required="true" value="{!v.discount.endDate}" type="datetime"
+                        name="formInput" label="{!$Label.c.discount_end_time}"
+                />
+                <lightning:slider value="{!v.discount.size}" label="{!$Label.c.discount_percent_time}"/>
             </div>
             <div class="newDiscountRequestContainer__price">
-                Original price:
+                {!$Label.c.original_price}
                 <lightning:formattedNumber value="{!v.product.price}" style="currency"
                                            currencyCode="USD"/>
-                Price after discount:
-                <lightning:formattedNumber value="{! (v.product.price - (v.product.price * (v.discount.size / 100)))}" style="currency"
+                {!$Label.c.price_after_discount}
+                <lightning:formattedNumber value="{! (v.product.price - (v.product.price * (v.discount.size / 100)))}"
+                                           style="currency"
                                            currencyCode="USD"/>
 
             </div>
             <div class="newDiscountRequestContainer__controls">
-                <lightning:button variant="brand" label="Send Discount Request" onclick="{!c.onRequestSend}"/>
-                <lightning:button variant="brand-outline" label="Cancel" onclick="{!c.onCancel}"/>
+                <lightning:button variant="brand" label="{!$Label.c.send_discount_request}"
+                                  onclick="{!c.onRequestSend}"/>
+                <lightning:button variant="brand-outline" label="{!$Label.c.cancel}" onclick="{!c.onCancel}"/>
             </div>
         </div>
     </div>

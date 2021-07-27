@@ -1,0 +1,68 @@
+<aura:component description="PA_CaseForm" controller="PA_DataProvider">
+
+    <aura:attribute name="orderObject" type="PA_Order"/>
+    <aura:attribute name="case" type="PA_Case" access="private"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
+    <div>
+        <div class="caseFormContainer">
+            <div class="caseFormContainer__titleContainer">
+                <div class="caseFormContainer__titleContainer__title">
+                        {!$Label.c.reclamation}
+                </div>
+                <aura:if isTrue="{!not(empty(v.orderObject.caseId))}">
+                    <div class="caseFormContainer__titleContainer__date">
+                        <span>{!$Label.c.date_of_submission}: </span>
+                        <lightning:formattedDateTime value="{!v.case.createdDate}"/>
+                    </div>
+                </aura:if>
+            </div>
+            <div class="caseFormContainer_body">
+                <div class="caseFormContainer_body__relatedProducts">
+                    <aura:if isTrue="{!not(empty(v.orderObject.caseId))}">
+                        <aura:iteration items="{!v.case.relatedProducts}" var="product">
+                            <div class="caseFormContainer_body__relatedProducts__element">
+                                <ui:inputCheckbox disabled="{!not(empty(v.orderObject.caseId))}"
+                                                  value="{!product.caseRelated}"/>
+                                    {!product.name}
+                            </div>
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <aura:iteration items="{!v.orderObject.products}" var="product">
+                                <div class="caseFormContainer_body__relatedProducts__element">
+                                    <ui:inputCheckbox disabled="{!not(empty(v.orderObject.caseId))}"
+                                                      value="{!product.caseRelated}"/>
+                                        {!product.name}
+                                </div>
+                            </aura:iteration>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <div class="caseFormContainer_body__form">
+                    <lightning:input required="true" disabled="{!not(empty(v.orderObject.caseId))}" name="subject"
+                                     value="{!v.case.subject}"
+                                     placeholder="{!$Label.c.type_here}" label="{!$Label.c.subject}"/>
+                    <lightning:textarea required="true" disabled="{!not(empty(v.orderObject.caseId))}"
+                                        value="{!v.case.description}"
+                                        name="description" label="{!$Label.c.description}"
+                                        placeholder="{!$Label.c.type_here}"/>
+                </div>
+            </div>
+            <div class="caseFormContainer__controls">
+                <div>
+                    <lightning:button variant="brand-outline" label="{!$Label.c.cancel}" onclick="{!c.onClose}"/>
+                    <lightning:button
+                            disabled="{!or(not(empty(v.orderObject.caseId)), empty(v.case.subject), empty(v.case.description))}"
+                            variant="brand" label="{!$Label.c.new_reclamation}"
+                            onclick="{!c.onNewReclamation}"/>
+                </div>
+                <div class="caseFormContainer__controls__status">
+                    <aura:if isTrue="{!not(empty(v.orderObject.caseId))}">
+                        {!$Label.c.status}: {!v.case.status}
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

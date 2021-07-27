@@ -1,20 +1,30 @@
 public class PA_Product {
     @AuraEnabled
-    public String id {get; set;}
+    public String id { get; set; }
     @AuraEnabled
-    public Boolean approved {get; set;}
+    public Boolean approved { get; set; }
     @AuraEnabled
-    public String description {get; set;}
+    public String description { get; set; }
     @AuraEnabled
-    public Decimal price {get; set;}
+    public Decimal price { get; set; }
     @AuraEnabled
-    public PA_Category category {get; set;}
+    public PA_Category category { get; set; }
     @AuraEnabled
-    public Decimal quantity {get; set;}
+    public Decimal quantity { get; set; }
     @AuraEnabled
-    public String name {get; set;}
+    public String name { get; set; }
+    @AuraEnabled
+    public Boolean caseRelated { get; set; }
 
-    public PA_Product(){}
+    public PA_Product() {
+    }
+
+    public PA_Product(MyOrderProduct__c orderItem) {
+        this.id = orderItem.Product__c;
+        this.quantity = orderItem.Quantity__c;
+        this.name = orderItem.Product__r.Name;
+        this.price = orderItem.UnitPrice__c;
+    }
 
     public PA_Product(Product__c product) {
         this.id = product.Id;
@@ -23,7 +33,7 @@ public class PA_Product {
         this.price = product.Price__c;
         this.quantity = product.Quantity__c;
         this.name = product.Name;
-        if(product.ProductCategory__r != null) {
+        if (product.ProductCategory__r != null) {
             this.category = new PA_Category(product.ProductCategory__r);
         }
     }
@@ -31,14 +41,14 @@ public class PA_Product {
     public static Product__c mapToCustomProduct(PA_Product product) {
         Product__c custom = new Product__c();
         custom.Id = product.id;
-        if(product.approved != null) {
+        if (product.approved != null) {
             custom.Approved__c = product.approved;
         }
         custom.Description__c = product.description;
         custom.Price__c = product.price;
         custom.Quantity__c = product.quantity;
         custom.Name = product.name;
-        if(product.category != null) {
+        if (product.category != null) {
             custom.ProductCategory__c = product.category.id;
         }
         return custom;
@@ -62,7 +72,7 @@ public class PA_Product {
             newPa_product.price = product.Product__r.Price__c;
             newPa_product.quantity = product.Product__r.Quantity__c;
             newPa_product.name = product.Product__r.Name;
-            if(product.Product__r.ProductCategory__r != null) {
+            if (product.Product__r.ProductCategory__r != null) {
                 newPa_product.category = new PA_Category(product.Product__r.ProductCategory__r);
             }
             pa_products.add(newPa_product);

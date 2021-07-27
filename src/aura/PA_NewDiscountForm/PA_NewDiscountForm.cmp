@@ -17,13 +17,15 @@
     <div>
         <div class="newDiscountFormContainer">
             <lightning:input value="{!v.discount.startDate}" type="datetime" name="formInput"
-                             label="Discount start time"/>
-            <lightning:input value="{!v.discount.endDate}" type="datetime" name="formInput" label="Discount end time"/>
-            <lightning:slider value="{!v.discount.size}" label="Discount percent size"/>
+                             label="{!$Label.c.discount_start_time}"/>
+            <lightning:input value="{!v.discount.endDate}"
+                             type="datetime" name="formInput"
+                             label="{!$Label.c.discount_end_time}"/>
+            <lightning:slider value="{!v.discount.size}" label="{!$Label.c.discount_percent_time}"/>
             <lightning:dualListbox name="languages"
-                                   label="Choose products Covered By Discount"
-                                   sourceLabel="Available"
-                                   selectedLabel="Selected"
+                                   label="{!$Label.c.choose_products_covered_discount}"
+                                   sourceLabel="{!$Label.c.Available}"
+                                   selectedLabel="{!$Label.c.selected}"
                                    options="{!v.userProducts}"
                                    value="{!v.discountProducts}"/>
 
@@ -34,9 +36,9 @@
                 <div class="newDiscountFormContainer__emails__new">
                     <lightning:layout>
                         <lightning:layoutItem size="8">
-                            <lightning:input class="slds-m-right_xxx-small" placeholder="User Email"
+                            <lightning:input class="slds-m-right_xxx-small" placeholder="{!$Label.c.user_email}"
                                              variant="label-hidden"
-                                             type="text" label="User Email"
+                                             type="text" label="{!$Label.c.user_email}"
                                              value="{!v.userEmail}"/>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="4">
@@ -58,8 +60,8 @@
                 </div>
             </div>
             <div class="newDiscountFormContainer__controls">
-                <lightning:button variant="brand" label="Add Discount" onclick="{!c.showSummaryModal}"/>
-                <lightning:button variant="brand-outline" label="Clear" onclick="{!c.onClear}"/>
+                <lightning:button variant="brand" label="{!$Label.c.add_discount}" onclick="{!c.showSummaryModal}"/>
+                <lightning:button variant="brand-outline" label="{!$Label.c.clear}" onclick="{!c.onClear}"/>
             </div>
         </div>
     </div>

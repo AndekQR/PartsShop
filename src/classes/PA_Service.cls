@@ -1,5 +1,4 @@
 public virtual class PA_Service {
-
     public virtual List<String> getIds(List<SObject> objects) {
         List<String> ids = new List<String>();
         for (SObject sobj : objects) {
@@ -7,5 +6,4 @@ public virtual class PA_Service {
         }
         return ids;
     }
-
 }

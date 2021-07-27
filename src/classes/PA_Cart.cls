@@ -6,7 +6,7 @@ public class PA_Cart {
     @AuraEnabled
     public String type { get; set; }
     @AuraEnabled
-    public PA_OrderAddress orderAddress { get; set; }
+    public Datetime orderTime { get; set; }
 
     public PA_Cart() {
     }
@@ -15,6 +15,14 @@ public class PA_Cart {
         this.id = cart.Id;
         this.priceSum = cart.Price_Sum__c;
         this.type = cart.Type__c;
+    }
+
+    public static List<PA_Cart> mapToCarts(List<Cart__c> carts) {
+        List<PA_Cart> result = new List<PA_Cart>();
+        for (Cart__c cart : carts) {
+            result.add(new PA_Cart(cart));
+        }
+        return result;
     }
 
     public static Cart__c mapToCustomCart(PA_Cart cart) {

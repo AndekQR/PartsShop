@@ -80,15 +80,17 @@
     },
 
     updateProductQuantity: function (component) {
+        console.log('updateProductQuantity');
         let productWrapper = component.get('v.productWrapper');
-        let quantityToSet = 0;
-        if(productWrapper.cartQuantity > productWrapper.product.quantity) {
-            quantityToSet = productWrapper.product.quantity;
-            component.set('v.productWrapper.cartQuantity', quantityToSet);
-        } else {
-            quantityToSet = productWrapper.cartQuantity;
-        }
+        console.log(productWrapper);
         if (productWrapper != null) {
+            let quantityToSet = 0;
+            if(productWrapper.cartQuantity > productWrapper.product.quantity) {
+                quantityToSet = productWrapper.product.quantity;
+                component.set('v.productWrapper.cartQuantity', quantityToSet);
+            } else {
+                quantityToSet = productWrapper.cartQuantity;
+            }
             let action = component.get('c.updateProductCartQuantity');
             action.setParams({
                 productId: productWrapper.product.id,

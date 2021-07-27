@@ -1,4 +1,4 @@
-public with sharing class PA_CartService {
+public with sharing class PA_CartService extends PA_Service {
 
     public static void addToCart(String productId) {
         PA_Cart userCart = getUserCart();
@@ -10,6 +10,8 @@ public with sharing class PA_CartService {
             ProductCart__c newProductCart = new ProductCart__c();
             newProductCart.Product__c = productId;
             newProductCart.Cart__c = userCart.id;
+            System.debug(newProductCart.Product__c);
+            System.debug(newProductCart.Cart__c);
             insert newProductCart;
         }
     }
@@ -80,12 +82,16 @@ public with sharing class PA_CartService {
         return wrappers;
     }
 
+    public static void removeCurrentCart() {
+        PA_Cart cart = getUserCart();
+        delete PA_Cart.mapToCustomCart(cart);
+    }
+
     public static PA_Cart getUserCart() {
         List<Cart__c> carts = [
                 SELECT Id, Price_Sum__c, Type__c
                 FROM Cart__c
-                WHERE CreatedById = :UserInfo.getUserId() AND
-                Type__c = 'Cart'
+                WHERE CreatedById = :UserInfo.getUserId()
         ];
         if (carts.isEmpty()) {
             Cart__c cart = new Cart__c();
@@ -93,24 +99,6 @@ public with sharing class PA_CartService {
             return new PA_Cart(cart);
         }
         return new PA_Cart(carts.get(0));
-    }
-
-    private static List<Cart__c> getUserOrdersCarts() {
-        return [
-                SELECT Id, Price_Sum__c, Type__c
-                FROM Cart__c
-                WHERE CreatedById = :UserInfo.getUserId() AND
-                Type__c = 'Order'
-        ];
-    }
-
-    private static List<Cart__c> getUserReturns() {
-        return [
-                SELECT Id, Price_Sum__c, Type__c
-                FROM Cart__c
-                WHERE CreatedById = :UserInfo.getUserId() AND
-                Type__c = 'Return'
-        ];
     }
 
     private static List<Product__c> mapToProducts(List<ProductCart__c> productCarts) {
@@ -155,33 +143,4 @@ public with sharing class PA_CartService {
             }
         }
     }
-
-    public static List<PA_OrderAddress> getCartAllAddresses() {
-        List<OrderAddress__c> addresses = [
-                SELECT Id, City__c, Country__c, PostalCode__c, State__c, Street__c
-                FROM OrderAddress__c
-                WHERE CreatedById = :UserInfo.getUserId()
-        ];
-        return PA_OrderAddress.mapToOrderAddresses(addresses);
-    }
-
-    public static void createAddress(PA_OrderAddress address) {
-        OrderAddress__c orderAddress = PA_OrderAddress.mapToCustomOrderAddress(address);
-        insert orderAddress;
-    }
-
-    public static void removeAddress(String addressId) {
-        OrderAddress__c orderAddress = new OrderAddress__c();
-        orderAddress.Id = addressId;
-        delete orderAddress;
-    }
-
-    public static void convertToOrder(String orderAddressId) {
-        PA_Cart cart = getUserCart();
-        Cart__c mapped = PA_Cart.mapToCustomCart(cart);
-        mapped.OrderAddress__c = orderAddressId;
-        mapped.Type__c = 'Order';
-        update mapped;
-    }
-
 }

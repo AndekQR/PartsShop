@@ -1,0 +1,87 @@
+.THIS {
+}
+
+.THIS .ordersListElementContainer {
+    border: 1px solid #f4ede7;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.THIS .ordersListElementContainer__products {
+    width: 60%;
+}
+
+.THIS .ordersListElementContainer__products__product {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e9e3;
+    flex-wrap: wrap;
+}
+
+.THIS .ordersListElementContainer__products__product__name {
+    margin-right: 10px;
+}
+
+.THIS .ordersListElementContainer__products__product__details {
+    display: flex;
+}
+
+.THIS .ordersListElementContainer__products__product__details__quantity {
+    margin-right: 10px;
+    width: 60px;
+}
+
+.THIS .ordersListElementContainer__products__product__details_sum {
+    width: 40px;
+}
+
+.THIS .ordersListElementContainer__address {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 15%;
+}
+
+.THIS .ordersListElementContainer__address__element {
+
+}
+
+.THIS .ordersListElementContainer_summary {
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.THIS .ordersListElementContainer_summary__date {
+
+}
+
+.THIS .ordersListElementContainer_summary__priceSum {
+
+}
+
+.THIS .ordersListElementContainer_summary__reclamationButton {
+    width: 200px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: #afb1ad;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.THIS .ordersListElementContainer_summary__reclamationButton:hover {
+    cursor: pointer;
+    background-color: #c7c9c4;
+}
+
+.THIS .subtitle {
+    font-weight: bold;
+}

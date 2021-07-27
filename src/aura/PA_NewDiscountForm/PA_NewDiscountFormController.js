@@ -24,5 +24,4 @@
     fillForm: function(component, event, helper) {
         helper.setFormData(component, event);
     },
-
 })

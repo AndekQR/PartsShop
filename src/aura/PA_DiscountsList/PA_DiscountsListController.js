@@ -26,7 +26,8 @@
         if(isRequests) {
             helper.fillUpDiscountFormEvent(component, selectedRowId);
         } else {
-            helper.fireRowSelectedEvent(component, selectedRowId);
+            let discountSize = event.currentTarget.dataset.size;
+            helper.fireRowSelectedEvent(component, selectedRowId, discountSize);
         }
     },
 

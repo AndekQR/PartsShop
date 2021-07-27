@@ -12,7 +12,7 @@
             <div class="productDetailsContainer__category">
                 <span>/{!v.product.product.category.name}</span>
                 <div class="productDetailsContainer__category__rating">
-                    <span>Average rate of {!v.product.numberOfReviews} reviews: </span>
+                    <span>{!format($Label.c.average_rate_of_reviews, v.product.numberOfReviews)}: </span>
                     <c:PA_FiveStarRating value="{!v.product.average}" readonly="{!true}"/>
                 </div>
             </div>
@@ -37,7 +37,8 @@
                         <div class="productDetailsContainer__detailsContainer__details__priceContainer slds-size_4-of-12">
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__container">
                                 <div class="productDetailsContainer__detailsContainer__details__price">
-                                    <lightning:input max="{!v.product.product.quantity}" value="{!v.quantity}" label="{!$Label.c.quantity}"/>
+                                    <lightning:input max="{!v.product.product.quantity}" value="{!v.quantity}"
+                                                     label="{!$Label.c.quantity}"/>
                                     <span>{! $Label.c.available_items + v.product.product.quantity}</span>
                                 </div>
                                 <div class="productDetailsContainer__detailsContainer__details__price__price">
@@ -54,14 +55,17 @@
                                 </div>
                             </div>
                             <div class="productDetailsContainer__detailsContainer__details__priceContainer__secondContainer">
-                                <div class="productDetailsContainer__detailsContainer__details__price__watchListButton" onclick="{!c.addToWatchlist}">
-                                    {!$Label.c.add_to_watchlist}
+                                <div class="productDetailsContainer__detailsContainer__details__price__watchListButton"
+                                     onclick="{!c.addToWatchlist}">
+                                        {!$Label.c.add_to_watchlist}
                                 </div>
-                                <div class="productDetailsContainer__detailsContainer__details__price__discountButton" onclick="{!c.applyForDiscount}">
-                                    {!$Label.c.apply_for_discount}
+                                <div class="productDetailsContainer__detailsContainer__details__price__discountButton"
+                                     onclick="{!c.applyForDiscount}">
+                                        {!$Label.c.apply_for_discount}
                                 </div>
-                                <div class="productDetailsContainer__detailsContainer__details__price__cartButton" onclick="{!c.addToCart}">
-                                    {!$Label.c.add_to_cart}
+                                <div class="productDetailsContainer__detailsContainer__details__price__cartButton"
+                                     onclick="{!c.addToCart}">
+                                        {!$Label.c.add_to_cart}
                                 </div>
                             </div>
                         </div>

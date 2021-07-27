@@ -39,10 +39,12 @@
                     <aura:if isTrue="{!not(empty(v.data))}">
                         <aura:iteration items="{!v.data}" var="element">
                             <tr data-myid="{!element.id}"
+                                data-size="{!element.size}"
                                 onclick="{!c.onRowSelect}"
                                 class="{!(element.id == v.selectedRowId) ? 'selectedRow' : ''}">
                                 <td>
                                     <lightning:formattedNumber value="{!element.size}"/>
+                                    <span>%</span>
                                 </td>
                                 <td>
                                     <lightning:formattedDateTime value="{!element.startDate}"/>
