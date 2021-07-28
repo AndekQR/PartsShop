@@ -6,7 +6,6 @@
 
     onNewRecord: function(component, event, helper) {
         helper.clearForm(component);
-        helper.showToast('Success', $A.get('$Label.c.discount_is_now_available'), 'success');
     },
 
     showSummaryModal: function(component, event, helper) {

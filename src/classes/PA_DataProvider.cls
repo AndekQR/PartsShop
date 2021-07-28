@@ -179,4 +179,9 @@ public class PA_DataProvider {
     public static PA_Discount getDiscount(String discountId) {
         return PA_DiscountService.getDiscount(discountId);
     }
+
+    @AuraEnabled
+    public static PA_PaginationResponse getAllDiscounts(Integer page, Integer pageSize) {
+        return PA_DiscountService.getAllDiscounts(page, pageSize);
+    }
 }

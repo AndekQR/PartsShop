@@ -20,16 +20,21 @@
                             <span class="subtitle">{!$Label.c.quantity}</span>
                     </div>
                 </div>
-                <aura:iteration items="{!v.wrappers}" var="wrapper">
-                    <div class="cartButtonContainer__modal__element">
-                        <div class="cartButtonContainer__modal__element__name">
-                                {!wrapper.product.name}
+                <aura:if isTrue="{!not(empty(v.wrappers))}">
+                    <aura:iteration items="{!v.wrappers}" var="wrapper">
+                        <div class="cartButtonContainer__modal__element">
+                            <div class="cartButtonContainer__modal__element__name">
+                                    {!wrapper.product.name}
+                            </div>
+                            <div class="cartButtonContainer__modal__element__quantity">
+                                    {!wrapper.cartQuantity}
+                            </div>
                         </div>
-                        <div class="cartButtonContainer__modal__element__quantity">
-                                {!wrapper.cartQuantity}
-                        </div>
-                    </div>
-                </aura:iteration>
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        {!$Label.c.no_products}
+                    </aura:set>
+                </aura:if>
                 <div class="cartButtonContainer__modal__summary">
                     <span class="subtitle">{!$Label.c.total+' '} </span>
                     <lightning:formattedNumber value="{!v.priceSum}"

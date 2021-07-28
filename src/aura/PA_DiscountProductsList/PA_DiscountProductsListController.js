@@ -19,7 +19,6 @@
         let params = event.getParam('arguments');
         let discountId = params.id;
         let discountSize = params.discountSize;
-        console.log('discountSize: '+discountSize);
         component.set('v.discountId', discountId);
         component.set('v.discountSize', discountSize);
         helper.setFirstPage(component);

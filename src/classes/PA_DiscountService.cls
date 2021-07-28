@@ -34,7 +34,7 @@ public class PA_DiscountService extends PA_Service {
                 pageSize
         );
     }
-    
+
     public static PA_Discount getDiscount(String discountId) {
         ProductDiscount__c discount = [
                 SELECT Id, Size__c, StartDate__c, EndDate__c
@@ -80,8 +80,35 @@ public class PA_DiscountService extends PA_Service {
         );
     }
 
+    public static PA_PaginationResponse getAllDiscounts(Integer page, Integer pageSize) {
+        Integer offset = (page - 1) * pageSize;
+        List<ProductDiscount__c> discounts = [
+                SELECT Id,
+                        Size__c, StartDate__c,
+                        EndDate__c
+                FROM ProductDiscount__c
+                WHERE Status__c = 'Active'
+                LIMIT :pageSize
+                OFFSET :offset
+        ];
+        return new PA_PaginationResponse(
+                page,
+                countAllActiveDiscounts(),
+                PA_Discount.mapToDiscounts(discounts),
+                pageSize
+        );
+    }
+
+    private static Integer countAllActiveDiscounts() {
+        AggregateResult result = [
+                SELECT count(Id) size
+                FROM ProductDiscount__c
+                WHERE Status__c = 'Active'
+        ];
+        return (Integer) result.get('size');
+    }
+
     public static PA_PaginationResponse getProductsByDiscount(String discountId, Integer page, Integer pageSize) {
-        String userId = UserInfo.getUserId();
         List<Product_ProductDiscount__c> product_productDiscounts = new List<Product_ProductDiscount__c>();
         if (page == null || pageSize == null) {
             product_productDiscounts = [
@@ -89,8 +116,7 @@ public class PA_DiscountService extends PA_Service {
                             Product__r.Approved__c, Product__r.Price__c, Product__r.Description__c,
                             Product__r.ProductCategory__r.Name
                     FROM Product_ProductDiscount__c
-                    WHERE CreatedById = :userId AND
-                    ProductDiscount__c = :discountId
+                    WHERE ProductDiscount__c = :discountId
             ];
         } else {
             Integer offset = (page - 1) * pageSize;
@@ -99,8 +125,7 @@ public class PA_DiscountService extends PA_Service {
                             Product__r.Approved__c, Product__r.Price__c, Product__r.Description__c,
                             Product__r.ProductCategory__r.Name
                     FROM Product_ProductDiscount__c
-                    WHERE CreatedById = :userId AND
-                    ProductDiscount__c = :discountId
+                    WHERE ProductDiscount__c = :discountId
                     LIMIT :pageSize
                     OFFSET :offset
             ];
@@ -204,6 +229,7 @@ public class PA_DiscountService extends PA_Service {
         }
         ProductDiscount__c mappedDiscount = PA_Discount.mapToDiscount(discount);
         insert mappedDiscount;
+        System.debug(mappedDiscount);
         List<Product_ProductDiscount__c> product_productDiscounts = new List<Product_ProductDiscount__c>();
         for (String productId : productsIds) {
             Product_ProductDiscount__c product_productDiscount = new Product_ProductDiscount__c();
@@ -212,6 +238,7 @@ public class PA_DiscountService extends PA_Service {
             product_productDiscounts.add(product_productDiscount);
         }
         insert product_productDiscounts;
+        System.debug(product_productDiscounts);
         if (!usersEmails.isEmpty()) {
             List<ProductDiscountAssign__c> discountAssigns = new List<ProductDiscountAssign__c>();
             List<User> users = getUsersByEmails(usersEmails);
@@ -224,8 +251,9 @@ public class PA_DiscountService extends PA_Service {
                 }
             }
             insert discountAssigns;
+            System.debug(discountAssigns);
         }
-        if(discount.status == 'Active') {
+        if (discount.status == 'Active') {
             notifyUsersAboutDiscount(discount, productsIds, usersEmails);
         }
     }

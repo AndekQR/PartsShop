@@ -23,14 +23,13 @@
                 <lightning:slider value="{!v.discount.size}" label="{!$Label.c.discount_percent_time}"/>
             </div>
             <div class="newDiscountRequestContainer__price">
-                {!$Label.c.original_price}
+                <span>{!$Label.c.original_price+': '} </span>
                 <lightning:formattedNumber value="{!v.product.price}" style="currency"
                                            currencyCode="USD"/>
-                {!$Label.c.price_after_discount}
+                <span>{!' '+$Label.c.price_after_discount+': '} </span>
                 <lightning:formattedNumber value="{! (v.product.price - (v.product.price * (v.discount.size / 100)))}"
                                            style="currency"
                                            currencyCode="USD"/>
-
             </div>
             <div class="newDiscountRequestContainer__controls">
                 <lightning:button variant="brand" label="{!$Label.c.send_discount_request}"
@@ -38,7 +37,6 @@
                 <lightning:button variant="brand-outline" label="{!$Label.c.cancel}" onclick="{!c.onCancel}"/>
             </div>
         </div>
-
         <c:PA_NotificationHandler aura:id="notificationHandler"/>
     </div>
 </aura:component>

@@ -32,7 +32,7 @@
                 </div>
                 <div class="newDiscountSummaryContainer__products">
                     <div class="newDiscountSummaryContainer__title">
-                            {!$label.c.products}
+                            {!$Label.c.products}
                     </div>
                     <aura:iteration items="{!v.discountProducts}" var="product">
                         <div class="newDiscountSummaryContainer__products__element">

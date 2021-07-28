@@ -9,6 +9,7 @@
     },
 
     addDiscount: function (component) {
+        console.log('addDiscount');
         let discount = component.get('v.discount');
         let discountProducts = component.get('v.discountProducts').map(element => element.id);
         let emails = component.get('v.usersEmails');
@@ -21,8 +22,10 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
+                console.log('success');
                 this.fireNewRecordEvent();
                 this.closeModal(component);
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.discount_is_now_available'));
             } else {
                 this.getNotificationHandler(component).handleActionError(response);
             }
@@ -30,7 +33,7 @@
         $A.enqueueAction(action);
     },
 
-    getNotificationHandler: function(component) {
+    getNotificationHandler: function (component) {
         return component.find('notificationHandler');
     }
 })

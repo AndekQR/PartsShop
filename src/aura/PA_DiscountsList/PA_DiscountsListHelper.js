@@ -36,7 +36,7 @@
     refreshDiscountData: function(component) {
         let page = component.get('v.pageNumber');
         let pageSize = component.get('v.pageSize');
-        let action = component.get('c.getDiscountsPage');
+        let action = component.get('c.getAllDiscounts');
         action.setParams({
             page: page,
             pageSize: pageSize
