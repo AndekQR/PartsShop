@@ -82,6 +82,7 @@
                 </div>
             </div>
         </div>
+        <c:PA_NotificationHandler aura:id="notificationHandler"/>
         <c:Spinner aura:id="spinner"/>
     </div>
 

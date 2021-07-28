@@ -75,5 +75,6 @@
                 <lightning:button variant="brand-outline" label="{!$Label.c.cancel}" onclick="{!c.onCancel}"/>
             </div>
         </div>
+        <c:PA_NotificationHandler aura:id="notificationHandler"/>
     </div>
 </aura:component>

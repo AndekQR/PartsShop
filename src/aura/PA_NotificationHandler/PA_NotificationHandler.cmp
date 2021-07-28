@@ -6,6 +6,9 @@
     <aura:method name="showWarningToast" action="{!c.showWarningToast}">
         <aura:attribute name="message" type="String"/>
     </aura:method>
+    <aura:method name="showErrorToast" action="{!c.showErrorToast}">
+        <aura:attribute name="message" type="String"/>
+    </aura:method>
     <aura:method name="handleActionError" action="{!c.handleActionError}">
         <aura:attribute name="response" type="Object"/>
     </aura:method>

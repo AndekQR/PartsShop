@@ -21,23 +21,11 @@
                 let returnValue = response.getReturnValue();
                 component.set('v.searchRecords', returnValue.data);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
             component.set('v.LoadingText', false);
         });
         $A.enqueueAction(action);
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.log("Unknown error");
-        }
     },
 
     removeResultBox: function (component) {
@@ -59,6 +47,10 @@
         let productId = component.get('v.selectRecordId');
         let navComponent = component.find('navigation');
         navComponent.navigateToProductDetails(productId);
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })
 

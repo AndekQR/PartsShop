@@ -16,23 +16,12 @@
                 }
                 component.set('v.allCategories', returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
     },
 
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.log("Unknown error");
-        }
-    },
 
     validateFields: function (component) {
         return component.find('productField').reduce(function (validSoFar, inputCmp) {
@@ -64,23 +53,12 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 this.clearForm(component);
-                this.showToast('Approve Process', $A.get('$Label.c.product_send_approve_process'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.product_send_approve_process'));
             } else {
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
-    },
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
     },
 
     clearForm: function (component) {
@@ -96,7 +74,7 @@
             return;
         }
         if (!file.type.match(/(image.*)/)) {
-            this.showToast('Error', $A.get('$label.c.image_file_format_not_supported'), 'error');
+            this.getNotificationHandler(component).showErrorToast($A.get('$label.c.image_file_format_not_supported'));
             return;
         }
         let allImages = component.get('v.productImages');
@@ -120,5 +98,9 @@
     hideSpinner: function (component) {
         let spinnerComponent = component.find('spinner');
         spinnerComponent.turnOff();
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

@@ -13,7 +13,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -25,18 +25,6 @@
         component.set('v.pageSize', returnValue.pageSize);
         component.set('v.allOrdersSize', returnValue.allProductsSize);
         this.setAllPageSize(component);
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
     },
 
     setAllPageSize: function (component) {
@@ -77,4 +65,8 @@
             this.setUsersOrders(component);
         }
     },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
+    }
 })

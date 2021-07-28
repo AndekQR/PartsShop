@@ -24,32 +24,13 @@
                 this.fireNewRecordEvent();
                 this.closeModal(component);
             } else {
-                this.handleError(response);
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
     },
 
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
-    },
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
-    },
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
+    }
 })

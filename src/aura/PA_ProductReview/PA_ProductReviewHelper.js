@@ -16,7 +16,7 @@
                 this.setPaginationData(component, returnValue);
                 this.formatDates(component);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -77,28 +77,6 @@
         }
     },
 
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.log("Unknown error");
-        }
-    },
-
     saveReview: function (component) {
         let content = component.get('v.newReviewContent');
         let rating = component.get('v.newReviewRating');
@@ -113,12 +91,16 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 this.setReviews(component);
-                this.showToast('Saved', 'Review successfully added.', 'success');
+                this.getNotificationHandler(component).showSuccessToast('Review successfully added.');
                 component.set('v.newReviewContent', '');
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

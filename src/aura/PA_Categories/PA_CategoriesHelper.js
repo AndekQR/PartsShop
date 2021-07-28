@@ -7,22 +7,10 @@
                 let returnValue = response.getReturnValue();
                 component.set('v.categories', returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
     },
 
     fireCategoryChangeEvent: function(component, event) {
@@ -46,5 +34,9 @@
         for (let i = 0; i < cmps.length; i++) {
             $A.util.removeClass(cmps[i], 'categoryContainer__list__element-active');
         }
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

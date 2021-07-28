@@ -10,33 +10,10 @@
             if (state === 'SUCCESS') {
                 this.showToast('Success', $A.get('$Label.c.product_went_favorites'), 'success');
             } else {
-                this.handleError(response);
-                this.showToast('Warning', response.getError()[0].message, 'warning');
+                this.getNotificationHandler(component).showWarningToast(response.getError()[0].message);
             }
         });
         $A.enqueueAction(action);
-    },
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
     },
 
     toProductDetails: function (component) {
@@ -65,10 +42,9 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', $A.get('$Label.c.product_went_cart'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.product_went_cart'));
             } else {
-                this.handleError(response);
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -90,12 +66,10 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                // labelk
-                this.showToast('Success', $A.get('$Label.c.product_removed_cart'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.product_removed_cart'));
                 this.callRefreshData(component);
             } else {
-                this.handleError(response);
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -117,9 +91,13 @@
             if(state === 'SUCCESS') {
                 
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

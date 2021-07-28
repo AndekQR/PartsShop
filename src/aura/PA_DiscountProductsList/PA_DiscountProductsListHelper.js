@@ -15,7 +15,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -68,15 +68,7 @@
         this.setAllPageSize(component);
     },
 
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
-    },
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
+    }
 })

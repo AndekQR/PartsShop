@@ -87,6 +87,7 @@
             </div>
             <lightning:button label="{!$Label.c.save_product}" variant="brand" onclick="{!c.onSaveProduct}"/>
         </div>
+        <c:PA_NotificationHandler aura:id="notificationHandler"/>
         <c:Spinner aura:id="spinner"/>
     </div>
 </aura:component>

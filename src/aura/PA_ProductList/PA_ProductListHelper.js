@@ -98,7 +98,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -119,7 +119,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -139,7 +139,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -160,7 +160,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -180,7 +180,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -200,7 +200,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue)
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -215,15 +215,7 @@
         this.hideSpinner(component);
     },
 
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.log("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.log("Unknown error");
-        }
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

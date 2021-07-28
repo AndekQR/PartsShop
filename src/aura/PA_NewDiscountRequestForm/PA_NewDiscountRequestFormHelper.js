@@ -15,11 +15,11 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', $A.get('$Label.c.request_sent'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.request_sent'));
                 this.clearForm(component);
                 this.closeModal(component);
             } else {
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -40,17 +40,12 @@
         }, true);
     },
 
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
-    },
 
     closeModal: function (component) {
         component.find('overlayLib').notifyClose();
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

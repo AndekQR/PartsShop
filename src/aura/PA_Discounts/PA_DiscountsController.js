@@ -2,7 +2,6 @@
     onDiscountIdChange: function(component, event, helper) {
         let discountId = event.getParam('id');
         let discountSize = event.getParam('discountSize');
-        console.log(discountSize);
         let productListComponent = component.find('productListComp');
         productListComponent.changeDiscountId(discountId, discountSize);
     },

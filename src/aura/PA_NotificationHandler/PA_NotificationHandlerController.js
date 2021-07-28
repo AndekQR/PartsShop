@@ -2,12 +2,17 @@
     showSuccessToast: function(component, event, helper) {
         let params = event.getParam('arguments');
         let message = params.message;
-        helper.showToast(message);
+        helper.showToast('Success', message, 'success');
     },
     showWarningToast: function(component, event, helper) {
         let params = event.getParam('arguments');
         let message = params.message;
-        helper.showToast(message);
+        helper.showToast('Warning', message, 'warning');
+    },
+    showErrorToast: function(component, event, helper) {
+        let params = event.getParam('arguments');
+        let message = params.message;
+        helper.showToast('Error', message, 'error');
     },
     handleActionError: function(component, event, helper) {
         let params = event.getParam('arguments');

@@ -3,7 +3,8 @@
 
 
 .THIS .productDetailsContainer {
-
+    background-color: white;
+    padding: 10px;
 }
 
 .THIS .productDetailsContainer__category {

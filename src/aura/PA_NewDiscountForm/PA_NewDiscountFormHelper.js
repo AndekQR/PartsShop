@@ -9,7 +9,7 @@
                 let mapped = this.mapToDualListOptions(returnValue);
                 component.set('v.userProducts', mapped);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -35,35 +35,12 @@
         component.set('v.userEmail', '');
     },
 
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
-    },
-
     addToEmailList: function (component) {
         let email = component.get('v.userEmail');
         let emailList = component.get('v.usersEmail');
         emailList.push(email);
         component.set('v.usersEmail', emailList);
         component.set('v.userEmail', '');
-    },
-
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
     },
 
     fireNewRecordEvent: function (component) {
@@ -92,7 +69,7 @@
                 returnValue.status = 'Active';
                 component.set('v.discount', returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -118,5 +95,9 @@
                 console.log("Error: " + errorMessage);
             }
         });
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

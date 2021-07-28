@@ -64,5 +64,6 @@
                 <lightning:button variant="brand-outline" label="{!$Label.c.clear}" onclick="{!c.onClear}"/>
             </div>
         </div>
+        <c:PA_NotificationHandler aura:id="notificationHandler"/>
     </div>
 </aura:component>

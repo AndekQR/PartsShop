@@ -27,7 +27,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -47,7 +47,7 @@
                 let returnValue = response.getReturnValue();
                 this.setPaginationData(component, returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -100,18 +100,6 @@
         this.setAllPageSize(component);
     },
 
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
-    },
-
     fireRowSelectedEvent: function(component, discountId, discountSize) {
         let event = component.getEvent('PA_DiscountIdChangeEvent');
         event.setParams({
@@ -130,23 +118,13 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if(state === 'SUCCESS') {
-                this.showToast('Success', $A.get('$Label.c.discount_deleted'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.discount_deleted'));
                 this.refreshData(component);
             } else {
-                this.showToast('Error',  $A.get('$Label.c.something_went_wrong'), 'error');
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
-    },
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
     },
 
     fillUpDiscountFormEvent: function (component, selectedRowId) {
@@ -155,5 +133,9 @@
             discountId: selectedRowId
         });
         event.fire();
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })

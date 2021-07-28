@@ -10,7 +10,7 @@
             if (state === 'SUCCESS') {
                 this.setAllUserAddresses(component);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -24,7 +24,7 @@
                 let returnValue = response.getReturnValue();
                 component.set('v.allAddresses', returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -40,41 +40,18 @@
             let state = response.getState();
             if (state === 'SUCCESS') {
                 this.fireNewOrderEvent();
-                this.showToast('Success', $A.get('$Label.c.new_order_created'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.new_order_created'));
                 this.closeModal(component);
             } else {
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
     },
 
-    handleError: function (response) {
-        let errors = response.getError();
-        if (errors) {
-            if (errors[0] && errors[0].message) {
-                console.error("Error message: " +
-                    errors[0].message);
-            }
-        } else {
-            console.error("Unknown error");
-        }
-    },
-
     showNewAddressFlow: function (component) {
         let flow = component.find("flowData");
         flow.startFlow("New_Order_Address_Flow");
-    },
-
-    showToast: function (title, message, type) {
-        let resultsToast = $A.get("e.force:showToast");
-        resultsToast.setParams({
-            "title": title,
-            "message": message,
-            "type": type
-        });
-        resultsToast.fire();
     },
 
     setAllCartProducts: function (component) {
@@ -85,7 +62,7 @@
                 let returnValue = response.getReturnValue();
                 component.set('v.wrappers', returnValue);
             } else {
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -107,11 +84,10 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', $A.get('$Label.c.address_record_deleted'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.address_record_deleted'));
                 this.setAllUserAddresses(component);
             } else {
-                this.showToast('Error', $A.get('$Label.c.something_went_wrong'), 'error');
-                this.handleError(response);
+                this.getNotificationHandler(component).handleActionError(response);
             }
         });
         $A.enqueueAction(action);
@@ -120,5 +96,9 @@
     fireNewOrderEvent: function () {
         let event = $A.get('e.c:PA_NewOrderEvent');
         event.fire();
+    },
+
+    getNotificationHandler: function(component) {
+        return component.find('notificationHandler');
     }
 })
