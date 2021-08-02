@@ -15,7 +15,7 @@
                              value="{!v.newProduct.name}"/>
             <lightning:layout>
                 <lightning:layoutItem size="6">
-                    <lightning:input class="slds-m-right_xxx-small" required="true" type="number" aura:id="productField"
+                    <lightning:input class="slds-m-right_xxx-small" step="2" required="true" type="number" aura:id="productField"
                                      label="{!$Label.c.price}"
                                      value="{!v.newProduct.price}"/>
                 </lightning:layoutItem>

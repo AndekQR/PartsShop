@@ -53,10 +53,12 @@
     },
 
     addProductToCart: function (component) {
+        let quantity = component.get('v.quantity');
         const productId = component.get('v.product').product.id;
         let action = component.get('c.addToUserCart');
         action.setParams({
-            productId: productId
+            productId: productId,
+            quantity: quantity
         });
         action.setCallback(this, (response) => {
             let state = response.getState();

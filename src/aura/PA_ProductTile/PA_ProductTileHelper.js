@@ -8,7 +8,7 @@
         action.setCallback(this, (response) => {
             let state = response.getState();
             if (state === 'SUCCESS') {
-                this.showToast('Success', $A.get('$Label.c.product_went_favorites'), 'success');
+                this.getNotificationHandler(component).showSuccessToast($A.get('$Label.c.product_went_favorites'));
             } else {
                 this.getNotificationHandler(component).showWarningToast(response.getError()[0].message);
             }

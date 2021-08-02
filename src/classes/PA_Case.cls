@@ -38,8 +38,8 @@ public with sharing class PA_Case {
         List<PA_Product> pa_products = new List<PA_Product>();
         for (MyOrderProduct__c myOrderProduct : orderProducts) {
             PA_Product pa_product = new PA_Product();
-            pa_product.id = myOrderProduct.Product__r.Id;
-            pa_product.name = myOrderProduct.Product__r.Name;
+            pa_product.id = myOrderProduct.ProductStnd__r.Id;
+            pa_product.name = myOrderProduct.ProductStnd__r.Name;
             pa_product.caseRelated = myOrderProduct.caseRelated__c;
             pa_products.add(pa_product);
         }

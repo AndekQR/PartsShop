@@ -19,7 +19,7 @@ public class PA_Review {
         this.id = review.Id;
         this.content = review.Content__c;
         this.rating = review.Rating__c;
-        this.productId = review.Product__c;
+        this.productId = review.ProductStnd__c;
         this.createdDate = review.CreatedDate;
         this.createdByName = review.CreatedBy.Name;
     }

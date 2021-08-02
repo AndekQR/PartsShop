@@ -3,14 +3,15 @@ public class PA_ProductWrapperBuilder {
     private List<PA_ProductWrapper> wrappers = new List<PA_ProductWrapper>();
     private PA_DiscountService discountService { get; set; }
 
-    public PA_ProductWrapperBuilder(List<Product__c> products) {
+    public PA_ProductWrapperBuilder(List<Product2> products) {
         this.products(products);
+        this.price();
         this.discountService = new PA_DiscountService();
     }
 
-    private void products(List<Product__c> products) {
-        Map<Product__c, Integer> occurrences = this.getOccurrences(products);
-        for (Product__c product : occurrences.keySet()) {
+    private void products(List<Product2> products) {
+        Map<Product2, Integer> occurrences = this.getOccurrences(products);
+        for (Product2 product : occurrences.keySet()) {
             PA_ProductWrapper wrapper = new PA_ProductWrapper();
             wrapper.product = new PA_Product(product);
             wrappers.add(wrapper);
@@ -20,7 +21,7 @@ public class PA_ProductWrapperBuilder {
     public PA_ProductWrapperBuilder cartQuantity(List<ProductCart__c> productCarts) {
         for(ProductCart__c productCart : productCarts) {
             for(PA_ProductWrapper wrapper : wrappers) {
-                if(productCart.Product__c == wrapper.product.id) {
+                if(productCart.ProductStnd__c == wrapper.product.id) {
                     wrapper.cartQuantity = (Integer)productCart.Quantity__c;
                 }
             }
@@ -28,9 +29,9 @@ public class PA_ProductWrapperBuilder {
         return this;
     }
 
-    private Map<Product__c, Integer> getOccurrences(List<Product__c> products) {
-        Map<Product__c, Integer> result = new Map<Product__c, Integer>();
-        for (Product__c product : products) {
+    private Map<Product2, Integer> getOccurrences(List<Product2> products) {
+        Map<Product2, Integer> result = new Map<Product2, Integer>();
+        for (Product2 product : products) {
             if (!result.containsKey(product)) {
                 result.put(product, 0);
             }
@@ -88,12 +89,34 @@ public class PA_ProductWrapperBuilder {
         return this;
     }
 
+    private void price() {
+        List<String> ids = getProductsIds();
+        List<PricebookEntry> pricebookEntries = [
+                SELECT Id, UnitPrice, Product2Id
+                FROM PricebookEntry
+                WHERE Pricebook2.IsStandard = true
+                AND Product2Id IN :ids
+        ];
+        for (PA_ProductWrapper pa_productWrapper : wrappers) {
+            pa_productWrapper.product.price = findPrice(pricebookEntries, pa_productWrapper.product.id);
+        }
+    }
+
+    private Decimal findPrice(List<PricebookEntry> pricebookEntries, String productId) {
+        for (PricebookEntry pricebookEntry : pricebookEntries) {
+            if(pricebookEntry.Product2Id == productId) {
+                return pricebookEntry.UnitPrice;
+            }
+        }
+        return 0;
+    }
+
     private List<PA_Specification> findProductSpecifications(
             List<ProductSpecification__c> specs,
             String productId) {
         List<ProductSpecification__c> result = new List<ProductSpecification__c>();
         for (ProductSpecification__c spec : specs) {
-            if (spec.Product__c == productId) {
+            if (spec.ProductStnd__c == productId) {
                 result.add(spec);
             }
         }
@@ -102,9 +125,9 @@ public class PA_ProductWrapperBuilder {
 
     private List<ProductSpecification__c> getProductsSpecifications(List<String> productIds) {
         return [
-                SELECT Id, Name, Value__c, Product__c
+                SELECT Id, Name, Value__c, ProductStnd__c
                 FROM ProductSpecification__c
-                WHERE Product__c IN :productIds
+                WHERE ProductStnd__c IN :productIds
         ];
     }
 
@@ -135,9 +158,9 @@ public class PA_ProductWrapperBuilder {
     public PA_ProductWrapperBuilder rateAverage() {
         List<String> productIds = getProductsIds();
         List<ProductReview__c> allReviews = [
-                SELECT Id, Rating__c, Product__c
+                SELECT Id, Rating__c, ProductStnd__c
                 FROM ProductReview__c
-                WHERE Product__c IN :productIds
+                WHERE ProductStnd__c IN :productIds
         ];
         for(PA_ProductWrapper wrapper : wrappers) {
             wrapper.numberOfReviews = getNumberOfReviews(allReviews, wrapper.product.id);
@@ -153,7 +176,7 @@ public class PA_ProductWrapperBuilder {
     private Integer getNumberOfReviews(List<ProductReview__c> allReviews, String productId) {
         Integer result = 0;
         for(ProductReview__c review : allReviews) {
-            if(review.Product__c == productId) {
+            if(review.ProductStnd__c == productId) {
                 result++;
             }
         }
@@ -164,14 +187,14 @@ public class PA_ProductWrapperBuilder {
         List<String> productIds = getProductsIds();
         String userId = UserInfo.getUserId();
         List<FavoriteProduct__c> favoriteProducts = [
-                SELECT Id, Notifications__c, Product__c
+                SELECT Id, Notifications__c, ProductStnd__c
                 FROM FavoriteProduct__c
-                WHERE Product__c IN :productIds AND
+                WHERE ProductStnd__c IN :productIds AND
                 CreatedById = :userId
         ];
         for (PA_ProductWrapper wrapper : wrappers) {
             for (FavoriteProduct__c favoriteProduct : favoriteProducts) {
-                if(wrapper.product.id == favoriteProduct.Product__c) {
+                if(wrapper.product.id == favoriteProduct.ProductStnd__c) {
                     wrapper.watchListNotifications = favoriteProduct.Notifications__c;
                 }
             }
@@ -182,7 +205,7 @@ public class PA_ProductWrapperBuilder {
     private Decimal getRatingSum(List<ProductReview__c> allReviews, String productId){
         Decimal result = 0;
         for(ProductReview__c review : allReviews) {
-            if(review.Product__c == productId) {
+            if(review.ProductStnd__c == productId) {
                 result += review.Rating__c;
             }
         }

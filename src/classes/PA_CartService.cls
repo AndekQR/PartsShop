@@ -1,17 +1,19 @@
 public with sharing class PA_CartService extends PA_Service {
 
-    public static void addToCart(String productId) {
+    public static void addToCart(String productId, Integer quantity) {
         PA_Cart userCart = getUserCart();
+        if (quantity == null || quantity < 1) {
+            quantity = 1;
+        }
         ProductCart__c productCart = checkIfExists(productId, userCart.Id);
         if (productCart != null) {
-            productCart.Quantity__c += 1;
+            productCart.Quantity__c += quantity;
             update productCart;
         } else {
             ProductCart__c newProductCart = new ProductCart__c();
-            newProductCart.Product__c = productId;
+            newProductCart.ProductStnd__c = productId;
             newProductCart.Cart__c = userCart.id;
-            System.debug(newProductCart.Product__c);
-            System.debug(newProductCart.Cart__c);
+            newProductCart.Quantity__c = quantity;
             insert newProductCart;
         }
     }
@@ -21,7 +23,7 @@ public with sharing class PA_CartService extends PA_Service {
                 SELECT Id, Quantity__c
                 FROM ProductCart__c
                 WHERE Cart__c = :cartId AND
-                Product__c = :productId
+                ProductStnd__c = :productId
                 LIMIT 1
         ];
         if (!result.isEmpty()) {
@@ -35,7 +37,7 @@ public with sharing class PA_CartService extends PA_Service {
                 SELECT Id
                 FROM ProductCart__c
                 WHERE CreatedById = :UserInfo.getUserId() AND
-                Product__c = :productId
+                ProductStnd__c = :productId
         ];
         delete productCarts;
     }
@@ -44,17 +46,17 @@ public with sharing class PA_CartService extends PA_Service {
         PA_Cart cart = getUserCart();
         Integer offset = (page - 1) * pageSize;
         List<ProductCart__c> productCarts = [
-                SELECT Id, Product__r.Id,Product__r.Name,
-                        Product__r.Description__c, Product__r.Price__c,
-                        Product__r.ProductCategory__r.Name,
-                        Product__r.Quantity__c,
+                SELECT Id, ProductStnd__r.Id,ProductStnd__r.Name,
+                        ProductStnd__r.Description,
+                        ProductStnd__r.ProductCategory__r.Name,
+                        ProductStnd__r.Quantity__c,
                         Quantity__c
                 FROM ProductCart__c
                 WHERE Cart__c = :cart.id
                 LIMIT :pageSize
                 OFFSET :offset
         ];
-        List<Product__c> mapped = mapToProducts(productCarts);
+        List<Product2> mapped = mapToProducts(productCarts);
         List<PA_ProductWrapper> wrappers = new PA_ProductWrapperBuilder(mapped)
                 .images()
                 .discount()
@@ -66,15 +68,15 @@ public with sharing class PA_CartService extends PA_Service {
     public static List<PA_ProductWrapper> getAllProductsCart() {
         PA_Cart cart = getUserCart();
         List<ProductCart__c> productCarts = [
-                SELECT Id, Product__r.Id,Product__r.Name,
-                        Product__r.Description__c, Product__r.Price__c,
-                        Product__r.ProductCategory__r.Name,
-                        Product__r.Quantity__c,
+                SELECT Id, ProductStnd__r.Id, ProductStnd__r.Name,
+                        ProductStnd__r.Description,
+                        ProductStnd__r.ProductCategory__r.Name,
+                        ProductStnd__r.Quantity__c,
                         Quantity__c
                 FROM ProductCart__c
                 WHERE Cart__c = :cart.id
         ];
-        List<Product__c> mapped = mapToProducts(productCarts);
+        List<Product2> mapped = mapToProducts(productCarts);
         List<PA_ProductWrapper> wrappers = new PA_ProductWrapperBuilder(mapped)
                 .discount()
                 .cartQuantity(productCarts)
@@ -101,17 +103,16 @@ public with sharing class PA_CartService extends PA_Service {
         return new PA_Cart(carts.get(0));
     }
 
-    private static List<Product__c> mapToProducts(List<ProductCart__c> productCarts) {
-        List<Product__c> products = new List<Product__c>();
+    private static List<Product2> mapToProducts(List<ProductCart__c> productCarts) {
+        List<Product2> products = new List<Product2>();
         for (ProductCart__c productCart : productCarts) {
             ProductCategory__c category = new ProductCategory__c();
-            category.Name = productCart.Product__r.ProductCategory__r.Name;
-            Product__c product = new Product__c();
-            product.Id = productCart.Product__r.Id;
-            product.Name = productCart.Product__r.Name;
-            product.Description__c = productCart.Product__r.Description__c;
-            product.Price__c = productCart.Product__r.Price__c;
-            product.Quantity__c = productCart.Product__r.Quantity__c;
+            category.Name = productCart.ProductStnd__r.ProductCategory__r.Name;
+            Product2 product = new Product2();
+            product.Id = productCart.ProductStnd__r.Id;
+            product.Name = productCart.ProductStnd__r.Name;
+            product.Description = productCart.ProductStnd__r.Description;
+            product.Quantity__c = productCart.ProductStnd__r.Quantity__c;
             product.ProductCategory__r = category;
             products.add(product);
         }
@@ -131,12 +132,12 @@ public with sharing class PA_CartService extends PA_Service {
     public static void updateProductCartQuantity(String productId, Integer quantity) {
         PA_Cart cart = getUserCart();
         List<ProductCart__c> productCarts = [
-                SELECT Id, Quantity__c, Product__c
+                SELECT Id, Quantity__c, ProductStnd__c
                 FROM ProductCart__c
                 WHERE Cart__c = :cart.id
         ];
         for (ProductCart__c productCart : productCarts) {
-            if (productCart.Product__c == productId) {
+            if (productCart.ProductStnd__c == productId) {
                 productCart.Quantity__c = quantity;
                 update productCart;
                 return;

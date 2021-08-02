@@ -15,7 +15,7 @@ public class PA_Specification {
         this.id = specification.Id;
         this.name = specification.Name;
         this.value = specification.Value__c;
-        this.productId = specification.Product__c;
+        this.productId = specification.ProductStnd__c;
     }
 
     public static List<PA_Specification> mapToSpecifications(List<ProductSpecification__c> specs) {

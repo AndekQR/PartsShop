@@ -2,7 +2,7 @@ public class PA_DataProvider {
 
     @AuraEnabled
     public static PA_PaginationResponse searchProducts(String searchQuery, Integer page, Integer pageSize) {
-        return PA_DataProviderService.searchMoviesLocally(searchQuery, page, pageSize);
+        return PA_DataProviderService.searchProductsLocally(searchQuery, page, pageSize);
     }
 
     @AuraEnabled
@@ -58,8 +58,8 @@ public class PA_DataProvider {
     }
 
     @AuraEnabled
-    public static void addToUserCart(String productId) {
-        PA_CartService.addToCart(productId);
+    public static void addToUserCart(String productId, Integer quantity) {
+        PA_CartService.addToCart(productId, quantity);
     }
     @AuraEnabled
     public static void removeFromCart(String productId) {

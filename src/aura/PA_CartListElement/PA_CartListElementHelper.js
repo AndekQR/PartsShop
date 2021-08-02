@@ -58,13 +58,18 @@
     updateProductQuantity: function (component) {
         let productWrapper = component.get('v.productWrapper');
         if (productWrapper != null) {
-            let quantityToSet = 0;
-            if(productWrapper.cartQuantity > productWrapper.product.quantity) {
-                quantityToSet = productWrapper.product.quantity;
-                component.set('v.productWrapper.cartQuantity', quantityToSet);
+            let quantityToSet;
+            if (isNaN(productWrapper.cartQuantity) || Number(productWrapper.cartQuantity) < 1) {
+                quantityToSet = 1;
             } else {
-                quantityToSet = productWrapper.cartQuantity;
+                if (productWrapper.cartQuantity > productWrapper.product.quantity) {
+                    quantityToSet = productWrapper.product.quantity;
+                    console.log('too high');
+                } else {
+                    quantityToSet = productWrapper.cartQuantity;
+                }
             }
+            component.set('v.productWrapper.cartQuantity', quantityToSet);
             let action = component.get('c.updateProductCartQuantity');
             action.setParams({
                 productId: productWrapper.product.id,
@@ -83,7 +88,7 @@
         }
     },
 
-    getNotificationHandler: function(component) {
+    getNotificationHandler: function (component) {
         return component.find('notificationHandler');
     }
 })

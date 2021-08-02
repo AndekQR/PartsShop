@@ -11,21 +11,31 @@ public with sharing class PA_UpdateCartPriceHandler {
         List<ProductCart__c> cartsData = getCartsData(cartsIds);
         List<String> productsIds = getProductsIds(cartsData);
         List<PA_Discount> discounts = service.getDiscounts(productsIds);
-        updateCartsPriceSum(cartsData, discounts, cartsIds);
+        List<PricebookEntry> pricebookEntries = getStandardPrices(productsIds);
+        updateCartsPriceSum(cartsData, discounts, cartsIds, pricebookEntries);
+    }
+
+    private List<PricebookEntry> getStandardPrices(List<String> productsIds) {
+        return [
+                SELECT Id, UnitPrice, Product2Id
+                FROM PricebookEntry
+                WHERE Pricebook2.IsStandard = true
+                AND Product2Id IN :productsIds
+        ];
     }
 
     private List<String> getProductsIds(List<ProductCart__c> productCarts) {
         List<String> result = new List<String>();
         for (ProductCart__c productCart : productCarts) {
-            result.add(productCart.Product__c);
+            result.add(productCart.ProductStnd__c);
         }
         return result;
     }
 
-    private void updateCartsPriceSum(List<ProductCart__c> data, List<PA_Discount> discounts, Set<String> cartsIds) {
+    private void updateCartsPriceSum(List<ProductCart__c> data, List<PA_Discount> discounts, Set<String> cartsIds, List<PricebookEntry> pricebookEntries) {
         List<Cart__c> cartsToUpdate = new List<Cart__c>();
         for (String cartId : cartsIds) {
-            Decimal sum = getPriceSumForCart(data, discounts, cartId);
+            Decimal sum = getPriceSumForCart(data, discounts, cartId, pricebookEntries);
             Cart__c cart = new Cart__c();
             cart.Id = cartId;
             cart.Price_Sum__c = sum;
@@ -34,24 +44,34 @@ public with sharing class PA_UpdateCartPriceHandler {
         update cartsToUpdate;
     }
 
-    private Decimal getPriceSumForCart(List<ProductCart__c> data, List<PA_Discount> allDiscounts, String cartId) {
+    private Decimal getPriceSumForCart(List<ProductCart__c> data, List<PA_Discount> allDiscounts, String cartId, List<PricebookEntry> pricebookEntries) {
         Decimal result = 0.0;
         for (ProductCart__c productCart : data) {
             if (productCart.Cart__c == cartId) {
-                PA_Discount discount = service.findBestProductDiscount(allDiscounts, productCart.Product__c);
+                PA_Discount discount = service.findBestProductDiscount(allDiscounts, productCart.ProductStnd__c);
+                Decimal standardPrice = findStandardPrice(pricebookEntries, productCart.ProductStnd__c);
                 if (discount != null) {
-                    result += (productCart.Product__r.Price__c - (productCart.Product__r.Price__c * (discount.size / 100))) * productCart.Quantity__c;
+                    result += (standardPrice - (standardPrice * (discount.size / 100))) * productCart.Quantity__c;
                 } else {
-                    result += (productCart.Product__r.Price__c) * productCart.Quantity__c;
+                    result += (standardPrice) * productCart.Quantity__c;
                 }
             }
         }
         return result;
     }
 
+    private Decimal findStandardPrice(List<PricebookEntry> entries, String productId) {
+        for (PricebookEntry pricebookEntry : entries) {
+            if(pricebookEntry.Product2Id == productId) {
+                return pricebookEntry.UnitPrice;
+            }
+        }
+        return 0;
+    }
+
     private List<ProductCart__c> getCartsData(Set<String> cartsIds) {
         List<ProductCart__c> result = [
-                SELECT Id, Cart__r.Id, Cart__r.Price_Sum__c, Quantity__c, Product__r.Price__c, Product__r.Name
+                SELECT Id, Cart__r.Id, Cart__r.Price_Sum__c, Quantity__c, ProductStnd__r.Name
                 FROM ProductCart__c
                 WHERE Cart__c IN :cartsIds
         ];

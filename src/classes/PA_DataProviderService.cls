@@ -1,6 +1,6 @@
 public with sharing class PA_DataProviderService {
 
-    public static PA_PaginationResponse searchMoviesLocally(String query, Integer page, Integer pageSize) {
+    public static PA_PaginationResponse searchProductsLocally(String query, Integer page, Integer pageSize) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
@@ -8,12 +8,12 @@ public with sharing class PA_DataProviderService {
         if (String.isBlank(query)) {
             return getProducts(page, pageSize);
         }
-        List<Product__c> products = [
+        List<Product2> products = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
-                         Quantity__c, Approved__c
-                FROM Product__c
+                        Quantity__c, Approved__c
+                FROM Product2
                 WHERE Name LIKE :query + '%' AND
                 Approved__c = :true
                 LIMIT :pageSize
@@ -27,12 +27,12 @@ public with sharing class PA_DataProviderService {
 
     public static PA_PaginationResponse getProducts(Integer page, Integer pageSize) {
         Integer offset = (page - 1) * pageSize;
-        List<Product__c> products = [
+        List<Product2> products = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
-                         Quantity__c, Approved__c
-                FROM Product__c
+                        Quantity__c, Approved__c
+                FROM Product2
                 WHERE Approved__c = :true
                 LIMIT :pageSize
                 OFFSET :offset
@@ -54,23 +54,43 @@ public with sharing class PA_DataProviderService {
 
     public static void saveProduct(PA_Product product, Map<String, String> imagesData,
             Map<String, String> specs) {
-        Product__c insertedProduct = insertProduct(product);
+        Product2 insertedProduct = insertProduct(product);
         List<ProductSpecification__c> productSpecifications = new List<ProductSpecification__c>();
         for (String key : specs.keySet()) {
             ProductSpecification__c specification = new ProductSpecification__c();
             specification.Name = key.trim();
             specification.Value__c = specs.get(key).trim();
-            specification.Product__c = insertedProduct.Id;
+            specification.ProductStnd__c = insertedProduct.Id;
             productSpecifications.add(specification);
         }
         saveImages(imagesData, insertedProduct.Id);
         insert productSpecifications;
     }
 
-    private static Product__c insertProduct(PA_Product product) {
-        Product__c mapped = PA_Product.mapToCustomProduct(product);
-        insert mapped;
-        return mapped;
+    private static Product2 insertProduct(PA_Product product) {
+        Product2 product2 = new Product2();
+        product2.Description = product.description;
+        if(product.category != null) {
+            product2.ProductCategory__c = product.category.id;
+        }
+        product2.Quantity__c = product.quantity;
+        product2.Name = product.name;
+        insert product2;
+
+        Pricebook2 pricebook = [
+                SELECT Id
+                FROM Pricebook2
+                WHERE IsStandard = true
+                LIMIT 1
+        ];
+
+        PricebookEntry pricebookEntry = new PricebookEntry();
+        pricebookEntry.Pricebook2Id = pricebook.Id;
+        pricebookEntry.Product2Id = product2.Id;
+        pricebookEntry.UnitPrice = product.price;
+        insert pricebookEntry;
+
+        return product2;
     }
 
     private static void saveImages(Map<String, String> imagesData, String imagesOwnerId) {
@@ -97,14 +117,25 @@ public with sharing class PA_DataProviderService {
     private static Integer getProductsSize() {
         AggregateResult result = [
                 SELECT count(Id) size
-                FROM Product__c
+                FROM Product2
+                WHERE Approved__c = true
+        ];
+        return (Integer) result.get('size');
+    }
+    private static Integer getUserProductsSize() {
+        String userId = UserInfo.getUserId();
+        AggregateResult result = [
+                SELECT count(Id) size
+                FROM Product2
+                WHERE Approved__c = true AND
+                CreatedById = :userId
         ];
         return (Integer) result.get('size');
     }
     private static Integer getProductsSize(String categoryId) {
         AggregateResult result = [
                 SELECT count(Id) size
-                FROM Product__c
+                FROM Product2
                 WHERE ProductCategory__c = :categoryId
         ];
         return (Integer) result.get('size');
@@ -123,12 +154,12 @@ public with sharing class PA_DataProviderService {
         pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
         Integer offset = (page - 1) * pageSize;
-        List<Product__c> products = [
+        List<Product2> products = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
-                         Quantity__c,Approved__c
-                FROM Product__c
+                        Quantity__c,Approved__c
+                FROM Product2
                 WHERE Approved__c = :true
                 ORDER BY CreatedDate DESC
                 LIMIT :pageSize
@@ -143,12 +174,12 @@ public with sharing class PA_DataProviderService {
 
     public static List<PA_Product> allUserProducts() {
         String userId = UserInfo.getUserId();
-        List<Product__c> products = [
+        List<Product2> products = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
                         Quantity__c, Approved__c
-                FROM Product__c
+                FROM Product2
                 WHERE CreatedById = :userId AND
                 Approved__c = :true
                 ORDER BY Name ASC
@@ -162,12 +193,12 @@ public with sharing class PA_DataProviderService {
         String userId = UserInfo.getUserId();
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
         Integer offset = (page - 1) * pageSize;
-        List<Product__c> products = [
+        List<Product2> products = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
-                         Quantity__c, Approved__c
-                FROM Product__c
+                        Quantity__c, Approved__c
+                FROM Product2
                 WHERE CreatedById = :userId AND
                 Approved__c = :true
                 ORDER BY CreatedDate DESC
@@ -178,19 +209,19 @@ public with sharing class PA_DataProviderService {
         PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(products)
                 .images()
                 .discount();
-        return new PA_PaginationResponse(page, getProductsSize(), builder.build(), pageSize);
+        return new PA_PaginationResponse(page, getUserProductsSize(), builder.build(), pageSize);
     }
     public static PA_PaginationResponse getProductsByCategory(Integer page, Integer pageSize, String categoryId) {
         page = validatePageData(page, 1);
         pageSize = validatePageData(pageSize, 12);
         PA_ProductWrapper productWrapper = new PA_ProductWrapper();
         Integer offset = (page - 1) * pageSize;
-        List<Product__c> products = [
+        List<Product2> products = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
-                         Quantity__c, Approved__c
-                FROM Product__c
+                        Quantity__c, Approved__c
+                FROM Product2
                 WHERE ProductCategory__c = :categoryId AND
                 Approved__c = :true
                 ORDER BY CreatedDate DESC
@@ -205,17 +236,17 @@ public with sharing class PA_DataProviderService {
     }
 
     public static PA_ProductWrapper getProductDetails(String productId) {
-        Product__c product = [
+        Product2 product = [
                 SELECT Id,Name,
-                        Description__c, Price__c,
+                        Description,
                         ProductCategory__r.Name,
                         Quantity__c, Approved__c
-                FROM Product__c
+                FROM Product2
                 WHERE Id = :productId AND
                 Approved__c = :true
                 LIMIT 1
         ];
-        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(new List<Product__C>{
+        PA_ProductWrapperBuilder builder = new PA_ProductWrapperBuilder(new List<Product2>{
                 product
         })
                 .images()
@@ -228,7 +259,7 @@ public with sharing class PA_DataProviderService {
     public static void saveReview(String content, String productId, Integer rating) {
         ProductReview__c review = new ProductReview__c();
         review.Content__c = content;
-        review.Product__c = productId;
+        review.ProductStnd__c = productId;
         review.Rating__c = rating;
         insert review;
     }
@@ -237,6 +268,7 @@ public with sharing class PA_DataProviderService {
         AggregateResult result = [
                 SELECT count(Id) size
                 FROM ProductReview__c
+                WHERE ProductStnd__c = :productId
         ];
         return (Integer) result.get('size');
     }
@@ -246,9 +278,9 @@ public with sharing class PA_DataProviderService {
         pageSize = validatePageData(pageSize, 12);
         Integer offset = (page - 1) * pageSize;
         List<ProductReview__c> reviews = [
-                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name, Product__c
+                SELECT Id, Content__c, Rating__c, CreatedDate, CreatedBy.Name, ProductStnd__c
                 FROM ProductReview__c
-                WHERE Product__c = :productId
+                WHERE ProductStnd__c = :productId
                 ORDER BY CreatedDate DESC
                 LIMIT :pageSize
                 OFFSET :offset

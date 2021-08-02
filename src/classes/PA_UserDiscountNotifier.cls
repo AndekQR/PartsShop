@@ -14,13 +14,13 @@ public with sharing class PA_UserDiscountNotifier implements Database.Batchable<
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         if (usersEmails == null || usersEmails.isEmpty()) {
-            return Database.getQueryLocator('SELECT Id, Product__r.Id, Product__r.Name, CreatedBy.Name, CreatedBy.Email ' +
+            return Database.getQueryLocator('SELECT Id, ProductStnd__r.Id, ProductStnd__r.Name, CreatedBy.Name, CreatedBy.Email ' +
                     'FROM FavoriteProduct__c ' +
-                    'WHERE Product__c IN :productsIds AND Notifications__c = true');
+                    'WHERE ProductStnd__c IN :productsIds AND Notifications__c = true');
         }
-        return Database.getQueryLocator('SELECT Id, Product__r.Id, Product__r.Name, CreatedBy.Name, CreatedBy.Email ' +
+        return Database.getQueryLocator('SELECT Id, ProductStnd__r.Id, ProductStnd__r.Name, CreatedBy.Name, CreatedBy.Email ' +
                 'FROM FavoriteProduct__c ' +
-                'WHERE CreatedBy.Email IN :usersEmails AND Product__c IN :productsIds AND Notifications__c = true');
+                'WHERE CreatedBy.Email IN :usersEmails AND ProductStnd__c IN :productsIds AND Notifications__c = true');
     }
 
     public void execute(Database.BatchableContext BC, List<SObject> objects) {
@@ -39,11 +39,11 @@ public with sharing class PA_UserDiscountNotifier implements Database.Batchable<
                 });
                 String htmlBody = String.format(template.HtmlValue, new List<String>{
                         favoriteProduct.CreatedBy.Name,
-                        favoriteProduct.Product__r.Name,
+                        favoriteProduct.ProductStnd__r.Name,
                         discount.size + '%',
                         discount.startDate.format(),
                         discount.endDate.format(),
-                        System.Label.partsshop_community_base_address + 'product-detail?productId=' + favoriteProduct.Product__r.Id
+                        System.Label.partsshop_community_base_address + 'product-detail?productId=' + favoriteProduct.ProductStnd__r.Id
                 });
                 mail.setHtmlBody(htmlBody);
                 String subject = String.format(template.Subject, new List<String>{
