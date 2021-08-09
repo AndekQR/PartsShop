@@ -20,34 +20,43 @@
                     {!v.productWrapper.product.name}
             </div>
             <div class="cartListElementContainer__controls">
-                <div class="cartListElementContainer__controls__price">
-                    <aura:if isTrue="{!not(empty(v.productWrapper.bestDiscount))}">
-                        <div class="cartListElementContainer__controls__price__beforeDiscount">
-                            <lightning:formattedNumber value="{!v.productWrapper.product.price}"
-                                                       style="currency" currencyCode="USD"/>
+                <div class="cartListElementContainer__controls__inner">
+                    <div class="cartListElementContainer__controls__price">
+                        <aura:if isTrue="{!not(empty(v.productWrapper.bestDiscount))}">
+                            <div class="cartListElementContainer__controls__price__beforeDiscount">
+                                <lightning:formattedNumber value="{!v.productWrapper.product.price}"
+                                                           style="currency" currencyCode="USD"/>
+                            </div>
+                        </aura:if>
+                        <div class="cartListElementContainer__controls__price__afterDiscount">
+                            <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
+                                                       currencyCode="USD"/>
                         </div>
-                    </aura:if>
-                    <div class="cartListElementContainer__controls__price__afterDiscount">
-                        <lightning:formattedNumber value="{!v.priceAfterDiscount}" style="currency"
+                    </div>
+                    <div class="cartListElementContainer__controls__quantity">
+                        <lightning:input variant="label-hidden" min="1" max="{!v.productWrapper.product.quantity}"
+                                         value="{!v.productWrapper.cartQuantity}" label="{!$Label.c.quantity}"/>
+                        <span>{!$Label.c.available_items + v.productWrapper.product.quantity}</span>
+                    </div>
+                    <div class="cartListElementContainer__controls__subtotal">
+                        <span>{!$Label.c.subtotal}: </span>
+                        <lightning:formattedNumber value="{!v.priceAfterDiscount * v.productWrapper.cartQuantity}" style="currency"
                                                    currencyCode="USD"/>
                     </div>
                 </div>
-                <div class="cartListElementContainer__controls__quantity">
-                    <lightning:input variant="label-hidden" min="1" max="{!v.productWrapper.product.quantity}"
-                                     value="{!v.productWrapper.cartQuantity}" label="{!$Label.c.quantity}"/>
-                    <span>{!$Label.c.available_items + v.productWrapper.product.quantity}</span>
-                </div>
-                <div class="cartListElementContainer__controls__button" onclick="{!c.addToWatchList}">
-                    <lightning:icon
-                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                            iconName="utility:pin" size="x-small" alternativeText="icon"/>
-                    <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
-                </div>
-                <div class="cartListElementContainer__controls__button" onclick="{!c.removeProduct}">
-                    <lightning:icon
-                            class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
-                            iconName="utility:close" size="x-small" alternativeText="icon"/>
-                    <span class="tooltiptext">{!$Label.c.remove_from_cart}</span>
+                <div class="cartListElementContainer__controls__buttons">
+                    <div class="cartListElementContainer__controls__button" onclick="{!c.addToWatchList}">
+                        <lightning:icon
+                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                iconName="utility:pin" size="x-small" alternativeText="icon"/>
+                        <span class="tooltiptext">{!$Label.c.add_to_watchlist}</span>
+                    </div>
+                    <div class="cartListElementContainer__controls__button" onclick="{!c.removeProduct}">
+                        <lightning:icon
+                                class="slds-icon slds-icon slds-icon_small slds-icon-text-default"
+                                iconName="utility:close" size="x-small" alternativeText="icon"/>
+                        <span class="tooltiptext">{!$Label.c.remove_from_cart}</span>
+                    </div>
                 </div>
             </div>
         </div>

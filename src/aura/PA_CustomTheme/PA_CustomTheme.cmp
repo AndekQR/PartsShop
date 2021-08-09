@@ -30,8 +30,12 @@
                     </div>
                 </div>
             </div>
-            <div class="customThemeContainer__mainContentArea">
-                    {!v.body}
+            <div class="slds-grid slds-grid_align-center">
+                <div class="slds-size_12-of-12 slds-large-size_10-of-12">
+                    <div class="customThemeContainer__mainContentArea">
+                            {!v.body}
+                    </div>
+                </div>
             </div>
             <div class="customThemeContainer__footer">
                     {!v.footer}

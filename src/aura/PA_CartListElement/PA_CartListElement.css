@@ -1,4 +1,5 @@
 .THIS {
+    height: 100%;
 }
 
 .THIS .cartListElementContainer {
@@ -13,10 +14,34 @@
 }
 
 .THIS .cartListElementContainer__controls {
-    min-width: 180px;
-    background-color: #f9f9f9;
+    /*background-color: #f9f9f9;*/
     padding-left: 5px;
     padding-right: 5px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 100%;
+    border-left: 1px solid #dfe1de;
+}
+
+.THIS .cartListElementContainer__controls__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+}
+
+.THIS .cartListElementContainer__controls__buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.THIS .cartListElementContainer__controls__subtotal {
+    font-weight: bold;
 }
 
 .THIS .CartListElementContainer__image {
@@ -27,7 +52,8 @@
 
 .THIS .CartListElementContainer__image img {
     object-fit: contain;
-
+    padding: 5px;
+    height: 100px;
 }
 
 .THIS .cartListElementContainer__title {

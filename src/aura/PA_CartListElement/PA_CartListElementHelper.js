@@ -64,7 +64,6 @@
             } else {
                 if (productWrapper.cartQuantity > productWrapper.product.quantity) {
                     quantityToSet = productWrapper.product.quantity;
-                    console.log('too high');
                 } else {
                     quantityToSet = productWrapper.cartQuantity;
                 }
