@@ -15,6 +15,9 @@
     </aura:method>
 
     <div>
+        <div class="title">
+            Discount Creator
+        </div>
         <div class="newDiscountFormContainer">
             <lightning:input value="{!v.discount.startDate}" type="datetime" name="formInput"
                              label="{!$Label.c.discount_start_time}"/>

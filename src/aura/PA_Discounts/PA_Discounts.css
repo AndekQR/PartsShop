@@ -31,9 +31,7 @@
 }
 
 .THIS .discountsContainer__form__left {
-    border: 1px solid #d3d3d3;
-    border-radius: 5px;
-    margin: 5px;
+    border-right: 1px solid #ededed;
 }
 
 .THIS .discountsContainer__discountsTables__leftSection {

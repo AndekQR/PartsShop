@@ -36,13 +36,17 @@
         let productObject = component.get('v.newProduct');
         let productImages = component.get('v.productImages');
         let productSpecifications = component.get('v.productSpecifications');
+        let mainImageName = component.get('v.mainImageName');
+        if(mainImageName) {
+            let imageIndex = productImages.findIndex(item => item.name === mainImageName);
+            productImages.splice(0,0,productImages.splice(imageIndex, 1)[0]);
+        }
 
         let specsMap = new Map();
         productSpecifications.forEach(element => specsMap[element.name] = element.value);
         let imagesMap = new Map();
         productImages.forEach(element => imagesMap[element.name] = element.data.match(/,(.*)$/)[1]);
         let action = component.get('c.saveProduct');
-        console.log(JSON.parse(JSON.stringify(productObject)));
         action.setParams({
             product: productObject,
             imagesData: imagesMap,
@@ -102,5 +106,12 @@
 
     getNotificationHandler: function(component) {
         return component.find('notificationHandler');
+    },
+
+    setMainImageNameIfNotSet: function(component, name) {
+        let currentName = component.get('v.mainImageName');
+        if(!currentName) {
+            component.set('v.mainImageName', name);
+        }
     }
 })

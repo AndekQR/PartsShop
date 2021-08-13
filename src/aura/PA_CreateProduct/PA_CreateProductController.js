@@ -35,8 +35,14 @@
         event.preventDefault();
         event.dataTransfer.dropEffect = 'copy';
         let files = event.dataTransfer.files;
+        helper.setMainImageNameIfNotSet(component, files[0].name);
         Array.prototype.forEach.call(files, (file) => {
             helper.readFile(component, helper, file)
         });
-    }
+    },
+
+    onMainImageChoose: function(component, event, helper) {
+        let imageName = event.currentTarget.dataset.name;
+        component.set('v.mainImageName', imageName);
+    },
 })

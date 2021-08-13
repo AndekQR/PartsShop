@@ -8,7 +8,7 @@ public with sharing class PA_OrderService {
                         MyOrder__r.OrderAddress__r.State__c, MyOrder__r.PriceSum__c, MyOrder__r.CreatedDate, MyOrder__r.Case__c
                 FROM MyOrderProduct__c
                 WHERE MyOrder__r.CreatedById = :UserInfo.getUserId()
-                ORDER BY MyOrder__r.CreatedDate
+                ORDER BY MyOrder__r.CreatedDate DESC
         ];
         List<PA_Order> orders = PA_Order.mapToOrders(orderItems);
         return new PA_PaginationResponse(page, allUserOrdersCount(), orders, pageSize);

@@ -77,7 +77,7 @@
                     <aura:if isTrue="{!empty(v.order.caseId)}">
                     {!$Label.c.reclamation}
                         <aura:set attribute="else">
-                            Reclamation Details
+                            {!$Label.c.reclamation_details}
                         </aura:set>
                     </aura:if>
                 </div>

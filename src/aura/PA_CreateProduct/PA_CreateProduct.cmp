@@ -7,6 +7,7 @@
     <aura:attribute name="productSpecifications" type="PA_Specification[]" access="private"/>
     <aura:attribute name="image" type="String" access="private"/>
     <aura:attribute name="specification" type="PA_Specification" access="private"/>
+    <aura:attribute name="mainImageName" type="String" access="private"/>
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
 
     <div>
@@ -15,7 +16,7 @@
                              value="{!v.newProduct.name}"/>
             <lightning:layout>
                 <lightning:layoutItem size="6">
-                    <lightning:input class="slds-m-right_xxx-small" step="2" required="true" type="number" aura:id="productField"
+                    <lightning:input class="slds-m-right_xxx-small" step="0.01" required="true" type="number" aura:id="productField"
                                      label="{!$Label.c.price}"
                                      value="{!v.newProduct.price}"/>
                 </lightning:layoutItem>
@@ -40,8 +41,10 @@
                 </div>
                 <div class="imagesChooserContainer__allImages">
                     <aura:iteration items="{!v.productImages}" var="imageObject">
-                        <div class="imagesChooserContainer__allImages__element slds-truncate">
-                            <img alt="Image Element" src="{!imageObject.data}"/>
+                        <div class="{!equals(imageObject.name, v.mainImageName) ? 'imagesChooserContainer__allImages__element__choosed' : ''}">
+                            <div data-name="{!imageObject.name}" class="imagesChooserContainer__allImages__element slds-truncate" onclick="{!c.onMainImageChoose}">
+                                <img alt="Image Element" src="{!imageObject.data}"/>
+                            </div>
                         </div>
                     </aura:iteration>
                 </div>
